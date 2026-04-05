@@ -634,13 +634,12 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   box-shadow: var(--glow-cyan-sm); transition: width 1.4s cubic-bezier(0.25,0.1,0.25,1);
 }
 .footprint__rule.is-visible { width: 200px; }
+.footprint__footnote { font-size:0.65rem; color:var(--dark-text-muted); text-align:center; margin-top:-2rem; margin-bottom:var(--space-xl); }
+.footprint__kpi-sup { font-size:0.6em; vertical-align:super; }
 .footprint__closing { text-align: center; position: relative; z-index: 1; }
 .footprint__closing-muted { font-size: var(--text-body); color: var(--dark-text-muted); margin-bottom: var(--space-md); }
-.footprint__closing-glow { font-size: var(--text-h2); font-weight: 700; color: var(--neon-cyan); text-shadow: var(--text-glow-cyan); }
 
-/* ============================================
-   SECTION 14 — GROWTH
-   ============================================ */
+.footprint__closing-glow { font-size: var(--text-h2); font-weight: 700; color: var(--neon-cyan); text-shadow: var(--text-glow-cyan); }
 .growth__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md);
 }
@@ -1289,7 +1288,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-3">
         <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus">0+</span>
-        <span class="footprint-kpi__label">Law &amp; Medical Offices<sup style="font-size:0.6em;vertical-align:super;">*</sup></span>
+        <span class="footprint-kpi__label">Law &amp; Medical Offices<sup class="footprint__kpi-sup">*</sup></span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-4">
         <span class="footprint-kpi__number" data-kpi="144" data-format="count">0</span>
@@ -1300,7 +1299,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
         <span class="footprint-kpi__label">States</span>
       </div>
     </div>
-    <p style="font-size:0.65rem;color:var(--dark-text-muted);text-align:center;margin-top:-2rem;margin-bottom:var(--space-xl);">* Independently managed offices — the Silver Mirror model</p>
+    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
 
     <!-- D3 Map -->
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
@@ -1709,7 +1708,9 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
       });
 
     }).catch(function(err) {
-      console.warn('Map load failed:', err);
+      console.warn('Map data load failed (network or parse error):', err);
+      var mapCtr = document.getElementById('fp-map-container');
+      if (mapCtr) mapCtr.innerHTML = '<p style="text-align:center;color:var(--dark-text-muted);padding:var(--space-xl);">Map unavailable — network connection required.</p>';
     });
   }
 
