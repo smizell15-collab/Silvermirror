@@ -273,6 +273,58 @@ body{background:var(--w);}
 #s10::before{content:'';position:absolute;top:50%;left:50%;width:120%;padding-bottom:120%;border-radius:50%;background:radial-gradient(circle,rgba(36,162,236,.04) 0%,transparent 60%);transform:translate(-50%,-50%);pointer-events:none;}
 .close-inner{max-width:62%;position:relative;z-index:1;}
 
+/* ═══ FOOTPRINT MAP ═══ */
+#sfp{background:linear-gradient(160deg,#060b19 0%,#0c1422 55%,#0e1927 100%);position:relative;overflow:hidden;}
+#sfp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(36,162,236,.07) 1px,transparent 1px);background-size:clamp(22px,2.4vw,30px) clamp(22px,2.4vw,30px);pointer-events:none;z-index:0;}
+.sfp-glow-a{position:absolute;width:50%;padding-bottom:50%;border-radius:50%;background:radial-gradient(circle,rgba(36,162,236,.09) 0%,transparent 65%);left:-8%;top:10%;pointer-events:none;z-index:0;}
+.sfp-glow-b{position:absolute;width:42%;padding-bottom:42%;border-radius:50%;background:radial-gradient(circle,rgba(36,162,236,.06) 0%,transparent 65%);right:-4%;bottom:-10%;pointer-events:none;z-index:0;}
+.sfp-inner{position:relative;z-index:1;width:100%;height:100%;padding:clamp(14px,1.9vw,26px) clamp(18px,3.2vw,44px) clamp(10px,1.3vw,18px);display:flex;flex-direction:column;gap:clamp(5px,.6vw,9px);}
+.sfp-header{flex-shrink:0;}
+.sfp-kpi-row{display:flex;gap:clamp(5px,.52vw,8px);flex-shrink:0;}
+.sfp-kpi{flex:1;background:rgba(255,255,255,.04);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(36,162,236,.13);border-radius:clamp(8px,.85vw,13px);padding:clamp(8px,1vw,14px) clamp(9px,1.2vw,16px);position:relative;overflow:hidden;transition:border-color .3s,background .3s;}
+.sfp-kpi::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(36,162,236,.07) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.sfp-kpi:hover{border-color:rgba(36,162,236,.32);background:rgba(36,162,236,.07);}
+.sfp-kpi:hover::after{opacity:1;}
+.sfp-kpi-lbl{font-size:clamp(5.5px,.48vw,7px);letter-spacing:.22em;text-transform:uppercase;color:rgba(36,162,236,.72);font-weight:600;margin-bottom:clamp(3px,.3vw,5px);display:block;position:relative;z-index:1;}
+.sfp-kpi-val{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(15px,2.2vw,30px);color:#fff;line-height:1;text-shadow:0 0 18px rgba(36,162,236,.35);position:relative;z-index:1;white-space:nowrap;}
+.sfp-kpi-sub{font-size:clamp(5px,.44vw,6.5px);color:rgba(255,255,255,.26);margin-top:3px;font-weight:300;line-height:1.35;position:relative;z-index:1;}
+.sfp-kpi-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:rgba(6,10,22,.97);border:1px solid rgba(36,162,236,.22);padding:5px 9px;border-radius:6px;font-size:clamp(5.5px,.48vw,7.5px);color:rgba(255,255,255,.65);pointer-events:none;opacity:0;transition:opacity .2s;z-index:30;backdrop-filter:blur(14px);max-width:190px;white-space:normal;text-align:center;line-height:1.45;}
+.sfp-kpi:hover .sfp-kpi-tip{opacity:1;}
+.sfp-pills-wrap{flex-shrink:0;}
+.sfp-pills-lbl{font-size:clamp(5.5px,.48vw,7px);letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.2);font-weight:600;margin-bottom:clamp(4px,.4vw,6px);display:block;}
+.sfp-pills{display:flex;flex-wrap:wrap;gap:clamp(4px,.45vw,7px);align-items:center;}
+.sfp-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:100px;padding:clamp(3px,.32vw,5px) clamp(8px,1vw,13px);font-size:clamp(7px,.62vw,8.5px);color:rgba(255,255,255,.58);font-weight:500;backdrop-filter:blur(8px);transition:all .25s;white-space:nowrap;}
+.sfp-pill:hover{background:rgba(36,162,236,.1);border-color:rgba(36,162,236,.28);color:#fff;}
+.sfp-map-area{flex:1;min-height:0;position:relative;border-radius:clamp(7px,.85vw,12px);overflow:hidden;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.06);}
+.sfp-map-area::before{content:'';position:absolute;left:57%;top:20%;width:22%;height:44%;background:radial-gradient(ellipse,rgba(36,162,236,.13) 0%,transparent 70%);pointer-events:none;z-index:1;}
+.sfp-map-area::after{content:'';position:absolute;left:63%;top:48%;width:16%;height:34%;background:radial-gradient(ellipse,rgba(36,162,236,.1) 0%,transparent 70%);pointer-events:none;z-index:1;}
+#sfp-map-svg{width:100%;height:100%;display:block;position:relative;z-index:2;}
+.sfp-map-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.14);font-size:clamp(7px,.6vw,9px);letter-spacing:.2em;text-transform:uppercase;font-weight:500;z-index:3;}
+@keyframes sfpPinDrop{0%{opacity:0;transform:translateY(-10px) scale(.4);}70%{opacity:1;transform:translateY(2px) scale(1.1);}100%{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes sfpPinPulse{0%,100%{opacity:.55;}50%{opacity:1;}}
+.sfp-pin-g{animation:sfpPinDrop .4s cubic-bezier(.4,0,.2,1) both;}
+.sfp-legend{flex-shrink:0;display:flex;align-items:center;gap:clamp(10px,1.4vw,20px);flex-wrap:wrap;}
+.sfp-legend-item{display:flex;align-items:center;gap:5px;font-size:clamp(5.5px,.52vw,7.5px);color:rgba(255,255,255,.38);font-weight:500;letter-spacing:.05em;}
+.sfp-legend-dot{width:clamp(6px,.65vw,9px);height:clamp(6px,.65vw,9px);border-radius:50%;flex-shrink:0;}
+.sfp-legend-sq{width:clamp(5px,.55vw,8px);height:clamp(5px,.55vw,8px);transform:rotate(45deg);flex-shrink:0;}
+.sfp-legend-line{width:1px;height:clamp(9px,1vw,13px);background:rgba(255,255,255,.1);}
+.sfp-close{flex-shrink:0;text-align:center;}
+.sfp-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(36,162,236,.5),transparent);margin-bottom:clamp(6px,.7vw,11px);box-shadow:0 0 8px rgba(36,162,236,.22);}
+.sfp-close-body{font-size:clamp(7px,.65vw,9px);color:rgba(255,255,255,.25);font-weight:300;letter-spacing:.04em;margin-bottom:clamp(3px,.32vw,5px);}
+.sfp-close-hero{font-family:'Montserrat',sans-serif;font-weight:700;font-size:clamp(13px,1.65vw,22px);color:#fff;text-shadow:0 0 28px rgba(36,162,236,.55),0 0 56px rgba(36,162,236,.25);letter-spacing:-.01em;}
+@media(max-width:768px){
+  #sfp{background:linear-gradient(160deg,#060b19 0%,#0c1422 55%,#0e1927 100%)!important;border-bottom:1px solid rgba(36,162,236,.1)!important;}
+  .sfp-inner{padding:18px 16px 14px;gap:11px;}
+  .sfp-kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;}
+  .sfp-kpi:nth-child(1),.sfp-kpi:nth-child(2),.sfp-kpi:nth-child(3){grid-column:span 2;}
+  .sfp-kpi:nth-child(4),.sfp-kpi:nth-child(5){grid-column:span 3;}
+  .sfp-kpi{padding:10px 9px;}
+  .sfp-kpi-val{font-size:18px;}
+  .sfp-map-area{height:54vw;flex:none;}
+  .sfp-close-hero{font-size:15px;}
+  .sfp-legend{gap:8px;}
+}
+
 /* ═══ PRINT ═══ */
 @media print{
   .nav,.pbar,.noise,.preloader,.mhint{display:none!important;}
@@ -432,6 +484,129 @@ body{background:var(--w);}
   </div>
   <div class="proof-bar anim-5">
     <span class="sm" style="color:rgba(255,255,255,.35);">$20M+ lifetime ad spend managed &nbsp;·&nbsp; Built and led teams (US + Philippines) &nbsp;·&nbsp; SOPs and operating systems built from scratch</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SFP — FOOTPRINT MAP                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" id="sfp">
+  <div class="sfp-glow-a"></div>
+  <div class="sfp-glow-b"></div>
+  <div class="sfp-inner">
+
+    <!-- HEADER -->
+    <div class="sfp-header">
+      <span class="eye anim-1" style="color:rgba(36,162,236,.6);">Current Scale</span>
+      <div class="h2 anim-2" style="color:#fff;line-height:1.05;margin-bottom:0;">The Footprint</div>
+      <p class="sm anim-3" style="color:rgba(255,255,255,.3);margin-top:4px;max-width:58%;">The engine I operate today — before Silver Mirror gets my full focus.</p>
+    </div>
+
+    <!-- 5 KPI CARDS -->
+    <div class="sfp-kpi-row anim-4">
+      <div class="sfp-kpi">
+        <span class="sfp-kpi-lbl">Monthly Ad Spend</span>
+        <div class="sfp-kpi-val">$<span class="count-up" data-target="915">0</span>K</div>
+        <div class="sfp-kpi-sub">Managed across all clients</div>
+      </div>
+      <div class="sfp-kpi">
+        <span class="sfp-kpi-lbl">Active Clients</span>
+        <div class="sfp-kpi-val"><span class="count-up" data-target="23">0</span></div>
+        <div class="sfp-kpi-sub">Agency roster</div>
+      </div>
+      <div class="sfp-kpi">
+        <span class="sfp-kpi-lbl">Law &amp; Medical Offices</span>
+        <div class="sfp-kpi-val"><span class="count-up" data-target="100">0</span>+</div>
+        <div class="sfp-kpi-sub">Managed individually*</div>
+        <div class="sfp-kpi-tip">Law/medical offices managed individually, parallel to Silver Mirror's location structure.</div>
+      </div>
+      <div class="sfp-kpi">
+        <span class="sfp-kpi-lbl">Franchise Locations</span>
+        <div class="sfp-kpi-val"><span class="count-up" data-target="144">0</span></div>
+        <div class="sfp-kpi-sub">Across franchise groups</div>
+      </div>
+      <div class="sfp-kpi">
+        <span class="sfp-kpi-lbl">States Active</span>
+        <div class="sfp-kpi-val"><span class="count-up" data-target="14">0</span></div>
+        <div class="sfp-kpi-sub">Nationwide footprint</div>
+      </div>
+    </div>
+
+    <!-- PILLS -->
+    <div class="sfp-pills-wrap anim-5">
+      <span class="sfp-pills-lbl">Who Relies on This Engine</span>
+      <div class="sfp-pills">
+        <span class="sfp-pill">⚖️&nbsp; 150+ Attorneys &amp; Legal Professionals</span>
+        <span class="sfp-pill">🩺&nbsp; 20+ Doctors / Surgeons / Practice Owners</span>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="sfp-map-area anim-scale">
+      <div class="sfp-map-loader" id="sfp-loader">Loading map&hellip;</div>
+      <svg id="sfp-map-svg" viewBox="0 0 1560 600" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="sfpGlowH" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#24A2EC" stop-opacity=".65"/>
+            <stop offset="100%" stop-color="#24A2EC" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="sfpGlowW" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1B7FBD" stop-opacity=".45"/>
+            <stop offset="100%" stop-color="#1B7FBD" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="sfpBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4"/>
+          </filter>
+          <filter id="sfpGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- States + borders injected by D3 -->
+        <g id="sfp-states"></g>
+        <g id="sfp-borders"></g>
+        <!-- Hotspot glows (positioned after projection runs) -->
+        <g id="sfp-hotspots"></g>
+        <!-- Cluster pins injected by D3 -->
+        <g id="sfp-pins"></g>
+      </svg>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="sfp-legend anim-6">
+      <div class="sfp-legend-item">
+        <span class="sfp-legend-dot" style="background:rgba(36,162,236,.75);box-shadow:0 0 5px rgba(36,162,236,.5);"></span>
+        Hot &mdash; IL &middot; WI &middot; FL
+      </div>
+      <div class="sfp-legend-line"></div>
+      <div class="sfp-legend-item">
+        <span class="sfp-legend-dot" style="background:rgba(36,162,236,.38);"></span>
+        Warm &mdash; AZ &middot; CO &middot; TX &middot; GA
+      </div>
+      <div class="sfp-legend-line"></div>
+      <div class="sfp-legend-item">
+        <span class="sfp-legend-dot" style="background:rgba(36,162,236,.16);"></span>
+        Present
+      </div>
+      <div class="sfp-legend-line"></div>
+      <div class="sfp-legend-item">
+        <span class="sfp-legend-sq" style="background:#24A2EC;"></span>
+        Franchise Location
+      </div>
+      <div class="sfp-legend-line"></div>
+      <div class="sfp-legend-item">
+        <span class="sfp-legend-dot" style="background:#D5DBDB;"></span>
+        Law / Medical
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sfp-close anim-7">
+      <div class="sfp-divider"></div>
+      <p class="sfp-close-body">Every one of them depends on my campaigns for their livelihood.</p>
+      <p class="sfp-close-hero">Your brand would be my only focus.</p>
+    </div>
+
   </div>
 </div>
 
@@ -743,6 +918,8 @@ body{background:var(--w);}
   <span class="key-hint">Arrow keys to navigate</span>
 </div>
 
+<script src="https://d3js.org/d3.v7.min.js" defer></script>
+<script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js" defer></script>
 <script>
 // ═══ PRELOADER ═══
 window.addEventListener('load',()=>{
@@ -758,6 +935,7 @@ function upd(){
   cnt.textContent=(cur+1)+' / '+slides.length;
   pbar.style.width=((cur+1)/slides.length*100)+'%';
   runCounters();
+  if(slides[cur]&&slides[cur].id==='sfp')renderSfpMap();
 }
 function go(d){
   slides[cur].classList.remove('on');
@@ -795,6 +973,156 @@ function runCounters(){
 }
 
 upd();
+
+// ═══ FOOTPRINT MAP ═══
+let sfpRendered=false,sfpWaiting=false;
+
+// State FIPS codes (numeric)
+const SFP_HOT=new Set([17,55,12]);           // IL, WI, FL
+const SFP_WARM=new Set([4,8,48,13]);          // AZ, CO, TX, GA
+const SFP_PRESENT=new Set([1,32,6,42,27,38,56,26]); // AL,NV,CA,PA,MN,ND,WY,MI
+
+// Cluster pins — [lng, lat], type: franchise|lawmed, tier: hot|warm|present
+const SFP_PINS=[
+  {c:[-87.65,41.85],label:'Chicago Metro',type:'franchise',tier:'hot',n:'60+'},
+  {c:[-82.46,27.95],label:'Florida',type:'franchise',tier:'hot',n:'40+'},
+  {c:[-87.96,43.05],label:'Milwaukee',type:'lawmed',tier:'hot',n:'8'},
+  {c:[-96.80,32.78],label:'Dallas/Houston',type:'franchise',tier:'warm',n:'25+'},
+  {c:[-112.07,33.45],label:'Phoenix',type:'lawmed',tier:'warm',n:'6'},
+  {c:[-104.98,39.74],label:'Denver',type:'lawmed',tier:'warm',n:'4'},
+  {c:[-84.39,33.75],label:'Atlanta',type:'lawmed',tier:'warm',n:'5'},
+  {c:[-93.27,44.98],label:'Minneapolis',type:'lawmed',tier:'present',n:'3'},
+  {c:[-83.05,42.33],label:'Michigan',type:'lawmed',tier:'present',n:'3'},
+  {c:[-75.16,39.95],label:'Philadelphia',type:'lawmed',tier:'present',n:'4'},
+  {c:[-118.24,34.05],label:'Los Angeles',type:'lawmed',tier:'present',n:'3'},
+  {c:[-115.14,36.17],label:'Las Vegas',type:'lawmed',tier:'present',n:'2'},
+  {c:[-86.80,33.52],label:'Birmingham',type:'lawmed',tier:'present',n:'2'},
+  {c:[-100.78,46.81],label:'North Dakota',type:'lawmed',tier:'present',n:'2'},
+  {c:[-104.82,41.14],label:'Wyoming',type:'lawmed',tier:'present',n:'2'},
+];
+
+function sfpFill(id){
+  const n=+id;
+  if(SFP_HOT.has(n)) return 'rgba(36,162,236,.38)';
+  if(SFP_WARM.has(n)) return 'rgba(36,162,236,.22)';
+  if(SFP_PRESENT.has(n)) return 'rgba(36,162,236,.12)';
+  return 'rgba(255,255,255,.04)';
+}
+function sfpStroke(id){
+  const n=+id;
+  if(SFP_HOT.has(n)) return 'rgba(36,162,236,.5)';
+  if(SFP_WARM.has(n)) return 'rgba(36,162,236,.28)';
+  if(SFP_PRESENT.has(n)) return 'rgba(36,162,236,.16)';
+  return 'rgba(255,255,255,.07)';
+}
+
+async function renderSfpMap(){
+  if(sfpRendered) return;
+  if(typeof d3==='undefined'||typeof topojson==='undefined'){
+    if(!sfpWaiting){sfpWaiting=true;setTimeout(renderSfpMap,400);}
+    return;
+  }
+  sfpRendered=true;
+  const loader=document.getElementById('sfp-loader');
+  try{
+    const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
+    if(loader) loader.style.display='none';
+
+    // Wide viewBox (1560×600) projection — fills horizontal space
+    const proj=d3.geoAlbersUsa().scale(1150).translate([780,315]);
+    const pathGen=d3.geoPath().projection(proj);
+    const states=topojson.feature(us,us.objects.states);
+    const borders=topojson.mesh(us,us.objects.states,(a,b)=>a!==b);
+
+    // Draw states
+    d3.select('#sfp-states').selectAll('path')
+      .data(states.features).join('path')
+      .attr('d',pathGen)
+      .attr('fill',d=>sfpFill(d.id))
+      .attr('stroke',d=>sfpStroke(d.id))
+      .attr('stroke-width','0.6');
+
+    // Interior borders mesh
+    d3.select('#sfp-borders').append('path')
+      .datum(borders).attr('d',pathGen)
+      .attr('fill','none')
+      .attr('stroke','rgba(255,255,255,.07)')
+      .attr('stroke-width','0.5');
+
+    // Hotspot radial glows under data-dense clusters
+    [{c:[-87.65,41.85],rx:110,ry:65,fill:'url(#sfpGlowH)',op:.45},
+     {c:[-82.46,27.95],rx:90, ry:55,fill:'url(#sfpGlowH)',op:.35},
+     {c:[-96.80,32.78],rx:80, ry:50,fill:'url(#sfpGlowW)',op:.3}
+    ].forEach(h=>{
+      const pt=proj(h.c);
+      if(!pt) return;
+      d3.select('#sfp-hotspots').append('ellipse')
+        .attr('cx',pt[0]).attr('cy',pt[1])
+        .attr('rx',h.rx).attr('ry',h.ry)
+        .attr('fill',h.fill).attr('opacity',h.op);
+    });
+
+    // Draw cluster pins with staggered entry animation
+    const pinsG=d3.select('#sfp-pins');
+    SFP_PINS.forEach((pin,i)=>{
+      const pt=proj(pin.c);
+      if(!pt) return;
+      const [px,py]=pt;
+      const isHot=pin.tier==='hot';
+      const isWarm=pin.tier==='warm';
+      const r=isHot?9:isWarm?7:5.5;
+      const delay=0.35+i*0.09;
+
+      const g=pinsG.append('g')
+        .attr('transform',`translate(${px},${py})`)
+        .attr('class','sfp-pin-g')
+        .style('animation-delay',`${delay}s`)
+        .attr('aria-label',`${pin.label}: ${pin.n}`);
+
+      if(pin.type==='franchise'){
+        // Franchise = cyan diamond
+        g.append('rect')
+          .attr('x',-r*2).attr('y',-r*2)
+          .attr('width',r*4).attr('height',r*4)
+          .attr('transform','rotate(45)')
+          .attr('fill','rgba(36,162,236,.18)')
+          .attr('filter','url(#sfpBlur)');
+        g.append('rect')
+          .attr('x',-r).attr('y',-r)
+          .attr('width',r*2).attr('height',r*2)
+          .attr('transform','rotate(45)')
+          .attr('fill','#24A2EC')
+          .attr('stroke','rgba(255,255,255,.45)')
+          .attr('stroke-width','0.8')
+          .attr('filter','url(#sfpGlow)');
+      } else {
+        // Law/Med = silver circle
+        g.append('circle').attr('r',r*2.2)
+          .attr('fill','rgba(213,219,219,.1)')
+          .attr('filter','url(#sfpBlur)');
+        g.append('circle').attr('r',r)
+          .attr('fill','#D5DBDB')
+          .attr('stroke','rgba(255,255,255,.4)')
+          .attr('stroke-width','0.8')
+          .attr('filter','url(#sfpGlow)');
+      }
+
+      // Count label below pin
+      g.append('text')
+        .attr('x',0).attr('y',r+10)
+        .attr('text-anchor','middle')
+        .attr('fill','rgba(255,255,255,.55)')
+        .attr('font-family','Montserrat,sans-serif')
+        .attr('font-size','6.5')
+        .attr('font-weight','600')
+        .text(pin.n);
+    });
+
+  }catch(err){
+    if(loader) loader.textContent='Map unavailable offline';
+    console.warn('Footprint map load failed:',err);
+  }
+}
 </script>
 </body>
 </html>
