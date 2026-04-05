@@ -536,8 +536,8 @@ body{background:var(--w);}
     <div class="sfp-pills-wrap anim-5">
       <span class="sfp-pills-lbl">Who Relies on This Engine</span>
       <div class="sfp-pills">
-        <span class="sfp-pill">⚖️&nbsp; 150+ Attorneys &amp; Legal Professionals</span>
-        <span class="sfp-pill">🩺&nbsp; 20+ Doctors / Surgeons / Practice Owners</span>
+        <span class="sfp-pill"><span aria-hidden="true">⚖️</span>&nbsp; 150+ Attorneys &amp; Legal Professionals</span>
+        <span class="sfp-pill"><span aria-hidden="true">🩺</span>&nbsp; 20+ Doctors / Surgeons / Practice Owners</span>
       </div>
     </div>
 
@@ -1119,7 +1119,7 @@ async function renderSfpMap(){
     });
 
   }catch(err){
-    if(loader) loader.textContent='Map unavailable offline';
+    if(loader) loader.textContent='Unable to load map data';
     console.warn('Footprint map load failed:',err);
   }
 }
