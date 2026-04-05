@@ -1710,7 +1710,12 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     }).catch(function(err) {
       console.warn('Map data load failed (network or parse error):', err);
       var mapCtr = document.getElementById('fp-map-container');
-      if (mapCtr) mapCtr.innerHTML = '<p style="text-align:center;color:var(--dark-text-muted);padding:var(--space-xl);">Map unavailable — network connection required.</p>';
+      if (mapCtr) {
+        var errP = document.createElement('p');
+        errP.style.cssText = 'text-align:center;color:var(--dark-text-muted);padding:var(--space-xl);';
+        errP.textContent = 'Map unavailable — network connection required.';
+        mapCtr.appendChild(errP);
+      }
     });
   }
 
