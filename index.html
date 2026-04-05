@@ -267,6 +267,20 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   color: var(--color-text); padding: var(--space-xl) var(--space-lg);
   border-top: 1px solid var(--color-border-light); margin-top: var(--space-lg);
 }
+.overview__quote {
+  border-left: 3px solid var(--color-accent); padding: var(--space-lg) var(--space-xl);
+  background: var(--color-accent-muted); border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  margin-bottom: var(--space-md);
+}
+.overview__quote-text { font-size: var(--text-body); color: var(--color-text); font-style: italic; line-height: 1.7; margin-bottom: var(--space-xs); }
+.overview__quote-attr { font-size: var(--text-small); color: var(--color-text-muted); font-weight: 600; }
+.overview__landscape {
+  background: linear-gradient(135deg, #FFFFFF, #FAF8F5);
+  border: 1px solid var(--color-border); border-radius: var(--border-radius);
+  padding: var(--space-lg); box-shadow: var(--shadow-sm); margin-bottom: var(--space-md);
+}
+.overview__landscape-label { display: block; text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--text-label); color: var(--color-accent); font-weight: 600; margin-bottom: var(--space-xs); }
+.overview__landscape-text { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
 
 /* ============================================
    SECTION 3 — CONCERNS
@@ -288,6 +302,12 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 }
 .concern__title { font-size: var(--text-h3); font-weight: 700; margin-bottom: var(--space-sm); color: var(--color-text); }
 .concern__answer { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
+.concern__case-study {
+  margin-top: var(--space-md); padding: var(--space-md); background: var(--color-accent-muted);
+  border-radius: var(--border-radius-sm); border-left: 3px solid var(--color-accent);
+}
+.concern__case-label { display: block; font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent); font-weight: 700; margin-bottom: var(--space-xs); }
+.concern__case-study p { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
 
 /* ============================================
    SECTION 4 — PHILOSOPHY
@@ -533,43 +553,93 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 /* ============================================
    SECTION 13 — FOOTPRINT (DARK)
    ============================================ */
-.footprint__header { text-align: center; margin-bottom: var(--space-xl); }
-.footprint__stats {
-  display: flex; justify-content: center; gap: var(--space-2xl);
-  flex-wrap: wrap; margin-bottom: var(--space-xl);
+.footprint__dot-grid {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(circle, rgba(78,197,191,0.07) 1px, transparent 1px);
+  background-size: 30px 30px; pointer-events: none; opacity: 0;
+  transition: opacity 1s ease;
 }
-.footprint-stat { text-align: center; }
-.footprint-stat__number {
-  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1;
+.footprint__dot-grid.is-visible { opacity: 1; }
+.footprint__glow-midwest {
+  position: absolute; top: 38%; left: 48%;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(58,175,169,0.07), transparent 70%);
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.footprint__glow-florida {
+  position: absolute; top: 72%; left: 74%;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(58,175,169,0.05), transparent 70%);
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.footprint__header { text-align: center; margin-bottom: var(--space-xl); position: relative; z-index: 1; }
+.footprint__header h1 { font-size: var(--text-h1); font-weight: 800; color: var(--dark-text); margin-bottom: var(--space-sm); }
+.footprint__header p { font-size: var(--text-body); color: var(--dark-text-secondary); max-width: 600px; margin: 0 auto; }
+.footprint__kpi-grid {
+  display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;
+  margin-bottom: var(--space-2xl); position: relative; z-index: 1;
+}
+.footprint-kpi-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(78,197,191,0.2);
+  border-radius: var(--border-radius); padding: var(--space-lg) var(--space-xl);
+  text-align: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  min-width: 140px;
+}
+.footprint-kpi-card:hover { border-color: rgba(78,197,191,0.5); box-shadow: 0 0 24px rgba(78,197,191,0.15); }
+.footprint-kpi__number {
+  display: block; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1;
   color: var(--neon-cyan); text-shadow: var(--text-glow-cyan);
   margin-bottom: var(--space-xs); cursor: default;
 }
-.footprint-stat__label { font-size: var(--text-small); color: var(--dark-text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
-.footprint__map-container { width: 100%; max-width: 900px; margin: 0 auto; }
-.footprint__map { width: 100%; height: auto; }
-.map-state { opacity: 0.6; }
-.map-state--active { fill: rgba(78,197,191,0.15); stroke: rgba(78,197,191,0.4); stroke-width: 0.5; }
-.map-state--growing { fill: rgba(0,136,255,0.1); stroke: rgba(0,136,255,0.3); stroke-width: 0.5; }
-.map-state--present { fill: rgba(255,184,0,0.08); stroke: rgba(255,184,0,0.2); stroke-width: 0.5; }
-.map-base { fill: rgba(255,255,255,0.03); stroke: rgba(255,255,255,0.06); stroke-width: 0.5; }
-.map-connection { stroke: rgba(78,197,191,0.35); stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
-.pin-outer { animation: pin-pulse 2.5s ease-in-out infinite; transform-origin: center; }
-.pin-inner { filter: drop-shadow(0 0 4px rgba(78,197,191,0.7)); }
-.pin-label { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 10px; }
+.footprint-kpi__label { font-size: var(--text-label); color: var(--dark-text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+.footprint__map-container { width: 100%; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+.footprint__map-svg { width: 100%; min-height: 420px; display: block; }
+@media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
+.fp-state { transition: fill 0.6s ease, opacity 0.6s ease; }
+.fp-state--base { fill: rgba(255,255,255,0.03); stroke: rgba(255,255,255,0.07); stroke-width: 0.5; }
+.fp-state--hot { fill: rgba(78,197,191,0.28); stroke: rgba(78,197,191,0.6); stroke-width: 0.8; filter: drop-shadow(0 0 6px rgba(78,197,191,0.3)); }
+.fp-state--warm { fill: rgba(78,197,191,0.14); stroke: rgba(78,197,191,0.35); stroke-width: 0.6; }
+.fp-state--present { fill: rgba(78,197,191,0.06); stroke: rgba(78,197,191,0.2); stroke-width: 0.5; }
+.fp-pin-ring { animation: pin-pulse 2.5s ease-in-out infinite; transform-origin: center; }
+.fp-pin-core { filter: drop-shadow(0 0 5px rgba(78,197,191,0.7)); }
+.fp-pin-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; fill: var(--neon-cyan); }
+.fp-pin-badge { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 9px; fill: #080c14; }
+.fp-tooltip-bg { rx: 6; ry: 6; }
 .footprint__legend {
-  display: flex; justify-content: center; gap: var(--space-lg);
-  flex-wrap: wrap; margin-top: var(--space-xl);
+  display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;
+  margin-top: var(--space-xl); position: relative; z-index: 1;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(78,197,191,0.15);
+  border-radius: 100px; padding: var(--space-sm) var(--space-xl); width: fit-content;
+  margin-left: auto; margin-right: auto;
 }
-.legend-item { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-small); color: var(--dark-text-secondary); }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.legend-dot--primary { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
-.legend-dot--growing { background: var(--neon-blue); }
-.legend-dot--present { background: var(--neon-amber); }
-.tooltip-bg { rx: 6; }
+.fp-legend-item { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-small); color: var(--dark-text-secondary); }
+.fp-legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.fp-legend-dot--hot { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
+.fp-legend-dot--warm { background: rgba(78,197,191,0.55); }
+.fp-legend-dot--present { background: rgba(78,197,191,0.25); }
+.footprint__who-relies { text-align: center; margin-top: var(--space-2xl); position: relative; z-index: 1; }
+.footprint__who-label { display: block; font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.2em; color: var(--dark-text-muted); margin-bottom: var(--space-md); font-weight: 600; }
+.footprint__pills { display: flex; justify-content: center; gap: var(--space-md); flex-wrap: wrap; }
+.footprint-pill {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(78,197,191,0.25);
+  border-radius: 100px; padding: 0.75rem 1.5rem;
+  font-size: var(--text-small); color: var(--dark-text-secondary);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.footprint__rule-wrap { text-align: center; margin: var(--space-2xl) 0 var(--space-xl); position: relative; z-index: 1; }
+.footprint__rule {
+  display: inline-block; width: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  box-shadow: var(--glow-cyan-sm); transition: width 1.4s cubic-bezier(0.25,0.1,0.25,1);
+}
+.footprint__rule.is-visible { width: 200px; }
+.footprint__footnote { font-size:0.65rem; color:var(--dark-text-muted); text-align:center; margin-top:-2rem; margin-bottom:var(--space-xl); }
+.footprint__kpi-sup { font-size:0.6em; vertical-align:super; }
+.footprint__closing { text-align: center; position: relative; z-index: 1; }
+.footprint__closing-muted { font-size: var(--text-body); color: var(--dark-text-muted); margin-bottom: var(--space-md); }
 
-/* ============================================
-   SECTION 14 — GROWTH
-   ============================================ */
+.footprint__closing-glow { font-size: var(--text-h2); font-weight: 700; color: var(--neon-cyan); text-shadow: var(--text-glow-cyan); }
 .growth__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md);
 }
@@ -748,6 +818,14 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
         <p class="overview__card-text">NYC, DC, Miami — three distinct markets, each with different competitive dynamics, customer behavior, and cost structures. Each location operates as its own P&amp;L.</p>
       </div>
     </div>
+    <div class="overview__quote animate-on-scroll stagger-5">
+      <p class="overview__quote-text">"When you're growing via your own investment, which I highly recommend to people… you have to be very disciplined. Every dollar counts."</p>
+      <p class="overview__quote-attr">— Matt Maroone, Kara Goldin Show, September 2025</p>
+    </div>
+    <div class="overview__landscape animate-on-scroll stagger-6">
+      <span class="overview__landscape-label">The Competitive Context</span>
+      <p class="overview__landscape-text">Heyday raised $40M+, franchising aggressively. Glowbar grew memberships 160% in one year. The category is moving. The acquisition system needs to move faster.</p>
+    </div>
     <p class="overview__question animate-on-scroll">Will Silver Mirror's acquisition become a controlled, revenue-aligned system?</p>
   </div>
 </section>
@@ -772,6 +850,10 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
         <div class="concern__number">02</div>
         <h3 class="concern__title">Can you maintain current performance — and improve it?</h3>
         <p class="concern__answer">Optimization begins immediately — without disrupting lead flow. The goal is to learn what's working and build on it from day one.</p>
+        <div class="concern__case-study">
+          <span class="concern__case-label">Proof</span>
+          <p>When I shifted a family law client from lead-volume optimization to signed-client optimization, the cost per signed case dropped from $5,600 to $1,200 — a 77% reduction — while case volume increased simultaneously.</p>
+        </div>
       </div>
       <div class="concern animate-on-scroll stagger-3">
         <div class="concern__number">03</div>
@@ -918,16 +1000,16 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     </div>
     <div class="locations__grid">
       <div class="location-card animate-on-scroll stagger-1">
-        <div class="location-card__header"><strong>New York City</strong> — 6 Locations</div>
-        <div class="location-card__body">The highest-volume market. Each NYC location operates in a distinct neighborhood with unique competitive dynamics. Budget allocation shifts weekly based on performance signals.</div>
+        <div class="location-card__header"><strong>New York City</strong> — 5 Locations</div>
+        <div class="location-card__body">Upper East Side · Midtown East · Bryant Park · Nomad · Upper West Side. The highest-volume market. Each location operates in a distinct neighborhood with unique dynamics. Budget shifts weekly based on performance signals.</div>
       </div>
       <div class="location-card animate-on-scroll stagger-2">
         <div class="location-card__header"><strong>Washington, D.C.</strong> — 3 Locations</div>
-        <div class="location-card__body">A professional market with strong membership conversion potential. Strategy focused on routine-building messaging and conversion rate optimization.</div>
+        <div class="location-card__body">Georgetown · Penn Quarter · Dupont Circle. A professional market with strong membership conversion potential. Strategy focused on routine-building messaging and conversion rate optimization.</div>
       </div>
       <div class="location-card animate-on-scroll stagger-3">
-        <div class="location-card__header"><strong>Miami</strong> — 1 Location</div>
-        <div class="location-card__body">A newer market with high growth potential. Strategy focuses on brand awareness and first-visit conversion — building the membership base from the ground up.</div>
+        <div class="location-card__header"><strong>Miami</strong> — 2 Locations</div>
+        <div class="location-card__body">Brickell · Coral Gables. A high-growth market with strong membership conversion potential. Strategy focuses on first-visit conversion and building the recurring membership base.</div>
       </div>
     </div>
     <div class="locations__approach animate-on-scroll">
@@ -1179,148 +1261,95 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 <!-- ================================================
      SECTION 13 — FOOTPRINT MAP (DARK)
      ================================================ -->
-<section class="section section--dark" id="section-footprint">
-  <div class="section-inner section-inner--wide">
+<div class="section-transition-dark" style="height:18vh;background:linear-gradient(to bottom,var(--color-bg-subtle),var(--dark-bg));pointer-events:none;"></div>
+<section class="section section--dark" id="section-footprint" style="background:var(--dark-bg);padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+  <!-- Dot grid + glow hotspots -->
+  <div class="footprint__dot-grid" id="fp-dot-grid"></div>
+  <div class="footprint__glow-midwest"></div>
+  <div class="footprint__glow-florida"></div>
+
+  <div class="section-inner section-inner--wide" style="position:relative;z-index:1;">
+    <!-- Header -->
     <div class="footprint__header animate-on-scroll">
-      <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">Proven at Scale</span>
-      <h2 style="color:var(--dark-text);font-size:var(--text-h2);font-weight:800;margin-bottom:var(--space-sm);">National Footprint</h2>
-      <p style="color:var(--dark-text-secondary);font-size:var(--text-body);">This is not theoretical. This is the system already running.</p>
+      <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">CURRENT SCALE</span>
+      <h1>The Footprint</h1>
+      <p>Every client, market, and office that depends on my acquisition engine — before Silver Mirror.</p>
     </div>
-    <div class="footprint__stats animate-on-scroll stagger-1">
-      <div class="footprint-stat">
-        <div class="footprint-stat__number" data-count="244">0+</div>
-        <div class="footprint-stat__label">Locations Managed</div>
+
+    <!-- 5 KPI Cards -->
+    <div class="footprint__kpi-grid">
+      <div class="footprint-kpi-card animate-on-scroll stagger-1">
+        <span class="footprint-kpi__number" data-kpi="915" data-format="dollar">$0K/mo</span>
+        <span class="footprint-kpi__label">Ad Spend</span>
       </div>
-      <div class="footprint-stat">
-        <div class="footprint-stat__number" data-dollars="915">$0K+/mo</div>
-        <div class="footprint-stat__label">Monthly Spend</div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-2">
+        <span class="footprint-kpi__number" data-kpi="23" data-format="count">0</span>
+        <span class="footprint-kpi__label">Clients</span>
       </div>
-      <div class="footprint-stat">
-        <div class="footprint-stat__number" data-count="14">0</div>
-        <div class="footprint-stat__label">States Active</div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-3">
+        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus">0+</span>
+        <span class="footprint-kpi__label">Law &amp; Medical Offices<sup class="footprint__kpi-sup">*</sup></span>
+      </div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-4">
+        <span class="footprint-kpi__number" data-kpi="144" data-format="count">0</span>
+        <span class="footprint-kpi__label">Franchise Locations</span>
+      </div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-5">
+        <span class="footprint-kpi__number" data-kpi="14" data-format="count">0</span>
+        <span class="footprint-kpi__label">States</span>
       </div>
     </div>
-    <div class="footprint__map-container animate-on-scroll stagger-2">
-      <svg viewBox="0 0 960 600" class="footprint__map" xmlns="http://www.w3.org/2000/svg">
-        <!-- Base map background -->
-        <rect x="0" y="0" width="960" height="600" fill="transparent"/>
-        <!-- Simplified US state regions -->
-        <g class="map-states">
-          <!-- West Coast (CA/WA/OR) - Active -->
-          <path class="map-state map-state--active" d="M80,80 L170,80 L175,200 L165,380 L130,430 L90,400 L75,300 Z"/>
-          <!-- Texas - Active -->
-          <path class="map-state map-state--active" d="M380,390 L560,390 L570,490 L480,510 L370,480 Z"/>
-          <!-- Florida - Active -->
-          <path class="map-state map-state--active" d="M720,430 L800,430 L820,490 L780,520 L730,500 Z"/>
-          <!-- New York - Active -->
-          <path class="map-state map-state--active" d="M820,150 L900,150 L905,210 L850,220 L815,200 Z"/>
-          <!-- Illinois - Active -->
-          <path class="map-state map-state--active" d="M620,195 L680,195 L685,280 L625,285 Z"/>
-          <!-- Georgia - Growing -->
-          <path class="map-state map-state--growing" d="M700,355 L780,355 L785,420 L715,425 Z"/>
-          <!-- NC/VA - Growing -->
-          <path class="map-state map-state--growing" d="M780,270 L880,265 L885,320 L785,325 Z"/>
-          <!-- Colorado - Growing -->
-          <path class="map-state map-state--growing" d="M310,245 L420,245 L420,315 L310,315 Z"/>
-          <!-- Washington State - Growing -->
-          <path class="map-state map-state--growing" d="M80,80 L200,80 L200,140 L80,140 Z"/>
-          <!-- Arizona - Present -->
-          <path class="map-state map-state--present" d="M175,310 L285,310 L285,420 L175,420 Z"/>
-          <!-- Ohio/PA - Present -->
-          <path class="map-state map-state--present" d="M720,200 L820,200 L820,270 L720,270 Z"/>
-        </g>
-        <!-- Connection lines between clusters -->
-        <g class="map-connections" id="map-connections">
-          <line class="map-connection" id="conn1" x1="860" y1="185" x2="838" y2="255"/>
-          <line class="map-connection" id="conn2" x1="660" y1="240" x2="860" y2="185"/>
-          <line class="map-connection" id="conn3" x1="660" y1="240" x2="740" y2="385"/>
-          <line class="map-connection" id="conn4" x1="740" y1="385" x2="780" y2="490"/>
-          <line class="map-connection" id="conn5" x1="540" y1="440" x2="740" y2="385"/>
-          <line class="map-connection" id="conn6" x1="120" y1="120" x2="340" y2="290"/>
-          <line class="map-connection" id="conn7" x1="115" y1="310" x2="340" y2="290"/>
-        </g>
-        <!-- City cluster pins -->
-        <g class="map-pins">
-          <!-- NYC -->
-          <g class="map-pin" transform="translate(860,185)" data-label="New York City" data-locations="12" data-spend="$142K/mo">
-            <circle class="pin-outer" r="18" fill="rgba(78,197,191,0.15)"/>
-            <circle class="pin-inner" r="9" fill="#4EC5BF"/>
-            <circle r="4" fill="#FFFFFF"/>
-            <text class="pin-label" y="-24" text-anchor="middle" fill="#4EC5BF">NYC</text>
-          </g>
-          <!-- LA -->
-          <g class="map-pin" transform="translate(115,310)" data-label="Los Angeles" data-locations="28" data-spend="$195K/mo">
-            <circle class="pin-outer" r="20" fill="rgba(78,197,191,0.15)"/>
-            <circle class="pin-inner" r="11" fill="#4EC5BF"/>
-            <circle r="5" fill="#FFFFFF"/>
-            <text class="pin-label" y="-26" text-anchor="middle" fill="#4EC5BF">LA</text>
-          </g>
-          <!-- Chicago -->
-          <g class="map-pin" transform="translate(660,240)" data-label="Chicago" data-locations="18" data-spend="$128K/mo">
-            <circle class="pin-outer" r="17" fill="rgba(0,136,255,0.15)"/>
-            <circle class="pin-inner" r="9" fill="#0088FF"/>
-            <circle r="4" fill="#FFFFFF"/>
-            <text class="pin-label" y="-22" text-anchor="middle" fill="#0088FF">CHI</text>
-          </g>
-          <!-- Houston -->
-          <g class="map-pin" transform="translate(540,440)" data-label="Houston" data-locations="22" data-spend="$148K/mo">
-            <circle class="pin-outer" r="18" fill="rgba(78,197,191,0.15)"/>
-            <circle class="pin-inner" r="9" fill="#4EC5BF"/>
-            <circle r="4" fill="#FFFFFF"/>
-            <text class="pin-label" y="-22" text-anchor="middle" fill="#4EC5BF">HOU</text>
-          </g>
-          <!-- Miami -->
-          <g class="map-pin" transform="translate(780,490)" data-label="Miami" data-locations="8" data-spend="$82K/mo">
-            <circle class="pin-outer" r="15" fill="rgba(0,255,136,0.15)"/>
-            <circle class="pin-inner" r="8" fill="#00FF88"/>
-            <circle r="3" fill="#FFFFFF"/>
-            <text class="pin-label" y="-20" text-anchor="middle" fill="#00FF88">MIA</text>
-          </g>
-          <!-- Atlanta -->
-          <g class="map-pin" transform="translate(740,385)" data-label="Atlanta" data-locations="15" data-spend="$105K/mo">
-            <circle class="pin-outer" r="16" fill="rgba(0,136,255,0.15)"/>
-            <circle class="pin-inner" r="8" fill="#0088FF"/>
-            <circle r="4" fill="#FFFFFF"/>
-            <text class="pin-label" y="-20" text-anchor="middle" fill="#0088FF">ATL</text>
-          </g>
-          <!-- DC -->
-          <g class="map-pin" transform="translate(838,255)" data-label="Washington D.C." data-locations="10" data-spend="$88K/mo">
-            <circle class="pin-outer" r="15" fill="rgba(78,197,191,0.15)"/>
-            <circle class="pin-inner" r="8" fill="#4EC5BF"/>
-            <circle r="3" fill="#FFFFFF"/>
-            <text class="pin-label" y="-20" text-anchor="middle" fill="#4EC5BF">DC</text>
-          </g>
-          <!-- Seattle -->
-          <g class="map-pin" transform="translate(120,120)" data-label="Seattle" data-locations="9" data-spend="$76K/mo">
-            <circle class="pin-outer" r="14" fill="rgba(0,136,255,0.15)"/>
-            <circle class="pin-inner" r="7" fill="#0088FF"/>
-            <circle r="3" fill="#FFFFFF"/>
-            <text class="pin-label" y="-18" text-anchor="middle" fill="#0088FF">SEA</text>
-          </g>
-          <!-- Denver -->
-          <g class="map-pin" transform="translate(340,290)" data-label="Denver" data-locations="11" data-spend="$72K/mo">
-            <circle class="pin-outer" r="14" fill="rgba(255,184,0,0.15)"/>
-            <circle class="pin-inner" r="7" fill="#FFB800"/>
-            <circle r="3" fill="#FFFFFF"/>
-            <text class="pin-label" y="-18" text-anchor="middle" fill="#FFB800">DEN</text>
-          </g>
-        </g>
-        <!-- Tooltip overlay -->
-        <g id="map-tooltip" style="display:none" pointer-events="none">
-          <rect class="tooltip-bg" width="150" height="50" rx="6" ry="6" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
-          <text id="tt-city" x="8" y="18" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
-          <text id="tt-locs" x="8" y="32" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
-          <text id="tt-spend" x="8" y="44" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
+    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
+
+    <!-- D3 Map -->
+    <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
+      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="fp-glow-filter">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- States rendered by JS below -->
+        <g id="fp-states"></g>
+        <!-- Pins rendered by JS below -->
+        <g id="fp-pins"></g>
+        <!-- Tooltip -->
+        <g id="fp-tooltip" style="display:none;" pointer-events="none">
+          <rect class="fp-tooltip-bg" width="160" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
+          <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
+          <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
         </g>
       </svg>
     </div>
-    <div class="footprint__legend animate-on-scroll stagger-3">
-      <div class="legend-item"><span class="legend-dot legend-dot--primary"></span>Primary Markets</div>
-      <div class="legend-item"><span class="legend-dot legend-dot--growing"></span>Growing Markets</div>
-      <div class="legend-item"><span class="legend-dot legend-dot--present"></span>Present Markets</div>
+
+    <!-- Legend -->
+    <div class="footprint__legend animate-on-scroll stagger-1">
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--hot"></span>Hot Market</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--warm"></span>Active Market</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--present"></span>Present</div>
+    </div>
+
+    <!-- Who Relies -->
+    <div class="footprint__who-relies animate-on-scroll stagger-2">
+      <span class="footprint__who-label">WHO RELIES ON THIS ENGINE</span>
+      <div class="footprint__pills">
+        <div class="footprint-pill">⚖️ 150+ Attorneys &amp; Legal Professionals</div>
+        <div class="footprint-pill">🩺 20+ Doctors, Surgeons &amp; Practice Owners</div>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="footprint__rule-wrap animate-on-scroll stagger-3">
+      <span class="footprint__rule" id="fp-rule"></span>
+    </div>
+    <div class="footprint__closing animate-on-scroll stagger-4">
+      <p class="footprint__closing-muted">Every one of them depends on my campaigns for their livelihood.</p>
+      <p class="footprint__closing-glow">Your brand would be my only focus.</p>
     </div>
   </div>
 </section>
+<div class="section-transition-light" style="height:18vh;background:linear-gradient(to bottom,var(--dark-bg),var(--color-bg));pointer-events:none;"></div>
 
 <!-- ================================================
      SECTION 14 — FUTURE GROWTH
@@ -1498,12 +1527,10 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     });
   });
 
-  /* ── COUNTER ANIMATION ── */
-  function animateVal(el) {
-    var isCount = el.hasAttribute('data-count');
-    var isDollars = el.hasAttribute('data-dollars');
-    if (!isCount && !isDollars) return;
-    var target = parseInt(isCount ? el.dataset.count : el.dataset.dollars);
+  /* ── KPI COUNTER ANIMATION ── */
+  function animateKPI(el) {
+    var target = parseInt(el.getAttribute('data-kpi') || '0');
+    var format = el.getAttribute('data-format') || 'count';
     var dur = 1600;
     var start = null;
     function step(ts) {
@@ -1511,29 +1538,48 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
       var p = Math.min((ts - start) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
       var val = Math.floor(eased * target);
-      el.textContent = isCount ? val + '+' : '$' + val + 'K+/mo';
+      if (format === 'dollar') el.textContent = '$' + val + 'K/mo';
+      else if (format === 'count-plus') el.textContent = val + '+';
+      else el.textContent = val;
       if (p < 1) requestAnimationFrame(step);
+      else {
+        if (format === 'dollar') el.textContent = '$' + target + 'K+/mo';
+        else if (format === 'count-plus') el.textContent = target + '+';
+        else el.textContent = target;
+      }
     }
     requestAnimationFrame(step);
   }
 
   var footSec = document.getElementById('section-footprint');
-  var countered = false;
+  var kpiCountered = false;
   if (footSec) {
     new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting && !countered) {
-        countered = true;
-        document.querySelectorAll('[data-count],[data-dollars]').forEach(animateVal);
+      if (entries[0].isIntersecting && !kpiCountered) {
+        kpiCountered = true;
+        // Dot grid
+        var dotGrid = document.getElementById('fp-dot-grid');
+        if (dotGrid) dotGrid.classList.add('is-visible');
+        // KPI cards staggered
+        setTimeout(function() {
+          document.querySelectorAll('.footprint-kpi__number').forEach(function(el, i) {
+            setTimeout(function() { animateKPI(el); }, i * 150);
+          });
+        }, 200);
+        // Glowing rule
+        setTimeout(function() {
+          var rule = document.getElementById('fp-rule');
+          if (rule) rule.classList.add('is-visible');
+        }, 2200);
       }
-    }, { threshold: 0.25 }).observe(footSec);
+    }, { threshold: 0.15 }).observe(footSec);
   }
 
   /* ── DIGIT SCRAMBLE ON HOVER ── */
   var CHARS = '0123456789';
-  document.querySelectorAll('.footprint-stat__number').forEach(function(el) {
-    var orig = null;
+  document.querySelectorAll('.footprint-kpi__number').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      if (!orig) orig = el.textContent;
+      var orig = el.textContent;
       var iter = 0;
       var iv = setInterval(function() {
         el.textContent = orig.split('').map(function(ch, i) {
@@ -1541,77 +1587,164 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
           if (/[0-9]/.test(ch)) return CHARS[Math.floor(Math.random() * CHARS.length)];
           return ch;
         }).join('');
-        iter += 0.4;
-        if (iter >= orig.length) clearInterval(iv);
+        iter += 0.5;
+        if (iter >= orig.length) { clearInterval(iv); el.textContent = orig; }
       }, 35);
     });
   });
 
-  /* ── SVG MAP CONNECTION LINES ANIMATION ── */
-  function animateConnections() {
-    document.querySelectorAll('.map-connection').forEach(function(line, i) {
-      try {
-        var len = line.getTotalLength();
-        line.style.strokeDasharray = len + ' ' + len;
-        line.style.strokeDashoffset = len;
-        line.style.transition = 'none';
-        setTimeout(function() {
-          line.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.25,0.1,0.25,1)';
-          line.style.strokeDashoffset = '0';
-        }, i * 250 + 400);
-      } catch(e) {}
+  /* ── D3 MAP INIT ── */
+  function initFPMap() {
+    var svg = document.getElementById('fp-map-svg');
+    var statesG = document.getElementById('fp-states');
+    var pinsG = document.getElementById('fp-pins');
+    if (!svg || !statesG || !pinsG) return;
+
+    var W = 960, H = 520;
+
+    // State tier mapping by FIPS id (as string)
+    var HOT = {'17':1,'55':1,'12':1}; // IL, WI, FL
+    var WARM = {'04':1,'08':1,'48':1,'13':1}; // AZ, CO, TX, GA
+    var PRESENT = {'01':1,'32':1,'06':1,'42':1,'27':1,'38':1,'56':1,'26':1}; // AL, NV, CA, PA, MN, ND, WY, MI
+
+    function getTier(id) {
+      var s = String(parseInt(id));
+      if (s.length === 1) s = '0' + s;
+      if (HOT[s]) return 'hot';
+      if (WARM[s]) return 'warm';
+      if (PRESENT[s]) return 'present';
+      return 'base';
+    }
+
+    var metros = [
+      { label:'Chicago Metro', sub:'~24 locations', lon:-87.65, lat:41.85, r:12, delay:1200 },
+      { label:'Milwaukee / SE Wisconsin', sub:'~18 locations', lon:-87.9, lat:43.05, r:10, delay:1300 },
+      { label:'Miami / South Florida', sub:'~28 locations', lon:-80.19, lat:25.77, r:13, delay:1400 },
+      { label:'Tampa Bay', sub:'~16 locations', lon:-82.46, lat:27.95, r:10, delay:1450 },
+      { label:'Orlando', sub:'~14 locations', lon:-81.38, lat:28.54, r:9, delay:1500 },
+      { label:'Phoenix / Scottsdale', sub:'~8 locations', lon:-111.93, lat:33.45, r:8, delay:1550 },
+      { label:'Houston / Gulf Coast', sub:'~8 locations', lon:-95.37, lat:29.76, r:8, delay:1600 },
+      { label:'Denver / Front Range', sub:'~6 locations', lon:-104.99, lat:39.74, r:7, delay:1650 },
+      { label:'Atlanta', sub:'~4 locations', lon:-84.39, lat:33.75, r:7, delay:1700 }
+    ];
+
+    // Load D3 + topojson
+    if (typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
+
+    var projection = d3.geoAlbersUsa().scale(1280).translate([W/2, H/2]);
+    var pathGen = d3.geoPath().projection(projection);
+
+    d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us) {
+      var features = topojson.feature(us, us.objects.states).features;
+
+      // Draw states by tier (base first, then present, warm, hot)
+      var tierOrder = ['base','present','warm','hot'];
+      tierOrder.forEach(function(tier) {
+        var tieredFeatures = features.filter(function(f) { return getTier(f.id) === tier; });
+        var delay = tier === 'hot' ? 800 : tier === 'warm' ? 950 : tier === 'present' ? 1100 : 0;
+        tieredFeatures.forEach(function(f) {
+          var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          p.setAttribute('d', pathGen(f) || '');
+          p.setAttribute('class', 'fp-state fp-state--base');
+          p.setAttribute('data-fips', f.id);
+          statesG.appendChild(p);
+          if (tier !== 'base') {
+            setTimeout(function() { p.setAttribute('class', 'fp-state fp-state--' + tier); }, delay);
+          }
+        });
+      });
+
+      // Draw pins
+      var tooltip = document.getElementById('fp-tooltip');
+      var ttCity = document.getElementById('fp-tt-city');
+      var ttLocs = document.getElementById('fp-tt-locs');
+
+      metros.forEach(function(m) {
+        var coords = projection([m.lon, m.lat]);
+        if (!coords) return;
+        var cx = coords[0], cy = coords[1];
+
+        var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'fp-pin');
+        g.setAttribute('style', 'opacity:0;cursor:pointer;');
+        g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
+
+        var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ring.setAttribute('class', 'fp-pin-ring');
+        ring.setAttribute('r', String(m.r + 7));
+        ring.setAttribute('fill', 'rgba(78,197,191,0.12)');
+        g.appendChild(ring);
+
+        var core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        core.setAttribute('class', 'fp-pin-core');
+        core.setAttribute('r', String(m.r));
+        core.setAttribute('fill', '#4EC5BF');
+        g.appendChild(core);
+
+        var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('r', String(Math.floor(m.r * 0.4)));
+        dot.setAttribute('fill', '#080c14');
+        g.appendChild(dot);
+
+        pinsG.appendChild(g);
+
+        // Reveal after delay
+        setTimeout(function() { g.style.opacity = '1'; g.style.transition = 'opacity 0.5s ease'; }, m.delay);
+
+        // Tooltip
+        g.addEventListener('mouseenter', function() {
+          if (!tooltip) return;
+          if (ttCity) ttCity.textContent = m.label;
+          if (ttLocs) ttLocs.textContent = m.sub;
+          var tx = cx + m.r + 8;
+          var ty = cy - 30;
+          if (tx + 165 > W) tx = cx - 170;
+          tooltip.setAttribute('transform', 'translate(' + tx + ',' + ty + ')');
+          tooltip.style.display = 'block';
+        });
+        g.addEventListener('mouseleave', function() {
+          if (tooltip) tooltip.style.display = 'none';
+        });
+      });
+
+    }).catch(function(err) {
+      console.warn('Map data load failed (network or parse error):', err);
+      var mapCtr = document.getElementById('fp-map-container');
+      if (mapCtr) {
+        var errP = document.createElement('p');
+        errP.style.cssText = 'text-align:center;color:var(--dark-text-muted);padding:var(--space-xl);';
+        errP.textContent = 'Map unavailable — network connection required.';
+        mapCtr.appendChild(errP);
+      }
     });
   }
 
-  var mapCont = document.querySelector('.footprint__map-container');
-  var mapAnimated = false;
-  if (mapCont) {
-    new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting && !mapAnimated) {
-        mapAnimated = true;
-        animateConnections();
-      }
-    }, { threshold: 0.2 }).observe(mapCont);
+  // Load D3 and topojson dynamically, then init map on footprint section visibility
+  var fpMapInited = false;
+  function loadAndInitMap() {
+    if (fpMapInited) return;
+    fpMapInited = true;
+    if (typeof d3 !== 'undefined' && typeof topojson !== 'undefined') {
+      initFPMap();
+      return;
+    }
+    var d3s = document.createElement('script');
+    d3s.src = 'https://d3js.org/d3.v7.min.js';
+    d3s.onload = function() {
+      var topos = document.createElement('script');
+      topos.src = 'https://unpkg.com/topojson-client@3/dist/topojson-client.min.js';
+      topos.onload = function() { setTimeout(initFPMap, 100); };
+      document.head.appendChild(topos);
+    };
+    document.head.appendChild(d3s);
   }
 
-  /* ── MAP PIN TOOLTIPS ── */
-  var tooltip = document.getElementById('map-tooltip');
-  var ttCity = document.getElementById('tt-city');
-  var ttLocs = document.getElementById('tt-locs');
-  var ttSpend = document.getElementById('tt-spend');
-
-  document.querySelectorAll('.map-pin').forEach(function(pin) {
-    pin.style.cursor = 'pointer';
-
-    function showTip(e) {
-      if (!tooltip) return;
-      var label = pin.dataset.label || '';
-      var locs = pin.dataset.locations || '';
-      var spend = pin.dataset.spend || '';
-      if (ttCity) ttCity.textContent = label;
-      if (ttLocs) ttLocs.textContent = locs + ' locations';
-      if (ttSpend) ttSpend.textContent = spend;
-      var t = pin.getAttribute('transform') || '';
-      var m = t.match(/translate\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)\)/);
-      if (m) {
-        var px = parseFloat(m[1]) + 20;
-        var py = parseFloat(m[2]) - 55;
-        tooltip.setAttribute('transform', 'translate(' + px + ',' + py + ')');
-      }
-      tooltip.style.display = 'block';
-    }
-
-    function hideTip() {
-      if (tooltip) tooltip.style.display = 'none';
-    }
-
-    pin.addEventListener('mouseenter', showTip);
-    pin.addEventListener('mouseleave', hideTip);
-    pin.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      tooltip && tooltip.style.display !== 'none' ? hideTip() : showTip(e);
-    }, { passive: false });
-  });
+  var fpMapCont = document.getElementById('fp-map-container');
+  if (fpMapCont) {
+    new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) loadAndInitMap();
+    }, { threshold: 0.1 }).observe(fpMapCont);
+  }
 
   /* ── REDUCED MOTION OVERRIDE ── */
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
