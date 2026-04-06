@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>Silver Mirror — Acquisition System</title>
+<title>Silver Mirror — Growth Strategy Presentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================
    RESET & BASE
@@ -15,7 +15,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg); color: var(--color-text); overflow-x: hidden; line-height: 1.6; }
-::selection { background: rgba(58, 175, 169, 0.2); }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; }
+::selection { background: rgba(0, 179, 222, 0.15); }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-subtle); }
 ::-webkit-scrollbar-thumb { background: #C8C4BC; border-radius: 4px; }
@@ -27,10 +29,11 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   --color-bg: #FAF8F5;
   --color-bg-subtle: #EFEBE5;
   --color-bg-card: #FFFFFF;
-  --color-accent: #3AAFA9;
-  --color-accent-bright: #4EC5BF;
-  --color-accent-muted: rgba(58, 175, 169, 0.08);
-  --color-accent-border: rgba(58, 175, 169, 0.2);
+  --color-accent: #00B3DE;
+  --color-accent-bright: #33C4E8;
+  --color-accent-dark: #0099BE;
+  --color-accent-muted: rgba(0, 179, 222, 0.08);
+  --color-accent-border: rgba(0, 179, 222, 0.2);
   --color-text: #2C2C2C;
   --color-text-secondary: #545454;
   --color-text-muted: #888888;
@@ -64,7 +67,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.02);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04), 0 8px 20px rgba(0,0,0,0.03);
   --shadow-lg: 0 12px 40px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.03);
-  --shadow-glow: 0 0 20px rgba(58, 175, 169, 0.15);
+  --shadow-glow: 0 0 20px rgba(0, 179, 222, 0.15);
   --transition-fast: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   --transition-base: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   --transition-slow: 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -139,8 +142,8 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   to { opacity: 1; }
 }
 @keyframes pulse-glow {
-  0%, 100% { text-shadow: 0 0 8px rgba(58,175,169,0.3); }
-  50% { text-shadow: 0 0 16px rgba(58,175,169,0.6), 0 0 30px rgba(58,175,169,0.3); }
+  0%, 100% { text-shadow: 0 0 8px rgba(0,179,222,0.3); }
+  50% { text-shadow: 0 0 16px rgba(0,179,222,0.6), 0 0 30px rgba(0,179,222,0.3); }
 }
 @keyframes pin-pulse {
   0%, 100% { transform: scale(1); opacity: 0.6; }
@@ -151,10 +154,10 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 }
 
 .animate-on-scroll {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  opacity: 0; transform: translateY(24px); filter: blur(4px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), filter 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
 .stagger-1 { transition-delay: 0.12s; }
 .stagger-2 { transition-delay: 0.24s; }
 .stagger-3 { transition-delay: 0.36s; }
@@ -189,7 +192,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 }
 .section--dark::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(58,175,169,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(78,197,191,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 .section-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; }
@@ -400,7 +403,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 }
 .location-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-accent-border); }
 .location-card__header {
-  background: linear-gradient(135deg, var(--color-accent), #2a8f8a);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
   padding: var(--space-md) var(--space-lg); color: white;
   font-size: var(--text-small); font-weight: 600;
 }
@@ -576,7 +579,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 .footprint__header h1 { font-size: var(--text-h1); font-weight: 800; color: var(--dark-text); margin-bottom: var(--space-sm); }
 .footprint__header p { font-size: var(--text-body); color: var(--dark-text-secondary); max-width: 600px; margin: 0 auto; }
 .footprint__kpi-grid {
-  display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); justify-content: center;
   margin-bottom: var(--space-2xl); position: relative; z-index: 1;
 }
 .footprint-kpi-card {
@@ -593,7 +596,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   margin-bottom: var(--space-xs); cursor: default;
 }
 .footprint-kpi__label { font-size: var(--text-label); color: var(--dark-text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
-.footprint__map-container { width: 100%; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; }
+.footprint__map-container { width: 100%; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; border-radius: 14px; border: 1px solid rgba(78,197,191,0.12); }
 .footprint__map-svg { width: 100%; min-height: 420px; display: block; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
 .fp-state { transition: fill 0.6s ease, opacity 0.6s ease; }
@@ -706,9 +709,9 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   border: 1px solid var(--color-border); box-shadow: var(--shadow-sm);
 }
 .decision-option--b {
-  background: linear-gradient(135deg, rgba(58,175,169,0.06), rgba(78,197,191,0.10));
+  background: linear-gradient(135deg, rgba(0,179,222,0.06), rgba(51,196,232,0.10));
   border: 2px solid var(--color-accent);
-  box-shadow: 0 0 30px rgba(58,175,169,0.15), var(--shadow-md);
+  box-shadow: 0 0 30px rgba(0,179,222,0.15), var(--shadow-md);
 }
 .decision-option__title { font-size: var(--text-h3); font-weight: 700; margin-bottom: var(--space-lg); }
 .decision-option--a .decision-option__title { color: var(--color-text-secondary); }
@@ -744,8 +747,8 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
    DECISION OPTION B — GLOW PULSE
    ============================================ */
 @keyframes border-glow-pulse {
-  0%, 100% { box-shadow: 0 0 30px rgba(58,175,169,0.15), var(--shadow-md); }
-  50% { box-shadow: 0 0 50px rgba(58,175,169,0.25), 0 0 80px rgba(58,175,169,0.1), var(--shadow-md); }
+  0%, 100% { box-shadow: 0 0 30px rgba(0,179,222,0.15), var(--shadow-md); }
+  50% { box-shadow: 0 0 50px rgba(0,179,222,0.25), 0 0 80px rgba(0,179,222,0.1), var(--shadow-md); }
 }
 .decision-option--b {
   animation: border-glow-pulse 4s ease-in-out infinite;
@@ -838,7 +841,6 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   .philosophy__before { text-align: center; }
   .philosophy__after { text-align: center; }
   .footprint__kpi-grid {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-sm);
   }
@@ -926,11 +928,131 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .animate-on-scroll { opacity: 1; transform: none; }
+  .animate-on-scroll { opacity: 1; transform: none; filter: none; }
 }
+
+/* ============================================
+   PLAYFAIR DISPLAY — ACCENT FONT
+   ============================================ */
+.playfair { font-family: 'Playfair Display', Georgia, serif; }
+.opening__title .playfair { color: var(--color-accent); }
+.closing__name { font-family: 'Playfair Display', Georgia, serif; }
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#sm-loading-screen {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: #FAF8F5; z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.25rem;
+  animation: loadingExit 0.6s cubic-bezier(0.4, 0, 0.2, 1) 2.4s forwards;
+}
+#sm-loading-screen.is-hidden { display: none; }
+@keyframes loadingExit { to { opacity: 0; visibility: hidden; } }
+.loading-screen__monogram {
+  animation: loadingMonogramIn 0.9s cubic-bezier(0.25, 0.1, 0.25, 1) 0.25s both;
+}
+@keyframes loadingMonogramIn {
+  from { opacity: 0; transform: scale(0.82); }
+  to { opacity: 1; transform: scale(1); }
+}
+.loading-screen__tagline {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.32em;
+  text-transform: uppercase; color: #888888;
+  animation: loadingTaglineIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.9s both;
+}
+@keyframes loadingTaglineIn {
+  from { opacity: 0; letter-spacing: 0.52em; }
+  to { opacity: 1; letter-spacing: 0.32em; }
+}
+
+/* ============================================
+   LOCATION CARDS — ENHANCED INDIVIDUAL
+   ============================================ */
+.locations__city-group { margin-bottom: var(--space-xl); }
+.locations__city-label {
+  font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.15em;
+  font-weight: 700; color: var(--color-text-muted); margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs); border-bottom: 1px solid var(--color-border);
+}
+.locations__grid-tight {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-sm);
+}
+.location-card--sm {
+  background: var(--color-bg-card); border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm); padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.location-card--sm:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-accent-border); }
+.location-card--sm__hood {
+  font-size: var(--text-small); font-weight: 700; color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+.location-card--sm__address {
+  font-size: var(--text-small); color: var(--color-text-muted); line-height: 1.5;
+}
+.location-card--sm__tag {
+  display: inline-block; margin-top: 0.5rem;
+  font-size: var(--text-label); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-accent); background: var(--color-accent-muted);
+  border-radius: 100px; padding: 0.15rem 0.6rem;
+}
+
+/* ============================================
+   WHAT HAPPENS NEXT — SECTION
+   ============================================ */
+.next__steps {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg); margin-bottom: var(--space-xl);
+}
+@media (max-width: 700px) { .next__steps { grid-template-columns: 1fr; } }
+.next-step {
+  text-align: center; padding: var(--space-xl) var(--space-lg);
+  background: var(--color-bg-card); border: 1px solid var(--color-border);
+  border-radius: var(--border-radius); box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.next-step__num {
+  font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800;
+  color: var(--color-accent); opacity: 0.15; line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+.next-step__icon {
+  width: 48px; height: 48px; margin: 0 auto var(--space-sm);
+  color: var(--color-accent);
+}
+.next-step__title {
+  font-size: var(--text-h3); font-weight: 700; color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+.next-step__detail {
+  font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7;
+}
+.next-step__timeline {
+  margin-top: var(--space-sm); font-size: var(--text-label); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-accent);
+}
+
 </style>
 </head>
 <body>
+
+<!-- ================================================
+     LOADING SCREEN
+     ================================================ -->
+<div id="sm-loading-screen" aria-hidden="true" aria-label="Loading Silver Mirror presentation">
+  <svg class="loading-screen__monogram" width="108" height="88" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- S letterform -->
+    <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#00B3DE" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <!-- M letterform -->
+    <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#00B3DE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <span class="loading-screen__tagline">Silver Mirror</span>
+</div>
 
 <div id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
 
@@ -943,7 +1065,6 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   <button class="nav-dot" data-section="section-plan" data-label="90-Day Plan" aria-label="90-Day Plan"></button>
   <button class="nav-dot" data-section="section-locations" data-label="Locations" aria-label="Locations"></button>
   <button class="nav-dot" data-section="section-system" data-label="Core System" aria-label="Core System"></button>
-  <button class="nav-dot" data-section="section-differentiator" data-label="What's Different" aria-label="Differentiator"></button>
   <button class="nav-dot" data-section="section-seo" data-label="SEO + LLM" aria-label="SEO"></button>
   <button class="nav-dot" data-section="section-communication" data-label="Communication" aria-label="Communication"></button>
   <button class="nav-dot" data-section="section-financial" data-label="Financial" aria-label="Financial"></button>
@@ -951,6 +1072,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   <button class="nav-dot" data-section="section-growth" data-label="Growth" aria-label="Growth"></button>
   <button class="nav-dot" data-section="section-team" data-label="Team" aria-label="Team"></button>
   <button class="nav-dot" data-section="section-closing" data-label="Closing" aria-label="Closing"></button>
+  <button class="nav-dot" data-section="section-next" data-label="What's Next" aria-label="What Happens Next"></button>
   <button class="nav-dot" data-section="section-decision" data-label="Decision" aria-label="Decision"></button>
 </nav>
 
@@ -959,13 +1081,14 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
      ================================================ -->
 <section class="section section--light" id="section-opening">
   <div class="section-inner section-inner--narrow">
-    <div class="opening__eyebrow animate-on-scroll">Silver Mirror Facial Bar — Acquisition System</div>
-    <h1 class="opening__title animate-on-scroll stagger-1">Building Silver Mirror's <strong>Growth</strong> Engine</h1>
+    <div class="opening__eyebrow animate-on-scroll">Silver Mirror Facial Bar — Growth Strategy Presentation</div>
+    <h1 class="opening__title animate-on-scroll stagger-1">Building Silver Mirror's <strong class="playfair">Growth</strong> Engine</h1>
     <p class="opening__subtitle animate-on-scroll stagger-2">Paid media becomes a measurable, controllable revenue engine — not just a lead source. Every dollar traced from impression to enrolled member.</p>
     <div class="opening__scope animate-on-scroll stagger-3">
       <span class="opening__scope-item">10 Locations</span>
       <span class="opening__scope-item">3 Markets</span>
       <span class="opening__scope-item">1 Operator</span>
+      <span class="opening__scope-item">Founded 2016</span>
     </div>
     <p class="opening__credibility animate-on-scroll stagger-4">Currently managing $915K+/month across 244+ locations in 14 states. Built for scale.</p>
     <p class="opening__hook animate-on-scroll stagger-5">This is not a media plan. This is an operating system for paid acquisition.</p>
@@ -983,22 +1106,49 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     </div>
     <div class="overview__cards">
       <div class="overview__card animate-on-scroll stagger-1">
-        <div class="overview__card-icon">💆</div>
+        <div class="overview__card-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#00B3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="14" cy="10" r="6"/>
+            <path d="M6 22 C6 17.5 9.5 14 14 14 C16.5 14 18.8 15.1 20.3 16.9"/>
+            <path d="M20 20 L24 20 M22 18 L22 22"/>
+          </svg>
+        </div>
         <h3 class="overview__card-title">The Service</h3>
         <p class="overview__card-text">Silver Mirror is a premium express facial bar delivering consistent, science-backed skincare in 50-minute sessions. The product is the experience — and the experience is the reason people return.</p>
       </div>
       <div class="overview__card animate-on-scroll stagger-2">
-        <div class="overview__card-icon">👥</div>
+        <div class="overview__card-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#00B3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="10" cy="10" r="4"/>
+            <circle cx="19" cy="10" r="4"/>
+            <path d="M2 23 C2 18.5 5.5 15 10 15"/>
+            <path d="M18 15 C22.5 15 26 18.5 26 23"/>
+            <path d="M10 15 C14 15 18 16 18 15"/>
+          </svg>
+        </div>
         <h3 class="overview__card-title">The Customer</h3>
         <p class="overview__card-text">The core customer values consistency, efficiency, and results. They are not looking for a spa day — they are building a routine.</p>
       </div>
       <div class="overview__card animate-on-scroll stagger-3">
-        <div class="overview__card-icon">💳</div>
+        <div class="overview__card-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#00B3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="8" width="22" height="14" rx="2"/>
+            <path d="M3 13 L25 13"/>
+            <path d="M8 17.5 L12 17.5"/>
+          </svg>
+        </div>
         <h3 class="overview__card-title">The Membership</h3>
         <p class="overview__card-text">Membership converts a first-time visitor into a recurring revenue contributor. Membership is a long-term commitment to skin health — not a one-time visit. The economics only work when enrollment rates are high.</p>
       </div>
       <div class="overview__card animate-on-scroll stagger-4">
-        <div class="overview__card-icon">📍</div>
+        <div class="overview__card-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#00B3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3 C14 3 8 9 8 15 C8 18.3 10.7 21 14 21 C17.3 21 20 18.3 20 15 C20 9 14 3 14 3Z"/>
+            <circle cx="14" cy="15" r="2.5" fill="#00B3DE" stroke="none"/>
+            <path d="M14 21 L14 25"/>
+            <path d="M10 25 L18 25"/>
+          </svg>
+        </div>
         <h3 class="overview__card-title">The Markets</h3>
         <p class="overview__card-text">NYC, DC, Miami — three distinct markets, each with different competitive dynamics, customer behavior, and cost structures. Each location operates as its own P&amp;L.</p>
       </div>
@@ -1183,20 +1333,78 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
       <span class="eyebrow">Location-Level Control</span>
       <h2>10 Locations. 10 Plans. One System.</h2>
     </div>
-    <div class="locations__grid">
-      <div class="location-card animate-on-scroll stagger-1">
-        <div class="location-card__header"><strong>New York City</strong> — 5 Locations</div>
-        <div class="location-card__body">Upper East Side · Midtown East · Bryant Park · Nomad · Upper West Side. The highest-volume market. Each location operates in a distinct neighborhood with unique dynamics. Budget shifts weekly based on performance signals.</div>
-      </div>
-      <div class="location-card animate-on-scroll stagger-2">
-        <div class="location-card__header"><strong>Washington, D.C.</strong> — 3 Locations</div>
-        <div class="location-card__body">Georgetown · Penn Quarter · Dupont Circle. A professional market with strong membership conversion potential. Strategy focused on routine-building messaging and conversion rate optimization.</div>
-      </div>
-      <div class="location-card animate-on-scroll stagger-3">
-        <div class="location-card__header"><strong>Miami</strong> — 2 Locations</div>
-        <div class="location-card__body">Brickell · Coral Gables. A high-growth market with strong membership conversion potential. Strategy focuses on first-visit conversion and building the recurring membership base.</div>
+
+    <!-- New York City -->
+    <div class="locations__city-group animate-on-scroll stagger-1">
+      <div class="locations__city-label">New York City — 5 Locations</div>
+      <div class="locations__grid-tight">
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Upper East Side</div>
+          <div class="location-card--sm__address">1049 Lexington Ave, New York, NY 10021</div>
+          <span class="location-card--sm__tag">High Volume</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Midtown East</div>
+          <div class="location-card--sm__address">430 Park Ave, New York, NY 10022</div>
+          <span class="location-card--sm__tag">Professional</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Bryant Park</div>
+          <div class="location-card--sm__address">7 W 51st St, New York, NY 10019</div>
+          <span class="location-card--sm__tag">Flagship</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">NoMad</div>
+          <div class="location-card--sm__address">10 W 26th St, New York, NY 10010</div>
+          <span class="location-card--sm__tag">Growth</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Upper West Side</div>
+          <div class="location-card--sm__address">2271 Broadway, New York, NY 10024</div>
+          <span class="location-card--sm__tag">Residential</span>
+        </div>
       </div>
     </div>
+
+    <!-- Washington D.C. -->
+    <div class="locations__city-group animate-on-scroll stagger-2">
+      <div class="locations__city-label">Washington, D.C. — 3 Locations</div>
+      <div class="locations__grid-tight">
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Georgetown</div>
+          <div class="location-card--sm__address">1054 31st St NW, Washington, DC 20007</div>
+          <span class="location-card--sm__tag">Anchor</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Penn Quarter</div>
+          <div class="location-card--sm__address">499 7th St NW, Washington, DC 20004</div>
+          <span class="location-card--sm__tag">Professional</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Dupont Circle</div>
+          <div class="location-card--sm__address">1600 Connecticut Ave NW, Washington, DC 20009</div>
+          <span class="location-card--sm__tag">Growth</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miami -->
+    <div class="locations__city-group animate-on-scroll stagger-3">
+      <div class="locations__city-label">Miami — 2 Locations</div>
+      <div class="locations__grid-tight" style="max-width: 460px;">
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Brickell</div>
+          <div class="location-card--sm__address">801 Brickell Ave, Miami, FL 33131</div>
+          <span class="location-card--sm__tag">High Growth</span>
+        </div>
+        <div class="location-card--sm">
+          <div class="location-card--sm__hood">Coral Gables</div>
+          <div class="location-card--sm__address">355 Miracle Mile, Coral Gables, FL 33134</div>
+          <span class="location-card--sm__tag">Expansion</span>
+        </div>
+      </div>
+    </div>
+
     <div class="locations__approach animate-on-scroll">
       <h3>How Each Location Is Controlled</h3>
       <div class="approach-grid">
@@ -1259,26 +1467,6 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 </section>
 
 <!-- ================================================
-     SECTION 9 — DIFFERENTIATOR (NEW)
-     ================================================ -->
-<section class="section section--light" id="section-differentiator">
-  <div class="section-inner">
-    <div class="diff__header animate-on-scroll">
-      <span class="eyebrow">What Sets This Apart</span>
-      <h2 class="diff__title">What Makes This Different</h2>
-    </div>
-    <div class="diff__grid">
-      <div class="diff-item animate-on-scroll stagger-1">Built from real-world experience managing multi-location businesses at scale — not theory</div>
-      <div class="diff-item animate-on-scroll stagger-2">Already proven across 244+ locations and $915K+/month in spend</div>
-      <div class="diff-item animate-on-scroll stagger-3">Strategy, execution, and automation combined — not separated across teams</div>
-      <div class="diff-item animate-on-scroll stagger-4">Every part tied to one outcome: enrolled members and revenue</div>
-      <div class="diff-item animate-on-scroll stagger-5">Designed to be owned, operated, and improved daily — not presented once and forgotten</div>
-      <div class="diff-item animate-on-scroll stagger-6">Built for a membership model where trust, routine, and consistency drive lifetime value — not one-time transactions</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
      SECTION 10 — SEO + LLM
      ================================================ -->
 <section class="section section--light-subtle" id="section-seo">
@@ -1286,48 +1474,53 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Search &amp; AI Visibility</span>
       <h2>SEO + LLM Strategy</h2>
+      <p class="section-subtitle">Owned media compounds over time. Every search impression Silver Mirror earns organically is a dollar of paid media not needed.</p>
     </div>
     <div class="seo__grid">
       <div class="seo-block animate-on-scroll stagger-1">
         <h3 class="seo-block__title">Local SEO</h3>
         <div class="seo-item">
-          <strong>Google Business Profile</strong>
-          <span>Fully optimized profiles for all 10 locations — consistent NAP, photos, services, and review management.</span>
+          <strong>Google Business Profile Optimization</strong>
+          <span>Fully optimized profiles for all 10 locations — consistent NAP (name, address, phone), current service menus, professional photography direction, and active review response cadence. Each location treated as an independent local entity.</span>
         </div>
         <div class="seo-item">
           <strong>Local Pack Dominance</strong>
-          <span>Citation building, review velocity, and proximity signals optimized for "facial near me" searches.</span>
+          <span>Citation building across 50+ directories, review velocity strategy, and proximity signals optimized for "facial near me," "express facial [neighborhood]," and "skincare bar [city]" searches. Target: top 3 in the local pack for each neighborhood.</span>
         </div>
         <div class="seo-item">
-          <strong>Location Pages</strong>
-          <span>Individual landing pages per location, structured for local search and conversion.</span>
+          <strong>Location Pages &amp; Keyword Architecture</strong>
+          <span>Individual landing pages per location with hyperlocal content — neighborhood references, nearby landmarks, and market-specific messaging. Primary keywords: "facial bar [neighborhood]," "express facial [city]," "membership facial [city]." Long-tail: "50-minute facial [neighborhood]," "best skincare bar [city]."</span>
         </div>
         <div class="seo-item">
-          <strong>FAQ Content</strong>
-          <span>Direct answers to skincare questions that build trust and confidence before the first visit.</span>
+          <strong>Content &amp; FAQ Strategy</strong>
+          <span>Skincare education content answers high-intent questions before the first visit: "What is an express facial?", "How often should I get a facial?", "Is Silver Mirror better than a spa?" Answers that build trust and drive conversions, not just traffic.</span>
         </div>
         <div class="seo-item">
-          <strong>LSA Opportunity</strong>
-          <span>Local Services Ads provide verified placement above standard paid search. Low competition in the facial bar category. High-intent, low-funnel traffic.</span>
+          <strong>Local Services Ads (LSA)</strong>
+          <span>Verified badge placement above standard paid search with Google Guarantee. Low competition in the facial bar category. High-intent, low-funnel traffic. Cost-per-lead typically lower than standard search campaigns.</span>
         </div>
       </div>
       <div class="seo-block animate-on-scroll stagger-2">
-        <h3 class="seo-block__title">LLM / AI Visibility</h3>
+        <h3 class="seo-block__title">LLM / AI Search Visibility</h3>
         <div class="seo-item">
-          <strong>ChatGPT Recommendations</strong>
-          <span>Silver Mirror appears when users ask AI tools for facial bar recommendations in NYC, DC, and Miami.</span>
+          <strong>ChatGPT &amp; Claude Recommendations</strong>
+          <span>When users ask "best facial bar in NYC" or "express facial recommendations in DC," Silver Mirror needs to appear. This requires structured brand data, consistent entity signals, and content that AI training sources can index and cite.</span>
         </div>
         <div class="seo-item">
-          <strong>Perplexity &amp; AI Overviews</strong>
-          <span>Structured content ensures Silver Mirror is cited in AI-generated local service recommendations.</span>
+          <strong>Perplexity &amp; Google AI Overviews</strong>
+          <span>AI-generated overviews now appear at the top of local service searches. Structured content — schema markup, FAQ pages, review aggregations — ensures Silver Mirror is cited rather than competitors when AI assembles these answers.</span>
         </div>
         <div class="seo-item">
-          <strong>Entity Authority</strong>
-          <span>Consistent brand signals across web properties strengthen Silver Mirror's entity recognition in AI systems.</span>
+          <strong>Entity Authority Building</strong>
+          <span>Consistent brand signals across the web — press mentions, brand partnerships, social profiles, and local citations — strengthen Silver Mirror's entity recognition in AI knowledge graphs. The stronger the entity, the more confident AI systems are in recommending it.</span>
         </div>
         <div class="seo-item">
           <strong>Review Signal Optimization</strong>
-          <span>Review volume, recency, and response patterns directly influence AI recommendation inclusion.</span>
+          <span>Volume, recency, star rating, and response rate directly influence both traditional local rankings and AI recommendation algorithms. A structured review velocity program across Google, Yelp, and emerging AI review sources creates a compounding authority signal.</span>
+        </div>
+        <div class="seo-item">
+          <strong>Schema &amp; Structured Data</strong>
+          <span>LocalBusiness, Service, FAQPage, and Review schema markup on all location pages ensures search engines and LLMs can correctly parse and represent Silver Mirror's service offerings, pricing tiers, and location data in AI-generated responses.</span>
         </div>
       </div>
     </div>
@@ -1439,6 +1632,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     <div class="financial__attribution animate-on-scroll stagger-3">
       <h3>Improved Visibility Creates Precision</h3>
       <p>When ad spend connects clearly to enrolled members at the location level, every budget decision becomes more precise. If that connection is not fully visible today, decisions rely on partial data. Building that visibility is a first-priority initiative — not because anything is broken, but because precision creates efficiency.</p>
+      <p style="margin-top: var(--space-md);">Operator alignment matters beyond the numbers. Supporting a team that delivers this experience — including competitive compensation, health benefits, and a stable workplace — directly influences retention, service quality, and ultimately member satisfaction. The acquisition system's performance is inseparable from the team delivering the service.</p>
     </div>
   </div>
 </section>
@@ -1464,24 +1658,24 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     <!-- 5 KPI Cards -->
     <div class="footprint__kpi-grid">
       <div class="footprint-kpi-card animate-on-scroll stagger-1">
+        <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus">0+</span>
+        <span class="footprint-kpi__label">Total Locations</span>
+      </div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-2">
         <span class="footprint-kpi__number" data-kpi="915" data-format="dollar">$0K/mo</span>
         <span class="footprint-kpi__label">Ad Spend</span>
       </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-2">
+      <div class="footprint-kpi-card animate-on-scroll stagger-3">
         <span class="footprint-kpi__number" data-kpi="23" data-format="count">0</span>
         <span class="footprint-kpi__label">Clients</span>
       </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-3">
-        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus">0+</span>
-        <span class="footprint-kpi__label">Law &amp; Medical Offices<sup class="footprint__kpi-sup">*</sup></span>
-      </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-4">
-        <span class="footprint-kpi__number" data-kpi="144" data-format="count">0</span>
-        <span class="footprint-kpi__label">Franchise Locations</span>
-      </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-5">
         <span class="footprint-kpi__number" data-kpi="14" data-format="count">0</span>
         <span class="footprint-kpi__label">States</span>
+      </div>
+      <div class="footprint-kpi-card animate-on-scroll stagger-5">
+        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus">0+</span>
+        <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
       </div>
     </div>
     <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
@@ -1521,6 +1715,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
       <div class="footprint__pills">
         <div class="footprint-pill">⚖️ 150+ Attorneys &amp; Legal Professionals</div>
         <div class="footprint-pill">🩺 20+ Doctors, Surgeons &amp; Practice Owners</div>
+        <div class="footprint-pill">🏢 Franchise Brands Across 14 States</div>
       </div>
     </div>
 
@@ -1574,27 +1769,28 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Team Building</span>
       <h2>Solo to Scalable</h2>
+      <p class="section-subtitle">The structure matches the stage. Each phase adds capability without adding overhead before it's needed.</p>
     </div>
     <div class="team__timeline animate-on-scroll stagger-1">
       <div class="team-phase">
         <div class="team-phase__label">Months 1–6</div>
         <div>
           <h3 class="team-phase__title">Solo Operator</h3>
-          <p>Full ownership of strategy, execution, and reporting. The advantage: no communication overhead, no dependencies, faster decisions.</p>
+          <p>Full ownership of strategy, execution, and reporting. The advantage: no communication overhead, no dependencies, faster decisions. The focus is entirely on building the system — understanding Silver Mirror's customer, building attribution infrastructure, and establishing performance baselines across all 10 locations. Compensation structure: performance-tied retainer with clear revenue-aligned metrics.</p>
         </div>
       </div>
       <div class="team-phase">
         <div class="team-phase__label">Months 7–18</div>
         <div>
-          <h3 class="team-phase__title">First Hire</h3>
-          <p>When volume justifies it, the first hire is a creative specialist — focused on content, photography direction, and ad creative. Execution accelerates without sacrificing strategy quality.</p>
+          <h3 class="team-phase__title">First Hire: Creative Specialist</h3>
+          <p>When volume justifies it — typically when managing 3+ simultaneous campaign structures — the first hire is a part-time creative specialist focused on content, photography direction, video editing, and ad creative production. This keeps strategy and execution in-house rather than relying on agencies or freelancers. First hire is budgeted conservatively and justified by measurable creative output volume. Full health benefits from first hire day one.</p>
         </div>
       </div>
       <div class="team-phase">
         <div class="team-phase__label">Month 18+</div>
         <div>
           <h3 class="team-phase__title">Scalable Department</h3>
-          <p>A small, high-output team built around Silver Mirror's specific needs — not a generic agency model. Strategy, creative, and analytics under one roof, built for the brand.</p>
+          <p>A small, high-output internal team: paid media strategist (me), creative specialist, and a part-time data/analytics support role. This structure covers strategy, creative, execution, and reporting — all inside Silver Mirror, all accountable to the same revenue metrics. Team size stays lean by design: 3–4 people managing what most agencies assign to 10+, using automation and AI tooling to compress execution time. As Silver Mirror grows to 20, 50, and 100+ locations, the hiring plan scales proportionally — not ahead of it.</p>
         </div>
       </div>
     </div>
@@ -1618,8 +1814,53 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
     <p class="closing__sub animate-on-scroll stagger-2">This system evolves with the business — not in isolation from it.</p>
     <p class="closing__ownership animate-on-scroll stagger-3">When something works, it gets scaled. When it doesn't, it's my responsibility to fix it.</p>
     <div class="closing__signature animate-on-scroll stagger-4">
-      <p class="closing__name">Sheldon Mizell</p>
+      <p class="closing__name playfair">Sheldon Mizell</p>
       <p class="closing__title-line">Paid Media Operator — Multi-Location Acquisition</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     WHAT HAPPENS NEXT
+     ================================================ -->
+<section class="section section--light-subtle" id="section-next">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="eyebrow">After This Presentation</span>
+      <h2>What Happens Next</h2>
+      <p class="section-subtitle">Three steps — clear, specific, and timed. No ambiguity about what follows this conversation.</p>
+    </div>
+    <div class="next__steps">
+      <div class="next-step animate-on-scroll stagger-1">
+        <div class="next-step__num">01</div>
+        <svg class="next-step__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M40 14 L24 26 L8 14"/>
+          <rect x="6" y="10" width="36" height="28" rx="4"/>
+        </svg>
+        <div class="next-step__title">Follow-Up Call</div>
+        <div class="next-step__detail">A focused 30-minute call within 24–48 hours to address any questions, discuss specific concerns, and confirm alignment on scope and structure. No prepared deck — just a direct conversation.</div>
+        <div class="next-step__timeline">Within 24–48 hours</div>
+      </div>
+      <div class="next-step animate-on-scroll stagger-2">
+        <div class="next-step__num">02</div>
+        <svg class="next-step__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 6 L34 6 L34 42 L14 42 Z"/>
+          <path d="M20 14 L28 14 M20 20 L28 20 M20 26 L25 26"/>
+        </svg>
+        <div class="next-step__title">Detailed Proposal</div>
+        <div class="next-step__detail">A written proposal delivered within 5 business days: specific scope, compensation structure, 90-day performance targets by location, reporting cadence, and onboarding timeline. Everything concrete, nothing vague.</div>
+        <div class="next-step__timeline">Within 5 business days</div>
+      </div>
+      <div class="next-step animate-on-scroll stagger-3">
+        <div class="next-step__num">03</div>
+        <svg class="next-step__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="24" cy="24" r="18"/>
+          <path d="M24 14 L24 24 L32 28"/>
+        </svg>
+        <div class="next-step__title">Onboarding Begins</div>
+        <div class="next-step__detail">Day 1 of the 90-day plan starts from agreement. Campaign access, tracking audit, and baseline documentation completed within the first week. No delay between agreement and action — the clock starts immediately.</div>
+        <div class="next-step__timeline">Day 1 from agreement</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1658,12 +1899,22 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
 </section>
 
 <footer class="footer">
-  <p>Silver Mirror Facial Bar — Acquisition System &nbsp;|&nbsp; Sheldon Mizell &nbsp;|&nbsp; 2024</p>
+  <p>Silver Mirror Facial Bar — Growth Strategy Presentation &nbsp;|&nbsp; Sheldon Mizell &nbsp;|&nbsp; 2026</p>
 </footer>
 
 <script>
 (function() {
   'use strict';
+
+  /* ── LOADING SCREEN ── */
+  var loadingScreen = document.getElementById('sm-loading-screen');
+  if (loadingScreen) {
+    loadingScreen.addEventListener('animationend', function(e) {
+      if (e.animationName === 'loadingExit') {
+        loadingScreen.classList.add('is-hidden');
+      }
+    });
+  }
 
   /* ── SCROLL PROGRESS ── */
   var bar = document.getElementById('scroll-progress');
@@ -1934,6 +2185,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg)
   /* ── REDUCED MOTION OVERRIDE ── */
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.animate-on-scroll').forEach(function(el) { el.classList.add('is-visible'); });
+    if (loadingScreen) loadingScreen.classList.add('is-hidden');
   }
 
 })();
