@@ -155,6 +155,11 @@ a { text-decoration: none; }
   50%  { opacity: 1;    transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(78,197,191,0.7)); }
   100% { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
 }
+@keyframes dot-pulse {
+  0%   { opacity: 0.6; transform: scale(1); }
+  50%  { opacity: 1;   transform: scale(1.3); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
 @keyframes dash-flow {
   to { stroke-dashoffset: 0; }
 }
@@ -530,10 +535,12 @@ a { text-decoration: none; }
 .fp-state { transition: fill 0.6s ease, stroke 0.6s ease, opacity 0.6s ease; }
 .fp-state--base { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.18); stroke-width: 0.5; }
 .fp-state--active { fill: rgba(78,197,191,0.22); stroke: rgba(78,197,191,0.6); stroke-width: 1; filter: drop-shadow(0 0 8px rgba(78,197,191,0.3)); transition: fill 0.6s ease, stroke 0.6s ease; }
-.fp-pin-ring { fill: none; stroke: #4EC5BF; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
-.fp-pin-core { fill: #4EC5BF; filter: url(#fp-glow-filter); }
-.fp-pin-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 8px; fill: #080c14; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-.fp-pin-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; fill: var(--neon-cyan); }
+/* .fp-pin-ring { fill: none; stroke: #4EC5BF; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; } */
+/* .fp-pin-core { fill: #4EC5BF; filter: url(#fp-glow-filter); } */
+/* .fp-pin-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 8px; fill: #080c14; text-anchor: middle; dominant-baseline: central; pointer-events: none; } */
+/* .fp-pin-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; fill: var(--neon-cyan); } */
+.fp-dot-group { pointer-events: none; }
+.fp-dot-group--interactive { pointer-events: all; cursor: pointer; }
 .fp-tooltip-bg { rx: 6; ry: 6; }
 .footprint__legend {
   display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;
@@ -1784,6 +1791,12 @@ a { text-decoration: none; }
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
             <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
+          <filter id="fp-dot-blur" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="5" />
+          </filter>
+          <filter id="fp-dot-blur-sm" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="2.5" />
+          </filter>
         </defs>
         <!-- States rendered by JS below -->
         <g id="fp-states"></g>
@@ -2087,77 +2100,173 @@ a { text-decoration: none; }
       return !!ACTIVE[s];
     }
 
-    var metros = [
-      // Florida — 8 pins
-      { label:'Miami / South Florida', sub:'~12 locations (FL)', lon:-80.19, lat:25.77, r:8, count:12, delay:300 },
-      { label:'Fort Lauderdale', sub:'~8 locations (FL)', lon:-80.14, lat:26.12, r:7, count:8, delay:340 },
-      { label:'West Palm Beach', sub:'~4 locations (FL)', lon:-80.05, lat:26.72, r:5, count:4, delay:380 },
-      { label:'Tampa Bay', sub:'~8 locations (FL)', lon:-82.46, lat:27.95, r:7, count:8, delay:420 },
-      { label:'Sarasota / Bradenton', sub:'~3 locations (FL)', lon:-82.53, lat:27.34, r:5, count:3, delay:460 },
-      { label:'Orlando', sub:'~6 locations (FL)', lon:-81.38, lat:28.54, r:6, count:6, delay:500 },
-      { label:'Jacksonville', sub:'~5 locations (FL)', lon:-81.66, lat:30.33, r:6, count:5, delay:540 },
-      { label:'Gainesville / North FL', sub:'~2 locations (FL)', lon:-82.32, lat:29.65, r:4, count:2, delay:580 },
-      // Illinois — 6 pins
-      { label:'Chicago Downtown', sub:'~8 locations (IL)', lon:-87.63, lat:41.88, r:8, count:8, delay:620 },
-      { label:'Chicago North Shore / Evanston', sub:'~5 locations (IL)', lon:-87.68, lat:42.05, r:6, count:5, delay:660 },
-      { label:'Chicago Western Suburbs', sub:'~4 locations (IL)', lon:-87.79, lat:41.85, r:5, count:4, delay:700 },
-      { label:'Naperville / Aurora', sub:'~3 locations (IL)', lon:-88.15, lat:41.77, r:5, count:3, delay:740 },
-      { label:'Schaumburg / NW Suburbs', sub:'~2 locations (IL)', lon:-88.08, lat:42.03, r:4, count:2, delay:780 },
-      { label:'Joliet / South Suburbs', sub:'~2 locations (IL)', lon:-88.08, lat:41.53, r:4, count:2, delay:820 },
-      // Wisconsin — 5 pins
-      { label:'Milwaukee', sub:'~6 locations (WI)', lon:-87.91, lat:43.04, r:7, count:6, delay:860 },
-      { label:'Waukesha / West Milwaukee', sub:'~4 locations (WI)', lon:-88.23, lat:43.01, r:5, count:4, delay:900 },
-      { label:'Madison', sub:'~3 locations (WI)', lon:-89.40, lat:43.07, r:5, count:3, delay:940 },
-      { label:'Green Bay', sub:'~3 locations (WI)', lon:-88.02, lat:44.51, r:5, count:3, delay:980 },
-      { label:'Racine / Kenosha', sub:'~2 locations (WI)', lon:-87.78, lat:42.73, r:4, count:2, delay:1020 },
-      // Texas — 5 pins
-      { label:'Houston', sub:'~5 locations (TX)', lon:-95.37, lat:29.76, r:6, count:5, delay:1060 },
-      { label:'Dallas / Fort Worth', sub:'~4 locations (TX)', lon:-96.80, lat:32.78, r:5, count:4, delay:1100 },
-      { label:'Austin', sub:'~3 locations (TX)', lon:-97.74, lat:30.27, r:5, count:3, delay:1140 },
-      { label:'San Antonio', sub:'~2 locations (TX)', lon:-98.49, lat:29.42, r:4, count:2, delay:1180 },
-      { label:'El Paso', sub:'~2 locations (TX)', lon:-106.44, lat:31.76, r:4, count:2, delay:1220 },
-      // California — 5 pins
-      { label:'Los Angeles', sub:'~4 locations (CA)', lon:-118.24, lat:34.05, r:5, count:4, delay:1260 },
-      { label:'San Francisco Bay Area', sub:'~3 locations (CA)', lon:-122.42, lat:37.77, r:5, count:3, delay:1300 },
-      { label:'San Diego', sub:'~3 locations (CA)', lon:-117.16, lat:32.72, r:5, count:3, delay:1340 },
-      { label:'Sacramento', sub:'~2 locations (CA)', lon:-121.49, lat:38.58, r:4, count:2, delay:1380 },
-      { label:'Inland Empire / Riverside', sub:'~2 locations (CA)', lon:-117.40, lat:33.95, r:4, count:2, delay:1420 },
-      // Arizona — 3 pins
-      { label:'Phoenix / Scottsdale', sub:'~4 locations (AZ)', lon:-112.07, lat:33.45, r:5, count:4, delay:1460 },
-      { label:'Tempe / Mesa', sub:'~2 locations (AZ)', lon:-111.94, lat:33.43, r:4, count:2, delay:1500 },
-      { label:'Tucson', sub:'~2 locations (AZ)', lon:-110.97, lat:32.22, r:4, count:2, delay:1540 },
-      // Pennsylvania — 3 pins
-      { label:'Philadelphia', sub:'~3 locations (PA)', lon:-75.16, lat:39.95, r:5, count:3, delay:1580 },
-      { label:'Pittsburgh', sub:'~3 locations (PA)', lon:-79.99, lat:40.44, r:5, count:3, delay:1620 },
-      { label:'Allentown / Lehigh Valley', sub:'~2 locations (PA)', lon:-75.49, lat:40.60, r:4, count:2, delay:1660 },
-      // Georgia — 3 pins
-      { label:'Atlanta', sub:'~3 locations (GA)', lon:-84.39, lat:33.75, r:5, count:3, delay:1700 },
-      { label:'Marietta / North Atlanta', sub:'~2 locations (GA)', lon:-84.55, lat:33.95, r:4, count:2, delay:1740 },
-      { label:'Savannah', sub:'~2 locations (GA)', lon:-81.10, lat:32.08, r:4, count:2, delay:1780 },
-      // Michigan — 3 pins
-      { label:'Detroit', sub:'~3 locations (MI)', lon:-83.05, lat:42.33, r:5, count:3, delay:1820 },
-      { label:'Grand Rapids', sub:'~2 locations (MI)', lon:-85.67, lat:42.96, r:4, count:2, delay:1860 },
-      { label:'Ann Arbor', sub:'~1 location (MI)', lon:-83.74, lat:42.28, r:4, count:1, delay:1900 },
-      // Colorado — 3 pins
-      { label:'Denver', sub:'~3 locations (CO)', lon:-104.99, lat:39.74, r:5, count:3, delay:1940 },
-      { label:'Colorado Springs', sub:'~2 locations (CO)', lon:-104.82, lat:38.83, r:4, count:2, delay:1980 },
-      { label:'Boulder', sub:'~1 location (CO)', lon:-105.27, lat:40.01, r:4, count:1, delay:2020 },
-      // Minnesota — 3 pins
-      { label:'Minneapolis', sub:'~3 locations (MN)', lon:-93.26, lat:44.98, r:5, count:3, delay:2060 },
-      { label:'St. Paul', sub:'~2 locations (MN)', lon:-93.09, lat:44.95, r:4, count:2, delay:2100 },
-      { label:'Rochester', sub:'~1 location (MN)', lon:-92.47, lat:44.02, r:4, count:1, delay:2140 },
-      // Nevada — 2 pins
-      { label:'Las Vegas', sub:'~3 locations (NV)', lon:-115.14, lat:36.17, r:5, count:3, delay:2180 },
-      { label:'Reno', sub:'~2 locations (NV)', lon:-119.81, lat:39.53, r:4, count:2, delay:2220 },
-      // Alabama — 2 pins
-      { label:'Birmingham', sub:'~2 locations (AL)', lon:-86.80, lat:33.52, r:4, count:2, delay:2260 },
-      { label:'Huntsville', sub:'~2 locations (AL)', lon:-86.59, lat:34.73, r:4, count:2, delay:2300 },
-      // North Dakota — 2 pins
-      { label:'Fargo', sub:'~2 locations (ND)', lon:-96.79, lat:46.88, r:4, count:2, delay:2340 },
-      { label:'Bismarck', sub:'~1 location (ND)', lon:-100.78, lat:46.81, r:4, count:1, delay:2380 },
-      // Wyoming — 2 pins
-      { label:'Cheyenne', sub:'~1 location (WY)', lon:-104.82, lat:41.14, r:4, count:1, delay:2420 },
-      { label:'Casper', sub:'~1 location (WY)', lon:-106.31, lat:42.87, r:4, count:1, delay:2460 }
+    var dots = [
+      // === FLORIDA (~48 locations → ~20 dots) ===
+      // Miami / South FL cluster
+      { lon:-80.19, lat:25.77, delay:200 },
+      { lon:-80.30, lat:25.85, delay:220 },
+      { lon:-80.12, lat:25.68, delay:240 },
+      { lon:-80.25, lat:25.92, delay:260 },
+      // Fort Lauderdale
+      { lon:-80.14, lat:26.12, delay:280 },
+      { lon:-80.22, lat:26.20, delay:300 },
+      { lon:-80.08, lat:26.05, delay:310 },
+      // West Palm Beach
+      { lon:-80.05, lat:26.72, delay:320 },
+      { lon:-80.12, lat:26.65, delay:330 },
+      // Tampa Bay
+      { lon:-82.46, lat:27.95, delay:350 },
+      { lon:-82.55, lat:27.85, delay:370 },
+      { lon:-82.38, lat:28.02, delay:380 },
+      // Orlando
+      { lon:-81.38, lat:28.54, delay:400 },
+      { lon:-81.28, lat:28.45, delay:410 },
+      { lon:-81.48, lat:28.60, delay:420 },
+      // Jacksonville
+      { lon:-81.66, lat:30.33, delay:440 },
+      { lon:-81.55, lat:30.25, delay:450 },
+      // Sarasota
+      { lon:-82.53, lat:27.34, delay:460 },
+      // Gainesville
+      { lon:-82.32, lat:29.65, delay:470 },
+      // Naples / SW FL
+      { lon:-81.80, lat:26.14, delay:480 },
+
+      // === ILLINOIS (~24 locations → ~10 dots) ===
+      // Chicago Downtown
+      { lon:-87.63, lat:41.88, delay:100 },
+      { lon:-87.68, lat:41.92, delay:120 },
+      { lon:-87.62, lat:41.82, delay:130 },
+      // North Shore / Evanston
+      { lon:-87.68, lat:42.05, delay:150 },
+      { lon:-87.72, lat:42.00, delay:160 },
+      // Western suburbs
+      { lon:-87.82, lat:41.85, delay:180 },
+      // Naperville / Aurora
+      { lon:-88.15, lat:41.77, delay:200 },
+      // Schaumburg
+      { lon:-88.08, lat:42.03, delay:220 },
+      // Joliet / South
+      { lon:-88.08, lat:41.53, delay:240 },
+      // Oak Brook
+      { lon:-87.93, lat:41.83, delay:250 },
+
+      // === WISCONSIN (~18 locations → ~8 dots) ===
+      // Milwaukee cluster
+      { lon:-87.91, lat:43.04, delay:140 },
+      { lon:-87.97, lat:43.10, delay:160 },
+      { lon:-87.85, lat:42.98, delay:170 },
+      // Waukesha
+      { lon:-88.23, lat:43.01, delay:190 },
+      // Madison
+      { lon:-89.40, lat:43.07, delay:220 },
+      // Green Bay
+      { lon:-88.02, lat:44.51, delay:250 },
+      // Racine / Kenosha
+      { lon:-87.78, lat:42.73, delay:260 },
+      { lon:-87.82, lat:42.58, delay:270 },
+
+      // === TEXAS (~16 locations → ~8 dots) ===
+      // Houston
+      { lon:-95.37, lat:29.76, delay:500 },
+      { lon:-95.50, lat:29.85, delay:520 },
+      { lon:-95.28, lat:29.68, delay:530 },
+      // Dallas / Fort Worth
+      { lon:-96.80, lat:32.78, delay:550 },
+      { lon:-96.92, lat:32.85, delay:560 },
+      // Austin
+      { lon:-97.74, lat:30.27, delay:580 },
+      // San Antonio
+      { lon:-98.49, lat:29.42, delay:600 },
+      // El Paso
+      { lon:-106.44, lat:31.76, delay:620 },
+
+      // === CALIFORNIA (~14 locations → ~7 dots) ===
+      // Los Angeles
+      { lon:-118.24, lat:34.05, delay:700 },
+      { lon:-118.38, lat:34.12, delay:710 },
+      // San Francisco Bay
+      { lon:-122.42, lat:37.77, delay:730 },
+      { lon:-122.25, lat:37.56, delay:740 },
+      // San Diego
+      { lon:-117.16, lat:32.72, delay:750 },
+      // Sacramento
+      { lon:-121.49, lat:38.58, delay:760 },
+      // Riverside / IE
+      { lon:-117.40, lat:33.95, delay:770 },
+
+      // === ARIZONA (~8 locations → ~4 dots) ===
+      // Phoenix / Scottsdale
+      { lon:-112.07, lat:33.45, delay:650 },
+      { lon:-111.93, lat:33.50, delay:660 },
+      // Tempe / Mesa
+      { lon:-111.94, lat:33.35, delay:670 },
+      // Tucson
+      { lon:-110.97, lat:32.22, delay:680 },
+
+      // === PENNSYLVANIA (~8 locations → ~4 dots) ===
+      // Philadelphia
+      { lon:-75.16, lat:39.95, delay:850 },
+      { lon:-75.25, lat:40.02, delay:860 },
+      // Pittsburgh
+      { lon:-79.99, lat:40.44, delay:870 },
+      // Allentown / Lehigh Valley
+      { lon:-75.49, lat:40.60, delay:880 },
+
+      // === GEORGIA (~7 locations → ~4 dots) ===
+      // Atlanta
+      { lon:-84.39, lat:33.75, delay:900 },
+      { lon:-84.50, lat:33.85, delay:910 },
+      // Marietta
+      { lon:-84.55, lat:33.95, delay:920 },
+      // Savannah
+      { lon:-81.10, lat:32.08, delay:930 },
+
+      // === MICHIGAN (~6 locations → ~3 dots) ===
+      // Detroit
+      { lon:-83.05, lat:42.33, delay:300 },
+      { lon:-83.15, lat:42.40, delay:310 },
+      // Grand Rapids
+      { lon:-85.67, lat:42.96, delay:330 },
+
+      // === COLORADO (~6 locations → ~3 dots) ===
+      // Denver
+      { lon:-104.99, lat:39.74, delay:630 },
+      { lon:-105.08, lat:39.68, delay:640 },
+      // Colorado Springs
+      { lon:-104.82, lat:38.83, delay:650 },
+
+      // === MINNESOTA (~6 locations → ~3 dots) ===
+      // Minneapolis / St Paul
+      { lon:-93.26, lat:44.98, delay:280 },
+      { lon:-93.09, lat:44.94, delay:290 },
+      // Rochester
+      { lon:-92.47, lat:44.02, delay:310 },
+
+      // === NEVADA (~5 locations → ~3 dots) ===
+      // Las Vegas
+      { lon:-115.14, lat:36.17, delay:690 },
+      { lon:-115.25, lat:36.10, delay:700 },
+      // Reno
+      { lon:-119.81, lat:39.53, delay:720 },
+
+      // === ALABAMA (~4 locations → ~2 dots) ===
+      // Birmingham
+      { lon:-86.80, lat:33.52, delay:940 },
+      // Huntsville
+      { lon:-86.59, lat:34.73, delay:950 },
+
+      // === NORTH DAKOTA (~3 locations → ~2 dots) ===
+      // Fargo
+      { lon:-96.79, lat:46.88, delay:340 },
+      // Bismarck
+      { lon:-100.78, lat:46.81, delay:350 },
+
+      // === WYOMING (~2 locations → ~2 dots) ===
+      // Cheyenne
+      { lon:-104.82, lat:41.14, delay:360 },
+      // Casper
+      { lon:-106.31, lat:42.87, delay:370 }
     ];
 
     // Load D3 + topojson
@@ -2188,78 +2297,118 @@ a { text-decoration: none; }
         setTimeout(function() { p.setAttribute('class', 'fp-state fp-state--active'); }, 600);
       });
 
-      // Draw pins
+      // Draw dots
       var tooltip = document.getElementById('fp-tooltip');
       var ttCity = document.getElementById('fp-tt-city');
       var ttLocs = document.getElementById('fp-tt-locs');
 
-      metros.forEach(function(m) {
-        var coords = projection([m.lon, m.lat]);
+      dots.forEach(function(d) {
+        var coords = projection([d.lon, d.lat]);
         if (!coords) return;
         var cx = coords[0], cy = coords[1];
-        var s = m.r;
-        // Teardrop geometry: bulb centered at (0,0), tip at (0, s*TIP) in local coords
-        var TIP = 1.6;
 
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('class', 'fp-pin');
-        g.setAttribute('style', 'opacity:0;cursor:pointer;');
-        // Translate so the TIP of the teardrop sits at (cx, cy)
-        g.setAttribute('transform', 'translate(' + cx + ',' + (cy - s * TIP) + ')');
+        g.setAttribute('class', 'fp-dot-group');
+        g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
+        g.style.opacity = '0';
+        g.style.transformOrigin = 'center';
+        g.style.transformBox = 'fill-box';
 
-        // Pulsing ring behind the pin — firefly animation applied here, NOT on <g>
-        var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        ring.setAttribute('class', 'fp-pin-ring');
-        ring.setAttribute('cx', '0');
-        ring.setAttribute('cy', '0');
-        ring.setAttribute('r', String(s * 1.5));
-        g.appendChild(ring);
+        // Layer 1: Ambient halo
+        var halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        halo.setAttribute('r', '14');
+        halo.setAttribute('cx', '0');
+        halo.setAttribute('cy', '0');
+        halo.setAttribute('fill', 'rgba(78,197,191,0.06)');
+        halo.setAttribute('filter', 'url(#fp-dot-blur)');
+        g.appendChild(halo);
 
-        // Teardrop / map-pin path shape; bulb centered at (0,0), tip at (0, s*TIP)
-        var pin = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        pin.setAttribute('class', 'fp-pin-core');
-        var d = 'M0,' + (-s) +
-          ' C' + (-s*0.6) + ',' + (-s) + ' ' + (-s) + ',' + (-s*0.4) + ' ' + (-s) + ',0' +
-          ' C' + (-s) + ',' + (s*0.55) + ' 0,' + (s*1.2) + ' 0,' + (s*TIP) +
-          ' C0,' + (s*1.2) + ' ' + s + ',' + (s*0.55) + ' ' + s + ',0' +
-          ' C' + s + ',' + (-s*0.4) + ' ' + (s*0.6) + ',' + (-s) + ' 0,' + (-s) + ' Z';
-        pin.setAttribute('d', d);
-        g.appendChild(pin);
+        // Layer 2: Inner glow (pulses)
+        var glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        glow.setAttribute('r', '6');
+        glow.setAttribute('cx', '0');
+        glow.setAttribute('cy', '0');
+        glow.setAttribute('fill', 'rgba(78,197,191,0.25)');
+        glow.setAttribute('filter', 'url(#fp-dot-blur-sm)');
+        glow.style.transformOrigin = 'center';
+        glow.style.transformBox = 'fill-box';
+        g.appendChild(glow);
 
-        if (m.count >= 3) {
-          var countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          countText.setAttribute('class', 'fp-pin-count');
-          countText.setAttribute('x', '0');
-          countText.setAttribute('y', '0');
-          var fontSize = m.count >= 10 ? '9px' : m.count >= 6 ? '8px' : '7px';
-          countText.setAttribute('font-size', fontSize);
-          countText.textContent = String(m.count);
-          g.appendChild(countText);
-        }
+        // Layer 3: Core dot (solid, no animation)
+        var core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        core.setAttribute('r', '2.5');
+        core.setAttribute('cx', '0');
+        core.setAttribute('cy', '0');
+        core.setAttribute('fill', '#4EC5BF');
+        g.appendChild(core);
 
         pinsG.appendChild(g);
 
-        // Reveal after delay; <g> stays at opacity:1 permanently — firefly goes on ring only
+        // Staggered reveal with scale-up
         setTimeout(function() {
+          g.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
           g.style.opacity = '1';
-          g.style.transition = 'opacity 0.5s ease';
-          var dur = (2.5 + Math.random() * 2.5).toFixed(2) + 's';
-          var del = (Math.random() * 4).toFixed(2) + 's';
-          ring.style.animation = 'firefly ' + dur + ' ease-in-out ' + del + ' infinite';
-        }, m.delay);
 
-        // Tooltip
-        g.addEventListener('mouseenter', function() {
+          // Desynchronized pulse on glow layer only
+          var pulseDur = (2.5 + Math.random() * 2.5).toFixed(2) + 's';
+          var pulseDel = (Math.random() * 4).toFixed(2) + 's';
+          glow.style.animation = 'dot-pulse ' + pulseDur + ' ease-in-out ' + pulseDel + ' infinite';
+        }, d.delay);
+      });
+
+      // City-level hover hit regions
+      var cities = [
+        { name: 'Miami / South Florida', locs: '28 locations', lon: -80.19, lat: 25.77, hitR: 25 },
+        { name: 'Fort Lauderdale', locs: '8 locations', lon: -80.14, lat: 26.12, hitR: 18 },
+        { name: 'Tampa Bay', locs: '8 locations', lon: -82.46, lat: 27.95, hitR: 18 },
+        { name: 'Orlando', locs: '6 locations', lon: -81.38, lat: 28.54, hitR: 16 },
+        { name: 'Jacksonville', locs: '5 locations', lon: -81.66, lat: 30.33, hitR: 14 },
+        { name: 'Chicago Metro', locs: '24 locations', lon: -87.63, lat: 41.88, hitR: 22 },
+        { name: 'Milwaukee', locs: '10 locations', lon: -87.91, lat: 43.04, hitR: 18 },
+        { name: 'Madison', locs: '3 locations', lon: -89.40, lat: 43.07, hitR: 12 },
+        { name: 'Houston', locs: '5 locations', lon: -95.37, lat: 29.76, hitR: 16 },
+        { name: 'Dallas / Fort Worth', locs: '4 locations', lon: -96.80, lat: 32.78, hitR: 14 },
+        { name: 'Phoenix / Scottsdale', locs: '6 locations', lon: -112.07, lat: 33.45, hitR: 16 },
+        { name: 'Los Angeles', locs: '4 locations', lon: -118.24, lat: 34.05, hitR: 14 },
+        { name: 'San Francisco', locs: '3 locations', lon: -122.42, lat: 37.77, hitR: 12 },
+        { name: 'Denver', locs: '3 locations', lon: -104.99, lat: 39.74, hitR: 12 },
+        { name: 'Las Vegas', locs: '3 locations', lon: -115.14, lat: 36.17, hitR: 12 },
+        { name: 'Atlanta', locs: '5 locations', lon: -84.39, lat: 33.75, hitR: 14 },
+        { name: 'Philadelphia', locs: '4 locations', lon: -75.16, lat: 39.95, hitR: 14 },
+        { name: 'Pittsburgh', locs: '3 locations', lon: -79.99, lat: 40.44, hitR: 12 },
+        { name: 'Detroit', locs: '3 locations', lon: -83.05, lat: 42.33, hitR: 12 },
+        { name: 'Minneapolis', locs: '4 locations', lon: -93.26, lat: 44.98, hitR: 14 },
+        { name: 'Birmingham', locs: '2 locations', lon: -86.80, lat: 33.52, hitR: 10 },
+        { name: 'Fargo', locs: '2 locations', lon: -96.79, lat: 46.88, hitR: 10 }
+      ];
+
+      var hitsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      hitsG.setAttribute('id', 'fp-hits');
+      svg.appendChild(hitsG);
+
+      cities.forEach(function(c) {
+        var coords = projection([c.lon, c.lat]);
+        if (!coords) return;
+        var hit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        hit.setAttribute('cx', String(coords[0]));
+        hit.setAttribute('cy', String(coords[1]));
+        hit.setAttribute('r', String(c.hitR));
+        hit.setAttribute('fill', 'transparent');
+        hit.setAttribute('cursor', 'pointer');
+        hitsG.appendChild(hit);
+
+        hit.addEventListener('mouseenter', function() {
           if (!tooltip) return;
-          if (ttCity) ttCity.textContent = m.label;
-          if (ttLocs) ttLocs.textContent = m.sub;
-          var tx = cx + m.r + 8;
-          var ty = cy - 30;
-          if (tx + 165 > W) tx = cx - 170;
+          if (ttCity) ttCity.textContent = c.name;
+          if (ttLocs) ttLocs.textContent = c.locs;
+          var tx = coords[0] + c.hitR + 8;
+          var ty = coords[1] - 30;
+          if (tx + 165 > W) tx = coords[0] - 170;
+          if (ty < 10) ty = 10;
           tooltip.setAttribute('transform', 'translate(' + tx + ',' + ty + ')');
           tooltip.style.display = 'block';
         });
-        g.addEventListener('mouseleave', function() {
+        hit.addEventListener('mouseleave', function() {
           if (tooltip) tooltip.style.display = 'none';
         });
       });
