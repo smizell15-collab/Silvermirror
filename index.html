@@ -603,9 +603,7 @@ a { text-decoration: none; }
   white-space: nowrap; z-index: 10;
 }
 .fp-zoom-hint.is-hidden { opacity: 0; }
-/* City label text styles (SVG) */
-.fp-label-city { font-family: Montserrat, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #4EC5BF; dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 3; stroke-linejoin: round; }
-.fp-label-type { font-family: Montserrat, Arial, sans-serif; font-size: 9px; font-weight: 600; fill: rgba(78,197,191,0.75); dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 2.5; stroke-linejoin: round; letter-spacing: 0.08em; }
+
 .growth__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md);
 }
@@ -1824,11 +1822,9 @@ a { text-decoration: none; }
           <!-- Pins rendered by JS below -->
           <g id="fp-pins"></g>
         </g>
-        <!-- City labels in viewport space (updated by JS on zoom) -->
-        <g id="fp-labels" pointer-events="none"></g>
         <!-- Tooltip (outside zoom group so it stays readable) -->
         <g id="fp-tooltip" style="display:none;" pointer-events="none">
-          <rect class="fp-tooltip-bg" width="160" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
+          <rect class="fp-tooltip-bg" width="200" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
           <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
           <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
         </g>
@@ -2146,101 +2142,101 @@ a { text-decoration: none; }
     // "Law Firm", "Medical Practice", "Franchise"
     var CITIES = [
       // Arizona
-      { name:'Scottsdale',        state:'AZ', lat:33.4942, lon:-111.9261, types:['Law Firm'],                   hitR:14, delay:650 },
-      { name:'Gilbert',           state:'AZ', lat:33.3528, lon:-111.7890, types:['Law Firm'],                   hitR:14, delay:660 },
-      { name:'Glendale',          state:'AZ', lat:33.5387, lon:-112.1860, types:['Law Firm'],                   hitR:14, delay:670 },
-      { name:'Show Low',          state:'AZ', lat:34.2542, lon:-110.0298, types:['Law Firm'],                   hitR:14, delay:680 },
-      { name:'Lake Havasu City',  state:'AZ', lat:34.4839, lon:-114.3225, types:['Law Firm'],                   hitR:14, delay:690 },
-      { name:'Phoenix',           state:'AZ', lat:33.4484, lon:-112.0740, types:['Law Firm'],                   hitR:14, delay:700 },
+      { name:'Scottsdale',        state:'AZ', lat:33.4942, lon:-111.9261, types:['Law Firm'],                   hitR:14, delay:650, clients:['Genesis Family Law','Aurit Mediation'] },
+      { name:'Gilbert',           state:'AZ', lat:33.3528, lon:-111.7890, types:['Law Firm'],                   hitR:14, delay:660, clients:['Genesis Family Law','Aurit Mediation'] },
+      { name:'Glendale',          state:'AZ', lat:33.5387, lon:-112.1860, types:['Law Firm'],                   hitR:14, delay:670, clients:['Genesis Family Law'] },
+      { name:'Show Low',          state:'AZ', lat:34.2542, lon:-110.0298, types:['Law Firm'],                   hitR:14, delay:680, clients:['Genesis Family Law'] },
+      { name:'Lake Havasu City',  state:'AZ', lat:34.4839, lon:-114.3225, types:['Law Firm'],                   hitR:14, delay:690, clients:['Genesis Family Law'] },
+      { name:'Phoenix',           state:'AZ', lat:33.4484, lon:-112.0740, types:['Law Firm'],                   hitR:14, delay:700, clients:['Arizona Family Law Attorneys','Aurit Mediation'] },
       // Florida
-      { name:'Miami',             state:'FL', lat:25.7617, lon:-80.1918,  types:['Law Firm'],                   hitR:14, delay:200 },
-      { name:'Coral Gables',      state:'FL', lat:25.7215, lon:-80.2684,  types:['Law Firm'],                   hitR:14, delay:220 },
-      { name:'Miami Lakes',       state:'FL', lat:25.9087, lon:-80.3087,  types:['Law Firm'],                   hitR:14, delay:240 },
-      { name:'Pembroke Pines',    state:'FL', lat:26.0078, lon:-80.2963,  types:['Law Firm'],                   hitR:14, delay:260 },
-      { name:'Fort Lauderdale',   state:'FL', lat:26.1224, lon:-80.1373,  types:['Law Firm'],                   hitR:14, delay:280 },
-      { name:'West Palm Beach',   state:'FL', lat:26.7153, lon:-80.0534,  types:['Law Firm'],                   hitR:14, delay:320 },
-      { name:'Tampa',             state:'FL', lat:27.9506, lon:-82.4572,  types:['Law Firm'],                   hitR:14, delay:350 },
-      { name:'Orlando',           state:'FL', lat:28.5383, lon:-81.3792,  types:['Law Firm'],                   hitR:14, delay:400 },
-      { name:'Jacksonville',      state:'FL', lat:30.3322, lon:-81.6557,  types:['Franchise'],                  hitR:14, delay:440 },
+      { name:'Miami',             state:'FL', lat:25.7617, lon:-80.1918,  types:['Law Firm'],                   hitR:14, delay:200, clients:['Vasquez de Lara Law Group','Kalish & Jaggars'] },
+      { name:'Coral Gables',      state:'FL', lat:25.7215, lon:-80.2684,  types:['Law Firm'],                   hitR:14, delay:220, clients:['Vasquez de Lara Law Group'] },
+      { name:'Miami Lakes',       state:'FL', lat:25.9087, lon:-80.3087,  types:['Law Firm'],                   hitR:14, delay:240, clients:['Vasquez de Lara Law Group'] },
+      { name:'Pembroke Pines',    state:'FL', lat:26.0078, lon:-80.2963,  types:['Law Firm'],                   hitR:14, delay:260, clients:['Vasquez de Lara Law Group'] },
+      { name:'Fort Lauderdale',   state:'FL', lat:26.1224, lon:-80.1373,  types:['Law Firm'],                   hitR:14, delay:280, clients:['Vasquez de Lara Law Group','Kalish & Jaggars'] },
+      { name:'West Palm Beach',   state:'FL', lat:26.7153, lon:-80.0534,  types:['Law Firm'],                   hitR:14, delay:320, clients:['Kalish & Jaggars'] },
+      { name:'Tampa',             state:'FL', lat:27.9506, lon:-82.4572,  types:['Law Firm'],                   hitR:14, delay:350, clients:['LaFrance Law'] },
+      { name:'Orlando',           state:'FL', lat:28.5383, lon:-81.3792,  types:['Law Firm'],                   hitR:14, delay:400, clients:['Fanash Family Law'] },
+      { name:'Jacksonville',      state:'FL', lat:30.3322, lon:-81.6557,  types:['Franchise'],                  hitR:14, delay:440, clients:['College Hunks Hauling Junk & Moving','Stretch Zone'] },
       // Illinois
-      { name:'Chicago',           state:'IL', lat:41.8781, lon:-87.6298,  types:['Law Firm'],                   hitR:14, delay:100 },
-      { name:'Evanston',          state:'IL', lat:42.0451, lon:-87.6877,  types:['Law Firm'],                   hitR:14, delay:120 },
-      { name:'Arlington Heights', state:'IL', lat:42.0884, lon:-87.9806,  types:['Law Firm'],                   hitR:14, delay:140 },
-      { name:'Schaumburg',        state:'IL', lat:42.0334, lon:-88.0834,  types:['Law Firm'],                   hitR:14, delay:160 },
-      { name:'Hoffman Estates',   state:'IL', lat:42.0629, lon:-88.1227,  types:['Law Firm'],                   hitR:14, delay:180 },
-      { name:'Aurora',            state:'IL', lat:41.7606, lon:-88.3201,  types:['Law Firm'],                   hitR:14, delay:200 },
-      { name:'Naperville',        state:'IL', lat:41.7508, lon:-88.1535,  types:['Law Firm'],                   hitR:14, delay:220 },
-      { name:'Plainfield',        state:'IL', lat:41.6260, lon:-88.2039,  types:['Law Firm'],                   hitR:14, delay:240 },
-      { name:'St. Charles',       state:'IL', lat:41.9142, lon:-88.3087,  types:['Law Firm'],                   hitR:14, delay:260 },
+      { name:'Chicago',           state:'IL', lat:41.8781, lon:-87.6298,  types:['Law Firm'],                   hitR:14, delay:100, clients:['Sterling Lawyers','Johnson Law Group'] },
+      { name:'Evanston',          state:'IL', lat:42.0451, lon:-87.6877,  types:['Law Firm'],                   hitR:14, delay:120, clients:['Sterling Lawyers'] },
+      { name:'Arlington Heights', state:'IL', lat:42.0884, lon:-87.9806,  types:['Law Firm'],                   hitR:14, delay:140, clients:['Sterling Lawyers'] },
+      { name:'Schaumburg',        state:'IL', lat:42.0334, lon:-88.0834,  types:['Law Firm'],                   hitR:14, delay:160, clients:['Sterling Lawyers'] },
+      { name:'Hoffman Estates',   state:'IL', lat:42.0629, lon:-88.1227,  types:['Law Firm'],                   hitR:14, delay:180, clients:['Sterling Lawyers'] },
+      { name:'Aurora',            state:'IL', lat:41.7606, lon:-88.3201,  types:['Law Firm'],                   hitR:14, delay:200, clients:['Sterling Lawyers'] },
+      { name:'Naperville',        state:'IL', lat:41.7508, lon:-88.1535,  types:['Law Firm'],                   hitR:14, delay:220, clients:['Sterling Lawyers'] },
+      { name:'Plainfield',        state:'IL', lat:41.6260, lon:-88.2039,  types:['Law Firm'],                   hitR:14, delay:240, clients:['Sterling Lawyers'] },
+      { name:'St. Charles',       state:'IL', lat:41.9142, lon:-88.3087,  types:['Law Firm'],                   hitR:14, delay:260, clients:['Sterling Lawyers'] },
       // Wisconsin
-      { name:'Kenosha',           state:'WI', lat:42.5847, lon:-87.8212,  types:['Law Firm','Medical Practice'], hitR:14, delay:250 },
-      { name:'Racine',            state:'WI', lat:42.7261, lon:-87.7829,  types:['Law Firm'],                   hitR:14, delay:270 },
-      { name:'Beloit',            state:'WI', lat:42.5083, lon:-89.0318,  types:['Law Firm'],                   hitR:14, delay:310 },
-      { name:'Janesville',        state:'WI', lat:42.6828, lon:-89.0187,  types:['Law Firm'],                   hitR:14, delay:300 },
-      { name:'Lake Geneva',       state:'WI', lat:42.5917, lon:-88.4334,  types:['Medical Practice'],           hitR:14, delay:330 },
-      { name:'Franklin',          state:'WI', lat:42.8886, lon:-88.0384,  types:['Medical Practice'],           hitR:14, delay:170 },
-      { name:'Milwaukee',         state:'WI', lat:43.0389, lon:-87.9065,  types:['Law Firm'],                   hitR:14, delay:140 },
-      { name:'Brookfield',        state:'WI', lat:43.0606, lon:-88.1065,  types:['Law Firm','Medical Practice'], hitR:14, delay:160 },
-      { name:'Waukesha',          state:'WI', lat:43.0117, lon:-88.2315,  types:['Law Firm'],                   hitR:14, delay:190 },
-      { name:'Delafield',         state:'WI', lat:43.0608, lon:-88.4037,  types:['Medical Practice'],           hitR:14, delay:210 },
-      { name:'Oconomowoc',        state:'WI', lat:43.1117, lon:-88.4993,  types:['Law Firm'],                   hitR:14, delay:220 },
-      { name:'Menomonee Falls',   state:'WI', lat:43.1789, lon:-88.1173,  types:['Law Firm'],                   hitR:14, delay:180 },
-      { name:'Mequon',            state:'WI', lat:43.2219, lon:-87.9823,  types:['Law Firm','Medical Practice'], hitR:14, delay:200 },
-      { name:'Middleton',         state:'WI', lat:43.0972, lon:-89.5043,  types:['Medical Practice'],           hitR:14, delay:290 },
-      { name:'Madison',           state:'WI', lat:43.0731, lon:-89.4012,  types:['Law Firm'],                   hitR:14, delay:280 },
-      { name:'Sheboygan',         state:'WI', lat:43.7508, lon:-87.7145,  types:['Medical Practice'],           hitR:14, delay:320 },
-      { name:'West Bend',         state:'WI', lat:43.4253, lon:-88.1834,  types:['Law Firm'],                   hitR:14, delay:240 },
-      { name:'Beaver Dam',        state:'WI', lat:43.4578, lon:-88.8373,  types:['Law Firm'],                   hitR:14, delay:340 },
-      { name:'Appleton',          state:'WI', lat:44.2619, lon:-88.4154,  types:['Law Firm'],                   hitR:14, delay:360 },
-      { name:'Baraboo',           state:'WI', lat:43.4711, lon:-89.7443,  types:['Law Firm'],                   hitR:14, delay:380 },
-      { name:'Green Bay',         state:'WI', lat:44.5133, lon:-88.0133,  types:['Law Firm'],                   hitR:14, delay:400 },
+      { name:'Kenosha',           state:'WI', lat:42.5847, lon:-87.8212,  types:['Law Firm','Medical Practice'], hitR:14, delay:250, clients:['Sterling Lawyers','NeuroEndo'] },
+      { name:'Racine',            state:'WI', lat:42.7261, lon:-87.7829,  types:['Law Firm'],                   hitR:14, delay:270, clients:['Sterling Lawyers'] },
+      { name:'Beloit',            state:'WI', lat:42.5083, lon:-89.0318,  types:['Law Firm'],                   hitR:14, delay:310, clients:['Sterling Lawyers'] },
+      { name:'Janesville',        state:'WI', lat:42.6828, lon:-89.0187,  types:['Law Firm'],                   hitR:14, delay:300, clients:['Sterling Lawyers'] },
+      { name:'Lake Geneva',       state:'WI', lat:42.5917, lon:-88.4334,  types:['Medical Practice'],           hitR:14, delay:330, clients:['NeuroEndo'] },
+      { name:'Franklin',          state:'WI', lat:42.8886, lon:-88.0384,  types:['Medical Practice'],           hitR:14, delay:170, clients:['NeuroEndo'] },
+      { name:'Milwaukee',         state:'WI', lat:43.0389, lon:-87.9065,  types:['Law Firm'],                   hitR:14, delay:140, clients:['Sterling Lawyers'] },
+      { name:'Brookfield',        state:'WI', lat:43.0606, lon:-88.1065,  types:['Law Firm','Medical Practice'], hitR:14, delay:160, clients:['Sterling Lawyers','Quintessa Medical Aesthetics'] },
+      { name:'Waukesha',          state:'WI', lat:43.0117, lon:-88.2315,  types:['Law Firm'],                   hitR:14, delay:190, clients:['Sterling Lawyers'] },
+      { name:'Delafield',         state:'WI', lat:43.0608, lon:-88.4037,  types:['Medical Practice'],           hitR:14, delay:210, clients:['Quintessa Medical Aesthetics'] },
+      { name:'Oconomowoc',        state:'WI', lat:43.1117, lon:-88.4993,  types:['Law Firm'],                   hitR:14, delay:220, clients:['Sterling Lawyers'] },
+      { name:'Menomonee Falls',   state:'WI', lat:43.1789, lon:-88.1173,  types:['Law Firm'],                   hitR:14, delay:180, clients:['Sterling Lawyers'] },
+      { name:'Mequon',            state:'WI', lat:43.2219, lon:-87.9823,  types:['Law Firm','Medical Practice'], hitR:14, delay:200, clients:['Sterling Lawyers','Quintessa Medical Aesthetics'] },
+      { name:'Middleton',         state:'WI', lat:43.0972, lon:-89.5043,  types:['Medical Practice'],           hitR:14, delay:290, clients:['Quintessa Medical Aesthetics'] },
+      { name:'Madison',           state:'WI', lat:43.0731, lon:-89.4012,  types:['Law Firm'],                   hitR:14, delay:280, clients:['Sterling Lawyers'] },
+      { name:'Sheboygan',         state:'WI', lat:43.7508, lon:-87.7145,  types:['Medical Practice'],           hitR:14, delay:320, clients:['Quintessa Medical Aesthetics'] },
+      { name:'West Bend',         state:'WI', lat:43.4253, lon:-88.1834,  types:['Law Firm'],                   hitR:14, delay:240, clients:['Sterling Lawyers'] },
+      { name:'Beaver Dam',        state:'WI', lat:43.4578, lon:-88.8373,  types:['Law Firm'],                   hitR:14, delay:340, clients:['Sterling Lawyers'] },
+      { name:'Appleton',          state:'WI', lat:44.2619, lon:-88.4154,  types:['Law Firm'],                   hitR:14, delay:360, clients:['Sterling Lawyers'] },
+      { name:'Baraboo',           state:'WI', lat:43.4711, lon:-89.7443,  types:['Law Firm'],                   hitR:14, delay:380, clients:['Sterling Lawyers'] },
+      { name:'Green Bay',         state:'WI', lat:44.5133, lon:-88.0133,  types:['Law Firm'],                   hitR:14, delay:400, clients:['Sterling Lawyers'] },
       // Texas
-      { name:'Houston',           state:'TX', lat:29.7604, lon:-95.3698,  types:['Law Firm'],                   hitR:14, delay:500 },
-      { name:'Angleton',          state:'TX', lat:29.1694, lon:-95.4319,  types:['Law Firm'],                   hitR:14, delay:510 },
-      { name:'Dallas',            state:'TX', lat:32.7767, lon:-96.7970,  types:['Law Firm'],                   hitR:14, delay:520 },
-      { name:'Tyler',             state:'TX', lat:32.3513, lon:-95.3011,  types:['Law Firm'],                   hitR:14, delay:530 },
-      { name:'Pearland',          state:'TX', lat:29.5636, lon:-95.2860,  types:['Law Firm'],                   hitR:14, delay:540 },
-      { name:'League City',       state:'TX', lat:29.5075, lon:-95.0949,  types:['Law Firm'],                   hitR:14, delay:550 },
-      { name:'Rosenberg',         state:'TX', lat:29.5572, lon:-95.8086,  types:['Law Firm'],                   hitR:14, delay:560 },
-      { name:'Round Rock',        state:'TX', lat:30.5083, lon:-97.6789,  types:['Law Firm'],                   hitR:14, delay:570 },
-      { name:'McKinney',          state:'TX', lat:33.1976, lon:-96.6153,  types:['Law Firm'],                   hitR:14, delay:580 },
-      { name:'Frisco',            state:'TX', lat:33.1507, lon:-96.8236,  types:['Law Firm'],                   hitR:14, delay:590 },
-      { name:'San Antonio',       state:'TX', lat:29.4241, lon:-98.4936,  types:['Law Firm'],                   hitR:14, delay:620 },
-      { name:'Odessa',            state:'TX', lat:31.8457, lon:-102.3676, types:['Law Firm'],                   hitR:14, delay:640 },
-      { name:'Midland',           state:'TX', lat:31.9974, lon:-102.0779, types:['Law Firm'],                   hitR:14, delay:650 },
-      { name:'El Paso',           state:'TX', lat:31.7619, lon:-106.4850, types:['Law Firm'],                   hitR:14, delay:660 },
+      { name:'Houston',           state:'TX', lat:29.7604, lon:-95.3698,  types:['Law Firm'],                   hitR:14, delay:500, clients:['Ramji Law Group'] },
+      { name:'Angleton',          state:'TX', lat:29.1694, lon:-95.4319,  types:['Law Firm'],                   hitR:14, delay:510, clients:['Scott M. Brown Law Office'] },
+      { name:'Dallas',            state:'TX', lat:32.7767, lon:-96.7970,  types:['Law Firm'],                   hitR:14, delay:520, clients:['Ramji Law Group'] },
+      { name:'Tyler',             state:'TX', lat:32.3513, lon:-95.3011,  types:['Law Firm'],                   hitR:14, delay:530, clients:['Ramji Law Group'] },
+      { name:'Pearland',          state:'TX', lat:29.5636, lon:-95.2860,  types:['Law Firm'],                   hitR:14, delay:540, clients:['Scott M. Brown Law Office'] },
+      { name:'League City',       state:'TX', lat:29.5075, lon:-95.0949,  types:['Law Firm'],                   hitR:14, delay:550, clients:['Scott M. Brown Law Office'] },
+      { name:'Rosenberg',         state:'TX', lat:29.5572, lon:-95.8086,  types:['Law Firm'],                   hitR:14, delay:560, clients:['Ramji Law Group'] },
+      { name:'Round Rock',        state:'TX', lat:30.5083, lon:-97.6789,  types:['Law Firm'],                   hitR:14, delay:570, clients:['Ramji Law Group'] },
+      { name:'McKinney',          state:'TX', lat:33.1976, lon:-96.6153,  types:['Law Firm'],                   hitR:14, delay:580, clients:['Ramage Family Law Firm'] },
+      { name:'Frisco',            state:'TX', lat:33.1507, lon:-96.8236,  types:['Law Firm'],                   hitR:14, delay:590, clients:['Ramage Family Law Firm'] },
+      { name:'San Antonio',       state:'TX', lat:29.4241, lon:-98.4936,  types:['Law Firm'],                   hitR:14, delay:620, clients:['Ramji Law Group'] },
+      { name:'Odessa',            state:'TX', lat:31.8457, lon:-102.3676, types:['Law Firm'],                   hitR:14, delay:640, clients:['Ramji Law Group'] },
+      { name:'Midland',           state:'TX', lat:31.9974, lon:-102.0779, types:['Law Firm'],                   hitR:14, delay:650, clients:['Ramji Law Group'] },
+      { name:'El Paso',           state:'TX', lat:31.7619, lon:-106.4850, types:['Law Firm'],                   hitR:14, delay:660, clients:['Ramji Law Group'] },
       // Colorado
-      { name:'Colorado Springs',  state:'CO', lat:38.8339, lon:-104.8214, types:['Law Firm'],                   hitR:14, delay:710 },
-      { name:'Englewood',         state:'CO', lat:39.6478, lon:-104.9878, types:['Law Firm'],                   hitR:14, delay:720 },
-      { name:'Lakewood',          state:'CO', lat:39.7047, lon:-105.0814, types:['Law Firm'],                   hitR:14, delay:730 },
-      { name:'Denver',            state:'CO', lat:39.7392, lon:-104.9903, types:['Law Firm'],                   hitR:14, delay:740 },
-      { name:'Commerce City',     state:'CO', lat:39.8083, lon:-104.9339, types:['Law Firm'],                   hitR:14, delay:750 },
-      { name:'Golden',            state:'CO', lat:39.7555, lon:-105.2211, types:['Law Firm'],                   hitR:14, delay:760 },
-      { name:'Fort Collins',      state:'CO', lat:40.5853, lon:-105.0844, types:['Law Firm'],                   hitR:14, delay:770 },
+      { name:'Colorado Springs',  state:'CO', lat:38.8339, lon:-104.8214, types:['Law Firm'],                   hitR:14, delay:710, clients:['Johnson Law Group'] },
+      { name:'Englewood',         state:'CO', lat:39.6478, lon:-104.9878, types:['Law Firm'],                   hitR:14, delay:720, clients:['Johnson Law Group'] },
+      { name:'Lakewood',          state:'CO', lat:39.7047, lon:-105.0814, types:['Law Firm'],                   hitR:14, delay:730, clients:['The Drake Law Firm'] },
+      { name:'Denver',            state:'CO', lat:39.7392, lon:-104.9903, types:['Law Firm'],                   hitR:14, delay:740, clients:['Johnson Law Group'] },
+      { name:'Commerce City',     state:'CO', lat:39.8083, lon:-104.9339, types:['Law Firm'],                   hitR:14, delay:750, clients:['Johnson Law Group'] },
+      { name:'Golden',            state:'CO', lat:39.7555, lon:-105.2211, types:['Law Firm'],                   hitR:14, delay:760, clients:['The Drake Law Firm'] },
+      { name:'Fort Collins',      state:'CO', lat:40.5853, lon:-105.0844, types:['Law Firm'],                   hitR:14, delay:770, clients:['Johnson Law Group'] },
       // Georgia
-      { name:'Atlanta',           state:'GA', lat:33.7490, lon:-84.3880,  types:['Law Firm'],                   hitR:14, delay:900 },
+      { name:'Atlanta',           state:'GA', lat:33.7490, lon:-84.3880,  types:['Law Firm'],                   hitR:14, delay:900, clients:['TDE Family Law','Ramji Law Group'] },
       // Alabama
-      { name:'Birmingham',        state:'AL', lat:33.5186, lon:-86.8104,  types:['Law Firm'],                   hitR:14, delay:920 },
-      { name:'Tuscaloosa',        state:'AL', lat:33.2098, lon:-87.5692,  types:['Law Firm'],                   hitR:14, delay:930 },
-      { name:'Florence',          state:'AL', lat:34.7998, lon:-87.6773,  types:['Law Firm'],                   hitR:14, delay:940 },
-      { name:'Athens',            state:'AL', lat:34.8029, lon:-86.9720,  types:['Law Firm'],                   hitR:14, delay:950 },
-      { name:'Huntsville',        state:'AL', lat:34.7304, lon:-86.5861,  types:['Law Firm'],                   hitR:14, delay:960 },
+      { name:'Birmingham',        state:'AL', lat:33.5186, lon:-86.8104,  types:['Law Firm'],                   hitR:14, delay:920, clients:['Summit Family Law'] },
+      { name:'Tuscaloosa',        state:'AL', lat:33.2098, lon:-87.5692,  types:['Law Firm'],                   hitR:14, delay:930, clients:['Summit Family Law'] },
+      { name:'Florence',          state:'AL', lat:34.7998, lon:-87.6773,  types:['Law Firm'],                   hitR:14, delay:940, clients:['Summit Family Law'] },
+      { name:'Athens',            state:'AL', lat:34.8029, lon:-86.9720,  types:['Law Firm'],                   hitR:14, delay:950, clients:['Summit Family Law'] },
+      { name:'Huntsville',        state:'AL', lat:34.7304, lon:-86.5861,  types:['Law Firm'],                   hitR:14, delay:960, clients:['Summit Family Law'] },
       // California
-      { name:'Modesto',           state:'CA', lat:37.6391, lon:-120.9969, types:['Law Firm'],                   hitR:14, delay:800 },
-      { name:'Sonora',            state:'CA', lat:37.9841, lon:-120.3821, types:['Law Firm'],                   hitR:14, delay:820 },
-      { name:'Murphys',           state:'CA', lat:38.1374, lon:-120.4610, types:['Law Firm'],                   hitR:14, delay:840 },
+      { name:'Modesto',           state:'CA', lat:37.6391, lon:-120.9969, types:['Law Firm'],                   hitR:14, delay:800, clients:['MeyerPink Law'] },
+      { name:'Sonora',            state:'CA', lat:37.9841, lon:-120.3821, types:['Law Firm'],                   hitR:14, delay:820, clients:['MeyerPink Law'] },
+      { name:'Murphys',           state:'CA', lat:38.1374, lon:-120.4610, types:['Law Firm'],                   hitR:14, delay:840, clients:['MeyerPink Law'] },
       // Nevada
-      { name:'Las Vegas',         state:'NV', lat:36.1699, lon:-115.1398, types:['Law Firm'],                   hitR:14, delay:780 },
+      { name:'Las Vegas',         state:'NV', lat:36.1699, lon:-115.1398, types:['Law Firm'],                   hitR:14, delay:780, clients:['Rosenblum Law'] },
       // Pennsylvania
-      { name:'Lancaster',         state:'PA', lat:40.0379, lon:-76.3055,  types:['Law Firm'],                   hitR:14, delay:870 },
+      { name:'Lancaster',         state:'PA', lat:40.0379, lon:-76.3055,  types:['Law Firm'],                   hitR:14, delay:870, clients:['Lancaster Law Firm'] },
       // Minnesota
-      { name:'Moorhead',          state:'MN', lat:46.8739, lon:-96.7678,  types:['Law Firm'],                   hitR:14, delay:290 },
+      { name:'Moorhead',          state:'MN', lat:46.8739, lon:-96.7678,  types:['Law Firm'],                   hitR:14, delay:290, clients:['Gjesdahl Law'] },
       // North Dakota
-      { name:'Fargo',             state:'ND', lat:46.8772, lon:-96.7898,  types:['Law Firm'],                   hitR:14, delay:340 },
+      { name:'Fargo',             state:'ND', lat:46.8772, lon:-96.7898,  types:['Law Firm'],                   hitR:14, delay:340, clients:['Gjesdahl Law'] },
       // Wyoming
-      { name:'Cheyenne',          state:'WY', lat:41.1400, lon:-104.8202, types:['Law Firm'],                   hitR:14, delay:370 },
+      { name:'Cheyenne',          state:'WY', lat:41.1400, lon:-104.8202, types:['Law Firm'],                   hitR:14, delay:370, clients:['Johnson Law Group'] },
       // Michigan
-      { name:'Bloomfield Hills',  state:'MI', lat:42.5836, lon:-83.2455,  types:['Law Firm'],                   hitR:14, delay:310 }
+      { name:'Bloomfield Hills',  state:'MI', lat:42.5836, lon:-83.2455,  types:['Law Firm'],                   hitR:14, delay:310, clients:['Genesis Family Law'] }
     ];
 
     // Load D3 + topojson
@@ -2286,6 +2282,7 @@ a { text-decoration: none; }
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'fp-dot-group');
         g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
+        g.setAttribute('data-translate', cx + ',' + cy);
         g.style.opacity = '0';
         g.style.transformOrigin = 'center';
         g.style.transformBox = 'fill-box';
@@ -2332,21 +2329,11 @@ a { text-decoration: none; }
         }, d.delay);
       });
 
-      // Get or create the labels group (outside fp-content, in SVG viewport space)
-      var labelsG = document.getElementById('fp-labels');
-      if (!labelsG) {
-        labelsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        labelsG.setAttribute('id', 'fp-labels');
-        labelsG.setAttribute('pointer-events', 'none');
-        svg.appendChild(labelsG);
-      }
-
       var hitsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       hitsG.setAttribute('id', 'fp-hits');
       svg.appendChild(hitsG);
 
-      // Build city data: SVG coords, hit regions, label elements
-      var cityData = [];
+      // Build hit regions for hover tooltip
       CITIES.forEach(function(c) {
         var coords = projection([c.lon, c.lat]);
         if (!coords) return;
@@ -2363,14 +2350,14 @@ a { text-decoration: none; }
 
         hit.addEventListener('mouseenter', function() {
           if (!tooltip) return;
-          if (ttCity) ttCity.textContent = c.name;
-          if (ttLocs) ttLocs.textContent = c.types.join(' · ');
+          if (ttCity) ttCity.textContent = c.clients.join(' · ');
+          if (ttLocs) ttLocs.textContent = c.name + ', ' + c.state;
           // Use current viewport cx/cy (updated by updateHitPositions on zoom)
           var curX = parseFloat(hit.getAttribute('cx'));
           var curY = parseFloat(hit.getAttribute('cy'));
           var ttx = curX + c.hitR + 8;
           var tty = curY - 30;
-          if (ttx + 165 > W) ttx = curX - 170;
+          if (ttx + 205 > W) ttx = curX - 210; // 200px tooltip + 5px margin / 10px offset
           if (tty < 10) tty = 10;
           tooltip.setAttribute('transform', 'translate(' + ttx + ',' + tty + ')');
           tooltip.style.display = 'block';
@@ -2378,112 +2365,7 @@ a { text-decoration: none; }
         hit.addEventListener('mouseleave', function() {
           if (tooltip) tooltip.style.display = 'none';
         });
-
-        // Label group — positioned in SVG viewport coordinates, updated on each zoom event
-        var labelG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        labelG.setAttribute('class', 'fp-city-label');
-        labelG.style.display = 'none';
-
-        // City name (zoom level 2+)
-        var nameText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        nameText.setAttribute('class', 'fp-label-city');
-        nameText.setAttribute('text-anchor', 'middle');
-        nameText.setAttribute('x', '0');
-        nameText.setAttribute('y', '-4');
-        nameText.textContent = c.name;
-        labelG.appendChild(nameText);
-
-        // Client type (zoom level 3 only)
-        var typeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        typeText.setAttribute('class', 'fp-label-type');
-        typeText.setAttribute('text-anchor', 'middle');
-        typeText.setAttribute('x', '0');
-        typeText.setAttribute('y', '8');
-        typeText.textContent = c.types.map(function(t) { return t.toUpperCase(); }).join(' · ');
-        typeText.style.display = 'none';
-        labelG.appendChild(typeText);
-
-        labelsG.appendChild(labelG);
-
-        cityData.push({
-          city: c, svgX: svgX, svgY: svgY,
-          labelG: labelG, nameText: nameText, typeText: typeText
-        });
       });
-
-      // Multi-type cities get label placement priority; alphabetical name is used
-      // as a stable, deterministic tie-breaker when types.length is equal
-      cityData.sort(function(a, b) {
-        return (b.city.types.length - a.city.types.length) || a.city.name.localeCompare(b.city.name);
-      });
-
-      // Approximate character widths for collision bbox estimates (in screen/viewport pixels)
-      function approxTextWidth(str, fontSize) {
-        return str.length * fontSize * 0.6 + 8;
-      }
-
-      // Check if two axis-aligned rectangles overlap (with optional padding)
-      function rectsOverlap(a, b, pad) {
-        pad = pad || 0;
-        return !(a.x2 + pad < b.x1 - pad || b.x2 + pad < a.x1 - pad ||
-                 a.y2 + pad < b.y1 - pad || b.y2 + pad < a.y1 - pad);
-      }
-
-      // Debounce timer for label updates
-      var labelTimer = null;
-
-      // Update label visibility and positions based on current zoom transform.
-      // Labels live in viewport (SVG) space — we translate them to the post-zoom
-      // screen position of each city dot.
-      function updateLabels(t) {
-        var k = t.k, tx = t.x, ty = t.y;
-
-        // Labels only appear at high zoom (k >= 4); dots-only below that
-        if (k < 4.0) {
-          cityData.forEach(function(cd) { cd.labelG.style.display = 'none'; });
-          return;
-        }
-
-        var occupied = []; // array of screen-space bboxes already claimed
-
-        cityData.forEach(function(cd) {
-          // Compute viewport position of this city's dot after zoom transform
-          var vpX = cd.svgX * k + tx;
-          var vpY = cd.svgY * k + ty;
-
-          // Build the label's bounding box in viewport coordinates
-          var nameW = approxTextWidth(cd.city.name, 11);
-          var typeStr = cd.city.types.map(function(t) { return t.toUpperCase(); }).join(' · ');
-          var typeW = approxTextWidth(typeStr, 9);
-          var bboxW = Math.max(nameW, typeW);
-          var bboxH = 24; // name + type
-
-          // Label sits above the dot with a small gap
-          var labelY = vpY - 18; // top of label block (city name baseline approx)
-          var bbox = {
-            x1: vpX - bboxW / 2,
-            y1: labelY - bboxH,
-            x2: vpX + bboxW / 2,
-            y2: labelY + 4
-          };
-
-          // Check collision against all already-placed labels
-          var collision = false;
-          for (var i = 0; i < occupied.length; i++) {
-            if (rectsOverlap(bbox, occupied[i], 3)) { collision = true; break; }
-          }
-
-          if (!collision) {
-            occupied.push(bbox);
-            // Position label group in viewport space
-            cd.labelG.setAttribute('transform', 'translate(' + vpX + ',' + (vpY - 18) + ')');
-            cd.labelG.style.display = 'block';
-            cd.typeText.style.display = 'block';
-          } else {
-            cd.labelG.style.display = 'none';
-          }
-        });
-      }
 
       // Also update hit-region positions on zoom so tooltips follow the map
       function updateHitPositions(t) {
@@ -2519,9 +2401,20 @@ a { text-decoration: none; }
           // Update hit circles and tooltip position to follow zoom
           updateHitPositions(t);
 
-          // Debounce label collision computation (labels update 80ms after zoom settles)
-          clearTimeout(labelTimer);
-          labelTimer = setTimeout(function() { updateLabels(t); }, 80);
+          // Counter-scale dots so they maintain readable size at any zoom level
+          // Exponent 0.7 dampens the inverse: dots shrink gradually rather than
+          // inversely with zoom, keeping them visible while reducing overlap in clusters
+          if (t.k > 1) {
+            var dotScale = 1 / Math.pow(t.k, 0.7);
+            var dotGroups = pinsG.querySelectorAll('.fp-dot-group');
+            for (var i = 0; i < dotGroups.length; i++) {
+              var translate = dotGroups[i].getAttribute('data-translate');
+              if (translate) {
+                dotGroups[i].setAttribute('transform',
+                  'translate(' + translate + ') scale(' + dotScale.toFixed(4) + ')');
+              }
+            }
+          }
 
           // Fade the scroll-to-zoom hint on first interaction
           var hint = document.getElementById('fp-zoom-hint');
@@ -2551,8 +2444,6 @@ a { text-decoration: none; }
       if (zoomResetBtn) {
         zoomResetBtn.addEventListener('click', function() {
           d3.select(svg).transition().duration(600).call(zoom.transform, d3.zoomIdentity);
-          // Re-hide labels after reset animation completes
-          setTimeout(function() { updateLabels(d3.zoomIdentity); }, 650);
         });
       }
 
