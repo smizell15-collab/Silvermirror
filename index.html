@@ -2180,7 +2180,7 @@ a { text-decoration: none; }
       { name:'Plainfield',        state:'IL', lat:41.6260, lon:-88.2039,  types:['Law Firm'],                   hitR:14, delay:240 },
       { name:'St. Charles',       state:'IL', lat:41.9142, lon:-88.3087,  types:['Law Firm'],                   hitR:14, delay:260 },
       // Wisconsin
-      { name:'Kenosha',           state:'WI', lat:42.5847, lon:-87.8212,  types:['Law Firm','Medical Practice'], hitR:14, delay:260 },
+      { name:'Kenosha',           state:'WI', lat:42.5847, lon:-87.8212,  types:['Law Firm','Medical Practice'], hitR:14, delay:250 },
       { name:'Racine',            state:'WI', lat:42.7261, lon:-87.7829,  types:['Law Firm'],                   hitR:14, delay:270 },
       { name:'Beloit',            state:'WI', lat:42.5083, lon:-89.0318,  types:['Law Firm'],                   hitR:14, delay:310 },
       { name:'Janesville',        state:'WI', lat:42.6828, lon:-89.0187,  types:['Law Firm'],                   hitR:14, delay:300 },
@@ -2418,7 +2418,8 @@ a { text-decoration: none; }
         });
       });
 
-      // Multi-type cities get label placement priority; ties sorted alphabetically
+      // Multi-type cities get label placement priority; alphabetical name is used
+      // as a stable, deterministic tie-breaker when types.length is equal
       cityData.sort(function(a, b) {
         return (b.city.types.length - a.city.types.length) || a.city.name.localeCompare(b.city.name);
       });
