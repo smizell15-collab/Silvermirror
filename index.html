@@ -151,9 +151,9 @@ a { text-decoration: none; }
   50% { text-shadow: 0 0 12px rgba(36,162,236,0.4), 0 0 30px rgba(36,162,236,0.2); }
 }
 @keyframes firefly {
-  0%   { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
-  50%  { opacity: 1;    transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(78,197,191,0.7)); }
-  100% { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
+  0%   { transform: scale(1);   opacity: 0.4; filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
+  50%  { transform: scale(1.4); opacity: 0.8; filter: drop-shadow(0 0 12px rgba(78,197,191,0.7)); }
+  100% { transform: scale(1);   opacity: 0.4; filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
 }
 @keyframes dash-flow {
   to { stroke-dashoffset: 0; }
@@ -522,7 +522,7 @@ a { text-decoration: none; }
 .footprint__map-svg { width: 100%; min-height: 420px; display: block; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
 .fp-state { transition: fill 0.6s ease, stroke 0.6s ease, opacity 0.6s ease; }
-.fp-state--base { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.12); stroke-width: 0.5; }
+.fp-state--base { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.15); stroke-width: 0.5; }
 .fp-state--active { fill: rgba(78,197,191,0.15); stroke: rgba(78,197,191,0.5); stroke-width: 1; filter: drop-shadow(0 0 8px rgba(78,197,191,0.3)); transition: fill 0.6s ease, stroke 0.6s ease; }
 .fp-pin-ring { fill: none; stroke: #4EC5BF; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
 .fp-pin-core { fill: #4EC5BF; filter: url(#fp-glow-filter); }
@@ -1773,9 +1773,9 @@ a { text-decoration: none; }
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
       <svg class="footprint__map-svg" id="fp-map-svg" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <filter id="fp-glow-filter">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <filter id="fp-glow-filter" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
         <!-- States rendered by JS below -->
@@ -1784,6 +1784,7 @@ a { text-decoration: none; }
         <g id="fp-pins"></g>
         <!-- Tooltip -->
         <g id="fp-tooltip" style="display:none;" pointer-events="none">
+          <polygon class="fp-tooltip-ptr" points="-6,0 6,0 0,8" fill="rgba(20,20,30,0.95)" />
           <rect class="fp-tooltip-bg" width="160" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
           <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
           <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
@@ -2098,6 +2099,34 @@ a { text-decoration: none; }
       { label:'Birmingham', sub:'~3 locations (AL)', lon:-86.80, lat:33.52, r:6, count:3, delay:1200 }
     ];
 
+    // Scale pin radius aggressively by location count
+    metros.forEach(function(m) {
+      m.r = Math.max(8, Math.round(Math.sqrt(m.count) * 2.6));
+    });
+
+    // Mobile: merge overlapping Florida pins into one cluster
+    var isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      var flMetros = metros.filter(function(m) {
+        return m.label.indexOf('Florida') !== -1 || m.label.indexOf('Miami') !== -1 ||
+               m.label.indexOf('Tampa') !== -1 || m.label.indexOf('Orlando') !== -1;
+      });
+      if (flMetros.length > 1) {
+        var totalCount = 0;
+        flMetros.forEach(function(m) { totalCount += m.count; });
+        metros = metros.filter(function(m) { return flMetros.indexOf(m) === -1; });
+        metros.push({
+          label: 'Florida',
+          sub: '~' + totalCount + ' locations (FL)',
+          lon: -81.5,
+          lat: 27.5,
+          r: Math.max(8, Math.round(Math.sqrt(totalCount) * 2.6)),
+          count: totalCount,
+          delay: 600
+        });
+      }
+    }
+
     // Load D3 + topojson
     if (typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
 
@@ -2136,31 +2165,29 @@ a { text-decoration: none; }
         if (!coords) return;
         var cx = coords[0], cy = coords[1];
         var s = m.r;
-        // Teardrop geometry: bulb centered at (0,0), tip at (0, s*TIP) in local coords
-        var TIP = 1.6;
+        // Teardrop geometry: point at local (0,0) anchored to map coords, bulb extends upward
+        var bulbCy = -(s * 1.8);
 
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'fp-pin');
         g.setAttribute('style', 'opacity:0;cursor:pointer;');
-        // Translate so the TIP of the teardrop sits at (cx, cy)
-        g.setAttribute('transform', 'translate(' + cx + ',' + (cy - s * TIP) + ')');
+        g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
 
         // Pulsing ring behind the pin — firefly animation applied here, NOT on <g>
         var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         ring.setAttribute('class', 'fp-pin-ring');
         ring.setAttribute('cx', '0');
-        ring.setAttribute('cy', '0');
-        ring.setAttribute('r', String(s * 1.5));
+        ring.setAttribute('cy', String(bulbCy));
+        ring.setAttribute('r', String(s + 6));
         g.appendChild(ring);
 
-        // Teardrop / map-pin path shape; bulb centered at (0,0), tip at (0, s*TIP)
+        // Teardrop / map-pin path: point at (0,0), bulb centered at (0, bulbCy)
         var pin = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         pin.setAttribute('class', 'fp-pin-core');
-        var d = 'M0,' + (-s) +
-          ' C' + (-s*0.6) + ',' + (-s) + ' ' + (-s) + ',' + (-s*0.4) + ' ' + (-s) + ',0' +
-          ' C' + (-s) + ',' + (s*0.55) + ' 0,' + (s*1.2) + ' 0,' + (s*TIP) +
-          ' C0,' + (s*1.2) + ' ' + s + ',' + (s*0.55) + ' ' + s + ',0' +
-          ' C' + s + ',' + (-s*0.4) + ' ' + (s*0.6) + ',' + (-s) + ' 0,' + (-s) + ' Z';
+        var d = 'M0,0'
+          + ' C' + (-s*0.58) + ',' + (-s*0.8) + ' ' + (-s) + ',' + (-s*1.3) + ' ' + (-s) + ',' + (-s*1.8)
+          + ' A' + s + ',' + s + ' 0 1,1 ' + s + ',' + (-s*1.8)
+          + ' C' + s + ',' + (-s*1.3) + ' ' + (s*0.58) + ',' + (-s*0.8) + ' 0,0 Z';
         pin.setAttribute('d', d);
         g.appendChild(pin);
 
@@ -2168,7 +2195,9 @@ a { text-decoration: none; }
           var countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           countText.setAttribute('class', 'fp-pin-count');
           countText.setAttribute('x', '0');
-          countText.setAttribute('y', '0');
+          countText.setAttribute('y', String(bulbCy));
+          if (s >= 12) countText.style.fontSize = '10px';
+          else if (s >= 10) countText.style.fontSize = '9px';
           countText.textContent = String(m.count);
           g.appendChild(countText);
         }
@@ -2185,15 +2214,22 @@ a { text-decoration: none; }
         }, m.delay);
 
         // Tooltip
+        var tooltipW = 160, tooltipH = 46;
         g.addEventListener('mouseenter', function() {
           if (!tooltip) return;
           if (ttCity) ttCity.textContent = m.label;
           if (ttLocs) ttLocs.textContent = m.sub;
-          var tx = cx + m.r + 8;
-          var ty = cy - 30;
-          if (tx + 165 > W) tx = cx - 170;
+          var tx = cx - tooltipW / 2;
+          var ty = cy - tooltipH - 14;
+          if (tx < 5) tx = 5;
+          if (tx + tooltipW + 5 > W) tx = W - tooltipW - 5;
           tooltip.setAttribute('transform', 'translate(' + tx + ',' + ty + ')');
           tooltip.style.display = 'block';
+          var ptr = tooltip.querySelector('.fp-tooltip-ptr');
+          if (ptr) {
+            var ptrX = Math.min(Math.max(cx - tx, 10), tooltipW - 10);
+            ptr.setAttribute('transform', 'translate(' + ptrX + ',' + tooltipH + ')');
+          }
         });
         g.addEventListener('mouseleave', function() {
           if (tooltip) tooltip.style.display = 'none';
