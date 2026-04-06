@@ -150,9 +150,10 @@ a { text-decoration: none; }
   0%, 100% { text-shadow: 0 0 8px rgba(36,162,236,0.3); }
   50% { text-shadow: 0 0 12px rgba(36,162,236,0.4), 0 0 30px rgba(36,162,236,0.2); }
 }
-@keyframes pin-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.4); opacity: 0.15; }
+@keyframes firefly {
+  0%   { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
+  50%  { opacity: 1;    transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(78,197,191,0.7)); }
+  100% { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 3px rgba(78,197,191,0.3)); }
 }
 @keyframes dash-flow {
   to { stroke-dashoffset: 0; }
@@ -522,13 +523,11 @@ a { text-decoration: none; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
 .fp-state { transition: fill 0.6s ease, opacity 0.6s ease; }
 .fp-state--base { fill: rgba(255,255,255,0.03); stroke: rgba(255,255,255,0.07); stroke-width: 0.5; }
-.fp-state--hot { fill: rgba(78,197,191,0.28); stroke: rgba(78,197,191,0.6); stroke-width: 0.8; filter: drop-shadow(0 0 6px rgba(78,197,191,0.3)); }
-.fp-state--warm { fill: rgba(78,197,191,0.14); stroke: rgba(78,197,191,0.35); stroke-width: 0.6; }
-.fp-state--present { fill: rgba(78,197,191,0.06); stroke: rgba(78,197,191,0.2); stroke-width: 0.5; }
-.fp-pin-ring { animation: pin-pulse 2.5s ease-in-out infinite; transform-origin: center; }
+.fp-state--active { fill: rgba(78,197,191,0.08); stroke: var(--neon-cyan); stroke-width: 1.2; filter: drop-shadow(0 0 4px rgba(78,197,191,0.4)); }
+.fp-pin--firefly { transform-origin: center; /* animation applied per-pin via JS with random duration + delay */ }
 .fp-pin-core { filter: drop-shadow(0 0 5px rgba(78,197,191,0.7)); }
+.fp-pin-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 8px; fill: #080c14; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 .fp-pin-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; fill: var(--neon-cyan); }
-.fp-pin-badge { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 9px; fill: #080c14; }
 .fp-tooltip-bg { rx: 6; ry: 6; }
 .footprint__legend {
   display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;
@@ -539,9 +538,8 @@ a { text-decoration: none; }
 }
 .fp-legend-item { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-small); color: var(--dark-text-secondary); }
 .fp-legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-.fp-legend-dot--hot { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
-.fp-legend-dot--warm { background: rgba(78,197,191,0.55); }
-.fp-legend-dot--present { background: rgba(78,197,191,0.25); }
+.fp-legend-dot--active { background: transparent; border: 2px solid var(--neon-cyan); box-shadow: 0 0 4px rgba(78,197,191,0.4); }
+.fp-legend-dot--pin { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
 .footprint__who-relies { text-align: center; margin-top: var(--space-2xl); position: relative; z-index: 1; }
 .footprint__who-label { display: block; font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.2em; color: var(--dark-text-muted); margin-bottom: var(--space-md); font-weight: 600; }
 .footprint__pills { display: flex; justify-content: center; gap: var(--space-md); flex-wrap: wrap; }
@@ -1795,9 +1793,8 @@ a { text-decoration: none; }
 
     <!-- Legend -->
     <div class="footprint__legend animate-on-scroll stagger-1">
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--hot"></span>Hot Market</div>
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--warm"></span>Active Market</div>
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--present"></span>Present</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active State</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--pin"></span>Location Cluster</div>
     </div>
 
     <!-- Who Relies -->
@@ -2074,30 +2071,31 @@ a { text-decoration: none; }
 
     var W = 960, H = 520;
 
-    // State tier mapping by FIPS id (as string)
-    var HOT = {'17':1,'55':1,'12':1}; // IL, WI, FL
-    var WARM = {'04':1,'08':1,'48':1,'13':1}; // AZ, CO, TX, GA
-    var PRESENT = {'01':1,'32':1,'06':1,'42':1,'27':1,'38':1,'56':1,'26':1}; // AL, NV, CA, PA, MN, ND, WY, MI
+    // Single active set — all 14 states by FIPS id
+    var ACTIVE = {'17':1,'55':1,'12':1,'04':1,'08':1,'48':1,'13':1,'01':1,'32':1,'06':1,'42':1,'27':1,'38':1,'56':1,'26':1};
 
-    function getTier(id) {
+    function isActive(id) {
       var s = String(parseInt(id));
       if (s.length === 1) s = '0' + s;
-      if (HOT[s]) return 'hot';
-      if (WARM[s]) return 'warm';
-      if (PRESENT[s]) return 'present';
-      return 'base';
+      return !!ACTIVE[s];
     }
 
     var metros = [
-      { label:'Chicago Metro', sub:'~24 locations', lon:-87.65, lat:41.85, r:12, delay:1200 },
-      { label:'Milwaukee / SE Wisconsin', sub:'~18 locations', lon:-87.9, lat:43.05, r:10, delay:1300 },
-      { label:'Miami / South Florida', sub:'~28 locations', lon:-80.19, lat:25.77, r:13, delay:1400 },
-      { label:'Tampa Bay', sub:'~16 locations', lon:-82.46, lat:27.95, r:10, delay:1450 },
-      { label:'Orlando', sub:'~14 locations', lon:-81.38, lat:28.54, r:9, delay:1500 },
-      { label:'Phoenix / Scottsdale', sub:'~8 locations', lon:-111.93, lat:33.45, r:8, delay:1550 },
-      { label:'Houston / Gulf Coast', sub:'~8 locations', lon:-95.37, lat:29.76, r:8, delay:1600 },
-      { label:'Denver / Front Range', sub:'~6 locations', lon:-104.99, lat:39.74, r:7, delay:1650 },
-      { label:'Atlanta', sub:'~4 locations', lon:-84.39, lat:33.75, r:7, delay:1700 }
+      { label:'Chicago Metro', sub:'~24 locations (IL)', lon:-87.65, lat:41.85, r:12, count:24, delay:400 },
+      { label:'Milwaukee / SE Wisconsin', sub:'~18 locations (WI)', lon:-87.9, lat:43.05, r:10, count:18, delay:500 },
+      { label:'Miami / South Florida', sub:'~28 locations (FL)', lon:-80.19, lat:25.77, r:13, count:28, delay:600 },
+      { label:'Tampa Bay', sub:'~16 locations (FL)', lon:-82.46, lat:27.95, r:10, count:16, delay:650 },
+      { label:'Orlando', sub:'~14 locations (FL)', lon:-81.38, lat:28.54, r:9, count:14, delay:700 },
+      { label:'Phoenix / Scottsdale', sub:'~8 locations (AZ)', lon:-111.93, lat:33.45, r:8, count:8, delay:750 },
+      { label:'Houston / Gulf Coast', sub:'~8 locations (TX)', lon:-95.37, lat:29.76, r:8, count:8, delay:800 },
+      { label:'Denver / Front Range', sub:'~6 locations (CO)', lon:-104.99, lat:39.74, r:7, count:6, delay:850 },
+      { label:'Atlanta', sub:'~4 locations (GA)', lon:-84.39, lat:33.75, r:7, count:4, delay:900 },
+      { label:'Las Vegas', sub:'~4 locations (NV)', lon:-115.14, lat:36.17, r:7, count:4, delay:950 },
+      { label:'Los Angeles', sub:'~6 locations (CA)', lon:-118.24, lat:34.05, r:8, count:6, delay:1000 },
+      { label:'Pittsburgh / Philadelphia', sub:'~5 locations (PA)', lon:-79.99, lat:40.44, r:7, count:5, delay:1050 },
+      { label:'Minneapolis', sub:'~4 locations (MN)', lon:-93.26, lat:44.98, r:7, count:4, delay:1100 },
+      { label:'Detroit', sub:'~4 locations (MI)', lon:-83.05, lat:42.33, r:7, count:4, delay:1150 },
+      { label:'Birmingham', sub:'~3 locations (AL)', lon:-86.80, lat:33.52, r:6, count:3, delay:1200 }
     ];
 
     // Load D3 + topojson
@@ -2109,21 +2107,23 @@ a { text-decoration: none; }
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us) {
       var features = topojson.feature(us, us.objects.states).features;
 
-      // Draw states by tier (base first, then present, warm, hot)
-      var tierOrder = ['base','present','warm','hot'];
-      tierOrder.forEach(function(tier) {
-        var tieredFeatures = features.filter(function(f) { return getTier(f.id) === tier; });
-        var delay = tier === 'hot' ? 800 : tier === 'warm' ? 950 : tier === 'present' ? 1100 : 0;
-        tieredFeatures.forEach(function(f) {
-          var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          p.setAttribute('d', pathGen(f) || '');
-          p.setAttribute('class', 'fp-state fp-state--base');
-          p.setAttribute('data-fips', f.id);
-          statesG.appendChild(p);
-          if (tier !== 'base') {
-            setTimeout(function() { p.setAttribute('class', 'fp-state fp-state--' + tier); }, delay);
-          }
-        });
+      // Draw states — base first, then active states on top with glow border
+      var baseFeatures = features.filter(function(f) { return !isActive(f.id); });
+      var activeFeatures = features.filter(function(f) { return isActive(f.id); });
+      baseFeatures.forEach(function(f) {
+        var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', pathGen(f) || '');
+        p.setAttribute('class', 'fp-state fp-state--base');
+        p.setAttribute('data-fips', f.id);
+        statesG.appendChild(p);
+      });
+      activeFeatures.forEach(function(f) {
+        var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', pathGen(f) || '');
+        p.setAttribute('class', 'fp-state fp-state--base');
+        p.setAttribute('data-fips', f.id);
+        statesG.appendChild(p);
+        setTimeout(function() { p.setAttribute('class', 'fp-state fp-state--active'); }, 600);
       });
 
       // Draw pins
@@ -2137,15 +2137,9 @@ a { text-decoration: none; }
         var cx = coords[0], cy = coords[1];
 
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('class', 'fp-pin');
+        g.setAttribute('class', 'fp-pin fp-pin--firefly');
         g.setAttribute('style', 'opacity:0;cursor:pointer;');
         g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
-
-        var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        ring.setAttribute('class', 'fp-pin-ring');
-        ring.setAttribute('r', String(m.r + 7));
-        ring.setAttribute('fill', 'rgba(78,197,191,0.12)');
-        g.appendChild(ring);
 
         var core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         core.setAttribute('class', 'fp-pin-core');
@@ -2153,15 +2147,25 @@ a { text-decoration: none; }
         core.setAttribute('fill', '#4EC5BF');
         g.appendChild(core);
 
-        var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot.setAttribute('r', String(Math.floor(m.r * 0.4)));
-        dot.setAttribute('fill', '#080c14');
-        g.appendChild(dot);
+        if (m.count >= 2) {
+          var countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          countText.setAttribute('class', 'fp-pin-count');
+          countText.setAttribute('x', '0');
+          countText.setAttribute('y', '0');
+          countText.textContent = String(m.count);
+          g.appendChild(countText);
+        }
 
         pinsG.appendChild(g);
 
-        // Reveal after delay
-        setTimeout(function() { g.style.opacity = '1'; g.style.transition = 'opacity 0.5s ease'; }, m.delay);
+        // Reveal after delay, then start firefly animation
+        setTimeout(function() {
+          g.style.opacity = '1';
+          g.style.transition = 'opacity 0.5s ease';
+          var dur = (2.5 + Math.random() * 2.5).toFixed(2) + 's';
+          var del = (Math.random() * 4).toFixed(2) + 's';
+          g.style.animation = 'firefly ' + dur + ' ease-in-out ' + del + ' infinite';
+        }, m.delay);
 
         // Tooltip
         g.addEventListener('mouseenter', function() {
