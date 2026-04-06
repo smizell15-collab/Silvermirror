@@ -521,11 +521,11 @@ a { text-decoration: none; }
 .footprint__map-container { width: 100%; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; border-radius: 14px; border: 1px solid rgba(78,197,191,0.12); }
 .footprint__map-svg { width: 100%; min-height: 420px; display: block; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
-.fp-state { transition: fill 0.6s ease, opacity 0.6s ease; }
-.fp-state--base { fill: rgba(255,255,255,0.03); stroke: rgba(255,255,255,0.07); stroke-width: 0.5; }
-.fp-state--active { fill: rgba(78,197,191,0.08); stroke: var(--neon-cyan); stroke-width: 1.2; filter: drop-shadow(0 0 4px rgba(78,197,191,0.4)); }
-.fp-pin--firefly { transform-origin: center; /* animation applied per-pin via JS with random duration + delay */ }
-.fp-pin-core { filter: drop-shadow(0 0 5px rgba(78,197,191,0.7)); }
+.fp-state { transition: fill 0.6s ease, stroke 0.6s ease, opacity 0.6s ease; }
+.fp-state--base { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.12); stroke-width: 0.5; }
+.fp-state--active { fill: rgba(78,197,191,0.15); stroke: rgba(78,197,191,0.5); stroke-width: 1; filter: drop-shadow(0 0 8px rgba(78,197,191,0.3)); transition: fill 0.6s ease, stroke 0.6s ease; }
+.fp-pin-ring { fill: none; stroke: #4EC5BF; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
+.fp-pin-core { fill: #4EC5BF; filter: url(#fp-glow-filter); }
 .fp-pin-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 8px; fill: #080c14; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 .fp-pin-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; fill: var(--neon-cyan); }
 .fp-tooltip-bg { rx: 6; ry: 6; }
@@ -538,8 +538,8 @@ a { text-decoration: none; }
 }
 .fp-legend-item { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-small); color: var(--dark-text-secondary); }
 .fp-legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-.fp-legend-dot--active { background: transparent; border: 2px solid var(--neon-cyan); box-shadow: 0 0 4px rgba(78,197,191,0.4); }
-.fp-legend-dot--pin { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
+.fp-legend-dot--active { background: var(--neon-cyan); box-shadow: var(--glow-cyan-sm); }
+.fp-legend-dot--base { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
 .footprint__who-relies { text-align: center; margin-top: var(--space-2xl); position: relative; z-index: 1; }
 .footprint__who-label { display: block; font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.2em; color: var(--dark-text-muted); margin-bottom: var(--space-md); font-weight: 600; }
 .footprint__pills { display: flex; justify-content: center; gap: var(--space-md); flex-wrap: wrap; }
@@ -1793,8 +1793,8 @@ a { text-decoration: none; }
 
     <!-- Legend -->
     <div class="footprint__legend animate-on-scroll stagger-1">
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active State</div>
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--pin"></span>Location Cluster</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active Market</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--base"></span>Coverage Area</div>
     </div>
 
     <!-- Who Relies -->
@@ -2135,17 +2135,34 @@ a { text-decoration: none; }
         var coords = projection([m.lon, m.lat]);
         if (!coords) return;
         var cx = coords[0], cy = coords[1];
+        var s = m.r;
+        // Teardrop geometry: bulb centered at (0,0), tip at (0, s*TIP) in local coords
+        var TIP = 1.6;
 
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('class', 'fp-pin fp-pin--firefly');
+        g.setAttribute('class', 'fp-pin');
         g.setAttribute('style', 'opacity:0;cursor:pointer;');
-        g.setAttribute('transform', 'translate(' + cx + ',' + cy + ')');
+        // Translate so the TIP of the teardrop sits at (cx, cy)
+        g.setAttribute('transform', 'translate(' + cx + ',' + (cy - s * TIP) + ')');
 
-        var core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        core.setAttribute('class', 'fp-pin-core');
-        core.setAttribute('r', String(m.r));
-        core.setAttribute('fill', '#4EC5BF');
-        g.appendChild(core);
+        // Pulsing ring behind the pin — firefly animation applied here, NOT on <g>
+        var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ring.setAttribute('class', 'fp-pin-ring');
+        ring.setAttribute('cx', '0');
+        ring.setAttribute('cy', '0');
+        ring.setAttribute('r', String(s * 1.5));
+        g.appendChild(ring);
+
+        // Teardrop / map-pin path shape; bulb centered at (0,0), tip at (0, s*TIP)
+        var pin = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pin.setAttribute('class', 'fp-pin-core');
+        var d = 'M0,' + (-s) +
+          ' C' + (-s*0.6) + ',' + (-s) + ' ' + (-s) + ',' + (-s*0.4) + ' ' + (-s) + ',0' +
+          ' C' + (-s) + ',' + (s*0.55) + ' 0,' + (s*1.2) + ' 0,' + (s*TIP) +
+          ' C0,' + (s*1.2) + ' ' + s + ',' + (s*0.55) + ' ' + s + ',0' +
+          ' C' + s + ',' + (-s*0.4) + ' ' + (s*0.6) + ',' + (-s) + ' 0,' + (-s) + ' Z';
+        pin.setAttribute('d', d);
+        g.appendChild(pin);
 
         if (m.count >= 2) {
           var countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -2158,13 +2175,13 @@ a { text-decoration: none; }
 
         pinsG.appendChild(g);
 
-        // Reveal after delay, then start firefly animation
+        // Reveal after delay; <g> stays at opacity:1 permanently — firefly goes on ring only
         setTimeout(function() {
           g.style.opacity = '1';
           g.style.transition = 'opacity 0.5s ease';
           var dur = (2.5 + Math.random() * 2.5).toFixed(2) + 's';
           var del = (Math.random() * 4).toFixed(2) + 's';
-          g.style.animation = 'firefly ' + dur + ' ease-in-out ' + del + ' infinite';
+          ring.style.animation = 'firefly ' + dur + ' ease-in-out ' + del + ' infinite';
         }, m.delay);
 
         // Tooltip
