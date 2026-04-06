@@ -1824,7 +1824,7 @@ a { text-decoration: none; }
         </g>
         <!-- Tooltip (outside zoom group so it stays readable) -->
         <g id="fp-tooltip" style="display:none;" pointer-events="none">
-          <rect class="fp-tooltip-bg" width="200" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
+          <rect class="fp-tooltip-bg" width="200" height="46" rx="6" ry="6" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
           <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
           <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
         </g>
@@ -2352,12 +2352,27 @@ a { text-decoration: none; }
           if (!tooltip) return;
           if (ttCity) ttCity.textContent = c.clients.join(' · ');
           if (ttLocs) ttLocs.textContent = c.name + ', ' + c.state;
+
+          // Dynamically size the tooltip background to fit text
+          var bg = tooltip.querySelector('.fp-tooltip-bg');
+          if (bg && ttCity && ttLocs) {
+            // Must briefly show tooltip to measure text
+            tooltip.style.display = 'block';
+            var cityWidth = ttCity.getComputedTextLength ? ttCity.getComputedTextLength() : 0;
+            var locsWidth = ttLocs.getComputedTextLength ? ttLocs.getComputedTextLength() : 0;
+            var maxTextWidth = Math.max(cityWidth, locsWidth);
+            var padding = 20; // 10px left + 10px right
+            var newWidth = Math.max(maxTextWidth + padding, 120); // minimum 120px
+            bg.setAttribute('width', String(Math.ceil(newWidth)));
+          }
+
           // Use current viewport cx/cy (updated by updateHitPositions on zoom)
           var curX = parseFloat(hit.getAttribute('cx'));
           var curY = parseFloat(hit.getAttribute('cy'));
+          var tooltipWidth = parseFloat(bg ? bg.getAttribute('width') : '200');
           var ttx = curX + c.hitR + 8;
           var tty = curY - 30;
-          if (ttx + 205 > W) ttx = curX - 210; // 200px tooltip + 5px margin / 10px offset
+          if (ttx + tooltipWidth + 5 > W) ttx = curX - tooltipWidth - 10;
           if (tty < 10) tty = 10;
           tooltip.setAttribute('transform', 'translate(' + ttx + ',' + tty + ')');
           tooltip.style.display = 'block';
