@@ -552,6 +552,7 @@ a { text-decoration: none; }
 }
 .financial__attribution h3 { font-size: var(--text-h3); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-md); }
 .financial__attribution p { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.8; }
+.financial__attribution p + p { margin-top: var(--space-md); }
 
 /* ============================================
    SECTION 13 — FOOTPRINT (DARK)
@@ -579,7 +580,7 @@ a { text-decoration: none; }
 .footprint__header h1 { font-size: var(--text-h1); font-weight: 800; color: var(--dark-text); margin-bottom: var(--space-sm); }
 .footprint__header p { font-size: var(--text-body); color: var(--dark-text-secondary); max-width: 600px; margin: 0 auto; }
 .footprint__kpi-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); justify-content: center;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md);
   margin-bottom: var(--space-2xl); position: relative; z-index: 1;
 }
 .footprint-kpi-card {
@@ -971,6 +972,7 @@ a { text-decoration: none; }
 /* ============================================
    LOCATION CARDS — ENHANCED INDIVIDUAL
    ============================================ */
+.locations__grid-tight--narrow { max-width: 460px; }
 .locations__city-group { margin-bottom: var(--space-xl); }
 .locations__city-label {
   font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.15em;
@@ -1391,7 +1393,7 @@ a { text-decoration: none; }
     <!-- Miami -->
     <div class="locations__city-group animate-on-scroll stagger-3">
       <div class="locations__city-label">Miami — 2 Locations</div>
-      <div class="locations__grid-tight" style="max-width: 460px;">
+      <div class="locations__grid-tight locations__grid-tight--narrow">
         <div class="location-card--sm">
           <div class="location-card--sm__hood">Brickell</div>
           <div class="location-card--sm__address">801 Brickell Ave, Miami, FL 33131</div>
@@ -1632,7 +1634,7 @@ a { text-decoration: none; }
     <div class="financial__attribution animate-on-scroll stagger-3">
       <h3>Improved Visibility Creates Precision</h3>
       <p>When ad spend connects clearly to enrolled members at the location level, every budget decision becomes more precise. If that connection is not fully visible today, decisions rely on partial data. Building that visibility is a first-priority initiative — not because anything is broken, but because precision creates efficiency.</p>
-      <p style="margin-top: var(--space-md);">Operator alignment matters beyond the numbers. Supporting a team that delivers this experience — including competitive compensation, health benefits, and a stable workplace — directly influences retention, service quality, and ultimately member satisfaction. The acquisition system's performance is inseparable from the team delivering the service.</p>
+      <p>Operator alignment matters beyond the numbers. Supporting a team that delivers this experience — including competitive compensation, health benefits, and a stable workplace — directly influences retention, service quality, and ultimately member satisfaction. The acquisition system's performance is inseparable from the team delivering the service.</p>
     </div>
   </div>
 </section>
@@ -1658,23 +1660,23 @@ a { text-decoration: none; }
     <!-- 5 KPI Cards -->
     <div class="footprint__kpi-grid">
       <div class="footprint-kpi-card animate-on-scroll stagger-1">
-        <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus">0+</span>
+        <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus" aria-live="polite">0+</span>
         <span class="footprint-kpi__label">Total Locations</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-2">
-        <span class="footprint-kpi__number" data-kpi="915" data-format="dollar">$0K/mo</span>
+        <span class="footprint-kpi__number" data-kpi="915" data-format="dollar" aria-live="polite">$0K/mo</span>
         <span class="footprint-kpi__label">Ad Spend</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-3">
-        <span class="footprint-kpi__number" data-kpi="23" data-format="count">0</span>
+        <span class="footprint-kpi__number" data-kpi="23" data-format="count" aria-live="polite">0</span>
         <span class="footprint-kpi__label">Clients</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-4">
-        <span class="footprint-kpi__number" data-kpi="14" data-format="count">0</span>
+        <span class="footprint-kpi__number" data-kpi="14" data-format="count" aria-live="polite">0</span>
         <span class="footprint-kpi__label">States</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-5">
-        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus">0+</span>
+        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus" aria-live="polite">0+</span>
         <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
       </div>
     </div>
