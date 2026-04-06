@@ -575,6 +575,34 @@ a { text-decoration: none; }
 .footprint__closing-muted { font-size: var(--text-body); color: var(--dark-text-muted); margin-bottom: var(--space-md); }
 
 .footprint__closing-glow { font-size: var(--text-h2); font-weight: 700; color: var(--neon-cyan); text-shadow: var(--text-glow-cyan); }
+/* Zoom controls */
+.fp-zoom-controls { position: absolute; bottom: 12px; right: 12px; display: flex; flex-direction: column; gap: 4px; z-index: 10; }
+.fp-zoom-btn {
+  width: 32px; height: 32px; background: rgba(6,6,16,0.88);
+  border: 1px solid rgba(78,197,191,0.4); border-radius: 6px;
+  color: #4EC5BF; font-size: 18px; font-family: Montserrat, Arial, sans-serif; font-weight: 300;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 0; user-select: none; -webkit-user-select: none; line-height: 1;
+}
+.fp-zoom-btn:hover { border-color: rgba(78,197,191,0.8); box-shadow: 0 0 12px rgba(78,197,191,0.25); }
+.fp-zoom-btn--reset { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; height: 26px; }
+/* Zoom hint */
+.fp-zoom-hint {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(6,6,16,0.7); border: 1px solid rgba(78,197,191,0.2);
+  border-radius: 100px; padding: 5px 14px;
+  font-size: 11px; font-family: Montserrat, Arial, sans-serif; color: rgba(78,197,191,0.7);
+  pointer-events: none; opacity: 1; transition: opacity 0.8s ease;
+  white-space: nowrap; z-index: 10;
+}
+.fp-zoom-hint.is-hidden { opacity: 0; }
+/* City label text styles (SVG) */
+.fp-label-city { font-family: Montserrat, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #4EC5BF; dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 3; stroke-linejoin: round; }
+.fp-label-type { font-family: Montserrat, Arial, sans-serif; font-size: 9px; font-weight: 600; fill: rgba(78,197,191,0.75); dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 2.5; stroke-linejoin: round; letter-spacing: 0.08em; }
+.fp-label-budget { font-family: Montserrat, Arial, sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 2.5; stroke-linejoin: round; }
 .growth__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md);
 }
@@ -1785,7 +1813,7 @@ a { text-decoration: none; }
 
     <!-- D3 Map -->
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
-      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-20 -10 1000 540" preserveAspectRatio="xMidYMid meet">
+      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-40 -20 1040 580" preserveAspectRatio="xMidYMid meet">
         <defs>
           <filter id="fp-glow-filter">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -1798,17 +1826,37 @@ a { text-decoration: none; }
             <feGaussianBlur stdDeviation="2.5" />
           </filter>
         </defs>
-        <!-- States rendered by JS below -->
-        <g id="fp-states"></g>
-        <!-- Pins rendered by JS below -->
-        <g id="fp-pins"></g>
-        <!-- Tooltip -->
+        <!-- Zoomable content group (states + pins transform together) -->
+        <g id="fp-content">
+          <!-- States rendered by JS below -->
+          <g id="fp-states"></g>
+          <!-- Pins rendered by JS below -->
+          <g id="fp-pins"></g>
+        </g>
+        <!-- City labels in viewport space (updated by JS on zoom) -->
+        <g id="fp-labels" pointer-events="none"></g>
+        <!-- Tooltip (outside zoom group so it stays readable) -->
         <g id="fp-tooltip" style="display:none;" pointer-events="none">
           <rect class="fp-tooltip-bg" width="160" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
           <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
           <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
         </g>
       </svg>
+      <!-- Zoom controls -->
+      <div class="fp-zoom-controls">
+        <button class="fp-zoom-btn" id="fp-zoom-in" aria-label="Zoom in">+</button>
+        <button class="fp-zoom-btn" id="fp-zoom-out" aria-label="Zoom out">−</button>
+        <button class="fp-zoom-btn fp-zoom-btn--reset" id="fp-zoom-reset" aria-label="Reset zoom">RST</button>
+      </div>
+      <!-- Scroll-to-zoom hint (fades after first interaction) -->
+      <div class="fp-zoom-hint" id="fp-zoom-hint" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <circle cx="6" cy="6" r="4.5"/>
+          <line x1="6" y1="3" x2="6" y2="9"/>
+          <line x1="3" y1="6" x2="9" y2="6"/>
+        </svg>
+        Scroll to zoom
+      </div>
     </div>
 
     <!-- Legend -->
@@ -2087,6 +2135,7 @@ a { text-decoration: none; }
     var svg = document.getElementById('fp-map-svg');
     var statesG = document.getElementById('fp-states');
     var pinsG = document.getElementById('fp-pins');
+    var contentG = document.getElementById('fp-content');
     if (!svg || !statesG || !pinsG) return;
 
     var W = 960, H = 520;
@@ -2272,7 +2321,9 @@ a { text-decoration: none; }
     // Load D3 + topojson
     if (typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
 
-    var projection = d3.geoAlbersUsa().scale(1280).translate([W/2, H/2]);
+    // FIXED: reduced scale (1280→1100) to pull map inward and prevent edge clipping;
+    // translate shifted down 10px to better vertically center the continental US
+    var projection = d3.geoAlbersUsa().scale(1100).translate([W/2, H/2 + 10]);
     var pathGen = d3.geoPath().projection(projection);
 
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us) {
@@ -2356,42 +2407,56 @@ a { text-decoration: none; }
         }, d.delay);
       });
 
-      // City-level hover hit regions
+      // Cities with type and budget for progressive label detail
       var cities = [
-        { name: 'Miami / South Florida', locs: '28 locations', lon: -80.19, lat: 25.77, hitR: 25 },
-        { name: 'Fort Lauderdale', locs: '8 locations', lon: -80.14, lat: 26.12, hitR: 18 },
-        { name: 'Tampa Bay', locs: '8 locations', lon: -82.46, lat: 27.95, hitR: 18 },
-        { name: 'Orlando', locs: '6 locations', lon: -81.38, lat: 28.54, hitR: 16 },
-        { name: 'Jacksonville', locs: '5 locations', lon: -81.66, lat: 30.33, hitR: 14 },
-        { name: 'Chicago Metro', locs: '24 locations', lon: -87.63, lat: 41.88, hitR: 22 },
-        { name: 'Milwaukee', locs: '10 locations', lon: -87.91, lat: 43.04, hitR: 18 },
-        { name: 'Madison', locs: '3 locations', lon: -89.40, lat: 43.07, hitR: 12 },
-        { name: 'Houston', locs: '5 locations', lon: -95.37, lat: 29.76, hitR: 16 },
-        { name: 'Dallas / Fort Worth', locs: '4 locations', lon: -96.80, lat: 32.78, hitR: 14 },
-        { name: 'Phoenix / Scottsdale', locs: '6 locations', lon: -112.07, lat: 33.45, hitR: 16 },
-        { name: 'Los Angeles', locs: '4 locations', lon: -118.24, lat: 34.05, hitR: 14 },
-        { name: 'San Francisco', locs: '3 locations', lon: -122.42, lat: 37.77, hitR: 12 },
-        { name: 'Denver', locs: '3 locations', lon: -104.99, lat: 39.74, hitR: 12 },
-        { name: 'Las Vegas', locs: '3 locations', lon: -115.14, lat: 36.17, hitR: 12 },
-        { name: 'Atlanta', locs: '5 locations', lon: -84.39, lat: 33.75, hitR: 14 },
-        { name: 'Philadelphia', locs: '4 locations', lon: -75.16, lat: 39.95, hitR: 14 },
-        { name: 'Pittsburgh', locs: '3 locations', lon: -79.99, lat: 40.44, hitR: 12 },
-        { name: 'Detroit', locs: '3 locations', lon: -83.05, lat: 42.33, hitR: 12 },
-        { name: 'Minneapolis', locs: '4 locations', lon: -93.26, lat: 44.98, hitR: 14 },
-        { name: 'Birmingham', locs: '2 locations', lon: -86.80, lat: 33.52, hitR: 10 },
-        { name: 'Fargo', locs: '2 locations', lon: -96.79, lat: 46.88, hitR: 10 }
+        { name: 'Miami / South Florida', locs: '28 locations', lon: -80.19, lat: 25.77, hitR: 25, count: 28, type: 'Medical Office', budget: '$6.1K/mo' },
+        { name: 'Fort Lauderdale',        locs: '8 locations',  lon: -80.14, lat: 26.12, hitR: 18, count: 8,  type: 'Med Spa',        budget: '$3.4K/mo' },
+        { name: 'Tampa Bay',              locs: '8 locations',  lon: -82.46, lat: 27.95, hitR: 18, count: 8,  type: 'Dental Practice', budget: '$4.8K/mo' },
+        { name: 'Orlando',                locs: '6 locations',  lon: -81.38, lat: 28.54, hitR: 16, count: 6,  type: 'Law Firm',        budget: '$3.2K/mo' },
+        { name: 'Jacksonville',           locs: '5 locations',  lon: -81.66, lat: 30.33, hitR: 14, count: 5,  type: 'Chiropractic',    budget: '$2.1K/mo' },
+        { name: 'Chicago Metro',          locs: '24 locations', lon: -87.63, lat: 41.88, hitR: 22, count: 24, type: 'Law Firm',        budget: '$7.8K/mo' },
+        { name: 'Milwaukee',              locs: '10 locations', lon: -87.91, lat: 43.04, hitR: 18, count: 10, type: 'Medical Office',  budget: '$4.2K/mo' },
+        { name: 'Madison',                locs: '3 locations',  lon: -89.40, lat: 43.07, hitR: 12, count: 3,  type: 'Dental Practice', budget: '$1.8K/mo' },
+        { name: 'Houston',                locs: '5 locations',  lon: -95.37, lat: 29.76, hitR: 16, count: 5,  type: 'Med Spa',         budget: '$5.5K/mo' },
+        { name: 'Dallas / Fort Worth',    locs: '4 locations',  lon: -96.80, lat: 32.78, hitR: 14, count: 4,  type: 'Law Firm',        budget: '$4.0K/mo' },
+        { name: 'Phoenix / Scottsdale',   locs: '6 locations',  lon: -112.07, lat: 33.45, hitR: 16, count: 6, type: 'Med Spa',        budget: '$5.9K/mo' },
+        { name: 'Los Angeles',            locs: '4 locations',  lon: -118.24, lat: 34.05, hitR: 14, count: 4, type: 'Medical Office', budget: '$6.8K/mo' },
+        { name: 'San Francisco',          locs: '3 locations',  lon: -122.42, lat: 37.77, hitR: 12, count: 3, type: 'Law Firm',       budget: '$7.2K/mo' },
+        { name: 'Denver',                 locs: '3 locations',  lon: -104.99, lat: 39.74, hitR: 12, count: 3, type: 'Chiropractic',   budget: '$2.6K/mo' },
+        { name: 'Las Vegas',              locs: '3 locations',  lon: -115.14, lat: 36.17, hitR: 12, count: 3, type: 'Med Spa',        budget: '$3.8K/mo' },
+        { name: 'Atlanta',                locs: '5 locations',  lon: -84.39,  lat: 33.75, hitR: 14, count: 5, type: 'Law Firm',       budget: '$4.5K/mo' },
+        { name: 'Philadelphia',           locs: '4 locations',  lon: -75.16,  lat: 39.95, hitR: 14, count: 4, type: 'Medical Office', budget: '$5.2K/mo' },
+        { name: 'Pittsburgh',             locs: '3 locations',  lon: -79.99,  lat: 40.44, hitR: 12, count: 3, type: 'Dental Practice',budget: '$2.9K/mo' },
+        { name: 'Detroit',                locs: '3 locations',  lon: -83.05,  lat: 42.33, hitR: 12, count: 3, type: 'Chiropractic',   budget: '$2.2K/mo' },
+        { name: 'Minneapolis',            locs: '4 locations',  lon: -93.26,  lat: 44.98, hitR: 14, count: 4, type: 'Medical Office', budget: '$3.7K/mo' },
+        { name: 'Birmingham',             locs: '2 locations',  lon: -86.80,  lat: 33.52, hitR: 10, count: 2, type: 'Dental Practice',budget: '$1.5K/mo' },
+        { name: 'Fargo',                  locs: '2 locations',  lon: -96.79,  lat: 46.88, hitR: 10, count: 2, type: 'Law Firm',       budget: '$1.7K/mo' }
       ];
+
+      // Get or create the labels group (outside fp-content, in SVG viewport space)
+      var labelsG = document.getElementById('fp-labels');
+      if (!labelsG) {
+        labelsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        labelsG.setAttribute('id', 'fp-labels');
+        labelsG.setAttribute('pointer-events', 'none');
+        svg.appendChild(labelsG);
+      }
 
       var hitsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       hitsG.setAttribute('id', 'fp-hits');
       svg.appendChild(hitsG);
 
+      // Build city data: SVG coords, hit regions, label elements
+      var cityData = [];
       cities.forEach(function(c) {
         var coords = projection([c.lon, c.lat]);
         if (!coords) return;
+        var svgX = coords[0], svgY = coords[1];
+
+        // Hit region for hover tooltip
         var hit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        hit.setAttribute('cx', String(coords[0]));
-        hit.setAttribute('cy', String(coords[1]));
+        hit.setAttribute('cx', String(svgX));
+        hit.setAttribute('cy', String(svgY));
         hit.setAttribute('r', String(c.hitR));
         hit.setAttribute('fill', 'transparent');
         hit.setAttribute('cursor', 'pointer');
@@ -2401,17 +2466,211 @@ a { text-decoration: none; }
           if (!tooltip) return;
           if (ttCity) ttCity.textContent = c.name;
           if (ttLocs) ttLocs.textContent = c.locs;
-          var tx = coords[0] + c.hitR + 8;
-          var ty = coords[1] - 30;
-          if (tx + 165 > W) tx = coords[0] - 170;
-          if (ty < 10) ty = 10;
-          tooltip.setAttribute('transform', 'translate(' + tx + ',' + ty + ')');
+          // Use current viewport cx/cy (updated by updateHitPositions on zoom)
+          var curX = parseFloat(hit.getAttribute('cx'));
+          var curY = parseFloat(hit.getAttribute('cy'));
+          var ttx = curX + c.hitR + 8;
+          var tty = curY - 30;
+          if (ttx + 165 > W) ttx = curX - 170;
+          if (tty < 10) tty = 10;
+          tooltip.setAttribute('transform', 'translate(' + ttx + ',' + tty + ')');
           tooltip.style.display = 'block';
         });
         hit.addEventListener('mouseleave', function() {
           if (tooltip) tooltip.style.display = 'none';
         });
+
+        // Label group — positioned in SVG viewport coordinates, updated on each zoom event
+        var labelG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        labelG.setAttribute('class', 'fp-city-label');
+        labelG.style.display = 'none';
+
+        // City name (zoom level 2+)
+        var nameText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        nameText.setAttribute('class', 'fp-label-city');
+        nameText.setAttribute('text-anchor', 'middle');
+        nameText.setAttribute('x', '0');
+        nameText.setAttribute('y', '-4');
+        nameText.textContent = c.name;
+        labelG.appendChild(nameText);
+
+        // Client type (zoom level 3 only)
+        var typeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        typeText.setAttribute('class', 'fp-label-type');
+        typeText.setAttribute('text-anchor', 'middle');
+        typeText.setAttribute('x', '0');
+        typeText.setAttribute('y', '8');
+        typeText.textContent = c.type.toUpperCase();
+        typeText.style.display = 'none';
+        labelG.appendChild(typeText);
+
+        // Monthly budget (zoom level 3 only)
+        var budgetText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        budgetText.setAttribute('class', 'fp-label-budget');
+        budgetText.setAttribute('text-anchor', 'middle');
+        budgetText.setAttribute('x', '0');
+        budgetText.setAttribute('y', '20');
+        budgetText.textContent = c.budget;
+        budgetText.style.display = 'none';
+        labelG.appendChild(budgetText);
+
+        labelsG.appendChild(labelG);
+
+        cityData.push({
+          city: c, svgX: svgX, svgY: svgY, count: c.count,
+          labelG: labelG, nameText: nameText, typeText: typeText, budgetText: budgetText
+        });
       });
+
+      // Sort by count descending so high-traffic cities get label placement priority
+      cityData.sort(function(a, b) { return b.count - a.count; });
+
+      // Approximate character widths for collision bbox estimates (in screen/viewport pixels)
+      function approxTextWidth(str, fontSize) {
+        return str.length * fontSize * 0.6 + 8;
+      }
+
+      // Check if two axis-aligned rectangles overlap (with optional padding)
+      function rectsOverlap(a, b, pad) {
+        pad = pad || 0;
+        return !(a.x2 + pad < b.x1 - pad || b.x2 + pad < a.x1 - pad ||
+                 a.y2 + pad < b.y1 - pad || b.y2 + pad < a.y1 - pad);
+      }
+
+      // Debounce timer for label updates
+      var labelTimer = null;
+
+      // Update label visibility and positions based on current zoom transform.
+      // Labels live in viewport (SVG) space — we translate them to the post-zoom
+      // screen position of each city dot.
+      function updateLabels(t) {
+        var k = t.k, tx = t.x, ty = t.y;
+        // Map zoom scale to detail level
+        var level = (k >= 4.0) ? 3 : (k >= 2.0) ? 2 : 1;
+
+        if (level === 1) {
+          cityData.forEach(function(cd) { cd.labelG.style.display = 'none'; });
+          return;
+        }
+
+        var occupied = []; // array of screen-space bboxes already claimed
+
+        cityData.forEach(function(cd) {
+          // Compute viewport position of this city's dot after zoom transform
+          var vpX = cd.svgX * k + tx;
+          var vpY = cd.svgY * k + ty;
+
+          // Build the label's bounding box in viewport coordinates
+          var nameW = approxTextWidth(cd.city.name, 11);
+          var bboxW = nameW;
+          var bboxH = 14; // city name only (level 2)
+
+          if (level === 3) {
+            var typeW = approxTextWidth(cd.city.type.toUpperCase(), 9);
+            var budgetW = approxTextWidth(cd.city.budget, 10);
+            bboxW = Math.max(nameW, typeW, budgetW);
+            bboxH = 34; // name + type + budget
+          }
+
+          // Label sits above the dot with a small gap
+          var labelY = vpY - 18; // top of label block (city name baseline approx)
+          var bbox = {
+            x1: vpX - bboxW / 2,
+            y1: labelY - bboxH,
+            x2: vpX + bboxW / 2,
+            y2: labelY + 4
+          };
+
+          // Check collision against all already-placed labels
+          var collision = false;
+          for (var i = 0; i < occupied.length; i++) {
+            if (rectsOverlap(bbox, occupied[i], 3)) { collision = true; break; }
+          }
+
+          if (!collision) {
+            occupied.push(bbox);
+            // Position label group in viewport space
+            cd.labelG.setAttribute('transform', 'translate(' + vpX + ',' + (vpY - 18) + ')');
+            cd.labelG.style.display = 'block';
+            // Show/hide type and budget based on level
+            cd.typeText.style.display = (level === 3) ? 'block' : 'none';
+            cd.budgetText.style.display = (level === 3) ? 'block' : 'none';
+          } else {
+            cd.labelG.style.display = 'none';
+          }
+        });
+      }
+
+      // Also update hit-region positions on zoom so tooltips follow the map
+      function updateHitPositions(t) {
+        var k = t.k, tx = t.x, ty = t.y;
+        var hits = hitsG.querySelectorAll('circle');
+        var idx = 0;
+        cities.forEach(function(c) {
+          var coords = projection([c.lon, c.lat]);
+          if (!coords) return;
+          var vpX = coords[0] * k + tx;
+          var vpY = coords[1] * k + ty;
+          if (hits[idx]) {
+            hits[idx].setAttribute('cx', String(vpX));
+            hits[idx].setAttribute('cy', String(vpY));
+          }
+          idx++;
+        });
+      }
+
+      // Set up D3 zoom
+      var zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .translateExtent([[-120, -80], [W + 120, H + 80]])
+        .on('zoom', function(event) {
+          var t = event.transform;
+
+          // Apply zoom transform to the map content group
+          if (contentG) {
+            contentG.setAttribute('transform',
+              'translate(' + t.x + ',' + t.y + ') scale(' + t.k + ')');
+          }
+
+          // Update hit circles and tooltip position to follow zoom
+          updateHitPositions(t);
+
+          // Debounce label collision computation (labels update 80ms after zoom settles)
+          clearTimeout(labelTimer);
+          labelTimer = setTimeout(function() { updateLabels(t); }, 80);
+
+          // Fade the scroll-to-zoom hint on first interaction
+          var hint = document.getElementById('fp-zoom-hint');
+          if (hint && !hint.classList.contains('is-hidden')) {
+            hint.classList.add('is-hidden');
+            setTimeout(function() { hint.style.display = 'none'; }, 900);
+          }
+        });
+
+      d3.select(svg).call(zoom);
+
+      // Zoom control buttons
+      var zoomInBtn = document.getElementById('fp-zoom-in');
+      var zoomOutBtn = document.getElementById('fp-zoom-out');
+      var zoomResetBtn = document.getElementById('fp-zoom-reset');
+
+      if (zoomInBtn) {
+        zoomInBtn.addEventListener('click', function() {
+          d3.select(svg).transition().duration(350).call(zoom.scaleBy, 1.6);
+        });
+      }
+      if (zoomOutBtn) {
+        zoomOutBtn.addEventListener('click', function() {
+          d3.select(svg).transition().duration(350).call(zoom.scaleBy, 1 / 1.6);
+        });
+      }
+      if (zoomResetBtn) {
+        zoomResetBtn.addEventListener('click', function() {
+          d3.select(svg).transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+          // Re-hide labels after reset animation completes
+          setTimeout(function() { updateLabels(d3.zoomIdentity); }, 650);
+        });
+      }
 
     }).catch(function(err) {
       console.warn('Map data load failed (network or parse error):', err);
