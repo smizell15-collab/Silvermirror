@@ -602,7 +602,6 @@ a { text-decoration: none; }
 /* City label text styles (SVG) */
 .fp-label-city { font-family: Montserrat, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #4EC5BF; dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 3; stroke-linejoin: round; }
 .fp-label-type { font-family: Montserrat, Arial, sans-serif; font-size: 9px; font-weight: 600; fill: rgba(78,197,191,0.75); dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 2.5; stroke-linejoin: round; letter-spacing: 0.08em; }
-.fp-label-budget { font-family: Montserrat, Arial, sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; dominant-baseline: auto; paint-order: stroke; stroke: rgba(6,6,16,0.85); stroke-width: 2.5; stroke-linejoin: round; }
 .growth__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md);
 }
@@ -2149,173 +2148,106 @@ a { text-decoration: none; }
       return !!ACTIVE[s];
     }
 
-    var dots = [
-      // === FLORIDA (~48 locations → ~20 dots) ===
-      // Miami / South FL cluster
-      { lon:-80.19, lat:25.77, delay:200 },
-      { lon:-80.30, lat:25.85, delay:220 },
-      { lon:-80.12, lat:25.68, delay:240 },
-      { lon:-80.25, lat:25.92, delay:260 },
-      // Fort Lauderdale
-      { lon:-80.14, lat:26.12, delay:280 },
-      { lon:-80.22, lat:26.20, delay:300 },
-      { lon:-80.08, lat:26.05, delay:310 },
-      // West Palm Beach
-      { lon:-80.05, lat:26.72, delay:320 },
-      { lon:-80.12, lat:26.65, delay:330 },
-      // Tampa Bay
-      { lon:-82.46, lat:27.95, delay:350 },
-      { lon:-82.55, lat:27.85, delay:370 },
-      { lon:-82.38, lat:28.02, delay:380 },
-      // Orlando
-      { lon:-81.38, lat:28.54, delay:400 },
-      { lon:-81.28, lat:28.45, delay:410 },
-      { lon:-81.48, lat:28.60, delay:420 },
-      // Jacksonville
-      { lon:-81.66, lat:30.33, delay:440 },
-      { lon:-81.55, lat:30.25, delay:450 },
-      // Sarasota
-      { lon:-82.53, lat:27.34, delay:460 },
-      // Gainesville
-      { lon:-82.32, lat:29.65, delay:470 },
-      // Naples / SW FL
-      { lon:-81.80, lat:26.14, delay:480 },
-
-      // === ILLINOIS (~24 locations → ~10 dots) ===
-      // Chicago Downtown
-      { lon:-87.63, lat:41.88, delay:100 },
-      { lon:-87.68, lat:41.92, delay:120 },
-      { lon:-87.62, lat:41.82, delay:130 },
-      // North Shore / Evanston
-      { lon:-87.68, lat:42.05, delay:150 },
-      { lon:-87.72, lat:42.00, delay:160 },
-      // Western suburbs
-      { lon:-87.82, lat:41.85, delay:180 },
-      // Naperville / Aurora
-      { lon:-88.15, lat:41.77, delay:200 },
-      // Schaumburg
-      { lon:-88.08, lat:42.03, delay:220 },
-      // Joliet / South
-      { lon:-88.08, lat:41.53, delay:240 },
-      // Oak Brook
-      { lon:-87.93, lat:41.83, delay:250 },
-
-      // === WISCONSIN (~18 locations → ~8 dots) ===
-      // Milwaukee cluster
-      { lon:-87.91, lat:43.04, delay:140 },
-      { lon:-87.97, lat:43.10, delay:160 },
-      { lon:-87.85, lat:42.98, delay:170 },
-      // Waukesha
-      { lon:-88.23, lat:43.01, delay:190 },
-      // Madison
-      { lon:-89.40, lat:43.07, delay:220 },
-      // Green Bay
-      { lon:-88.02, lat:44.51, delay:250 },
-      // Racine / Kenosha
-      { lon:-87.78, lat:42.73, delay:260 },
-      { lon:-87.82, lat:42.58, delay:270 },
-
-      // === TEXAS (~16 locations → ~8 dots) ===
-      // Houston
-      { lon:-95.37, lat:29.76, delay:500 },
-      { lon:-95.50, lat:29.85, delay:520 },
-      { lon:-95.28, lat:29.68, delay:530 },
-      // Dallas / Fort Worth
-      { lon:-96.80, lat:32.78, delay:550 },
-      { lon:-96.92, lat:32.85, delay:560 },
-      // Austin
-      { lon:-97.74, lat:30.27, delay:580 },
-      // San Antonio
-      { lon:-98.49, lat:29.42, delay:600 },
-      // El Paso
-      { lon:-106.44, lat:31.76, delay:620 },
-
-      // === CALIFORNIA (~14 locations → ~7 dots) ===
-      // Los Angeles
-      { lon:-118.24, lat:34.05, delay:700 },
-      { lon:-118.38, lat:34.12, delay:710 },
-      // San Francisco Bay
-      { lon:-122.42, lat:37.77, delay:730 },
-      { lon:-122.25, lat:37.56, delay:740 },
-      // San Diego
-      { lon:-117.16, lat:32.72, delay:750 },
-      // Sacramento
-      { lon:-121.49, lat:38.58, delay:760 },
-      // Riverside / IE
-      { lon:-117.40, lat:33.95, delay:770 },
-
-      // === ARIZONA (~8 locations → ~4 dots) ===
-      // Phoenix / Scottsdale
-      { lon:-112.07, lat:33.45, delay:650 },
-      { lon:-111.93, lat:33.50, delay:660 },
-      // Tempe / Mesa
-      { lon:-111.94, lat:33.35, delay:670 },
-      // Tucson
-      { lon:-110.97, lat:32.22, delay:680 },
-
-      // === PENNSYLVANIA (~8 locations → ~4 dots) ===
-      // Philadelphia
-      { lon:-75.16, lat:39.95, delay:850 },
-      { lon:-75.25, lat:40.02, delay:860 },
-      // Pittsburgh
-      { lon:-79.99, lat:40.44, delay:870 },
-      // Allentown / Lehigh Valley
-      { lon:-75.49, lat:40.60, delay:880 },
-
-      // === GEORGIA (~7 locations → ~4 dots) ===
-      // Atlanta
-      { lon:-84.39, lat:33.75, delay:900 },
-      { lon:-84.50, lat:33.85, delay:910 },
-      // Marietta
-      { lon:-84.55, lat:33.95, delay:920 },
-      // Savannah
-      { lon:-81.10, lat:32.08, delay:930 },
-
-      // === MICHIGAN (~6 locations → ~3 dots) ===
-      // Detroit
-      { lon:-83.05, lat:42.33, delay:300 },
-      { lon:-83.15, lat:42.40, delay:310 },
-      // Grand Rapids
-      { lon:-85.67, lat:42.96, delay:330 },
-
-      // === COLORADO (~6 locations → ~3 dots) ===
-      // Denver
-      { lon:-104.99, lat:39.74, delay:630 },
-      { lon:-105.08, lat:39.68, delay:640 },
-      // Colorado Springs
-      { lon:-104.82, lat:38.83, delay:650 },
-
-      // === MINNESOTA (~6 locations → ~3 dots) ===
-      // Minneapolis / St Paul
-      { lon:-93.26, lat:44.98, delay:280 },
-      { lon:-93.09, lat:44.94, delay:290 },
-      // Rochester
-      { lon:-92.47, lat:44.02, delay:310 },
-
-      // === NEVADA (~5 locations → ~3 dots) ===
-      // Las Vegas
-      { lon:-115.14, lat:36.17, delay:690 },
-      { lon:-115.25, lat:36.10, delay:700 },
-      // Reno
-      { lon:-119.81, lat:39.53, delay:720 },
-
-      // === ALABAMA (~4 locations → ~2 dots) ===
-      // Birmingham
-      { lon:-86.80, lat:33.52, delay:940 },
-      // Huntsville
-      { lon:-86.59, lat:34.73, delay:950 },
-
-      // === NORTH DAKOTA (~3 locations → ~2 dots) ===
-      // Fargo
-      { lon:-96.79, lat:46.88, delay:340 },
-      // Bismarck
-      { lon:-100.78, lat:46.81, delay:350 },
-
-      // === WYOMING (~2 locations → ~2 dots) ===
-      // Cheyenne
-      { lon:-104.82, lat:41.14, delay:360 },
-      // Casper
-      { lon:-106.31, lat:42.87, delay:370 }
+    // Authoritative city dataset — one entry per city, deduplicated from client list.
+    // Each city gets one dot on the map. types contains only allowed values:
+    // "Law Firm", "Medical Practice", "Franchise"
+    var CITIES = [
+      // Arizona
+      { name:'Scottsdale',        state:'AZ', lat:33.4942, lon:-111.9261, types:['Law Firm'],                   hitR:14, delay:650 },
+      { name:'Gilbert',           state:'AZ', lat:33.3528, lon:-111.7890, types:['Law Firm'],                   hitR:14, delay:660 },
+      { name:'Glendale',          state:'AZ', lat:33.5387, lon:-112.1860, types:['Law Firm'],                   hitR:14, delay:670 },
+      { name:'Show Low',          state:'AZ', lat:34.2542, lon:-110.0298, types:['Law Firm'],                   hitR:14, delay:680 },
+      { name:'Lake Havasu City',  state:'AZ', lat:34.4839, lon:-114.3225, types:['Law Firm'],                   hitR:14, delay:690 },
+      { name:'Phoenix',           state:'AZ', lat:33.4484, lon:-112.0740, types:['Law Firm'],                   hitR:14, delay:700 },
+      // Florida
+      { name:'Miami',             state:'FL', lat:25.7617, lon:-80.1918,  types:['Law Firm'],                   hitR:14, delay:200 },
+      { name:'Coral Gables',      state:'FL', lat:25.7215, lon:-80.2684,  types:['Law Firm'],                   hitR:14, delay:220 },
+      { name:'Miami Lakes',       state:'FL', lat:25.9087, lon:-80.3087,  types:['Law Firm'],                   hitR:14, delay:240 },
+      { name:'Pembroke Pines',    state:'FL', lat:26.0078, lon:-80.2963,  types:['Law Firm'],                   hitR:14, delay:260 },
+      { name:'Fort Lauderdale',   state:'FL', lat:26.1224, lon:-80.1373,  types:['Law Firm'],                   hitR:14, delay:280 },
+      { name:'West Palm Beach',   state:'FL', lat:26.7153, lon:-80.0534,  types:['Law Firm'],                   hitR:14, delay:320 },
+      { name:'Tampa',             state:'FL', lat:27.9506, lon:-82.4572,  types:['Law Firm'],                   hitR:14, delay:350 },
+      { name:'Orlando',           state:'FL', lat:28.5383, lon:-81.3792,  types:['Law Firm'],                   hitR:14, delay:400 },
+      { name:'Jacksonville',      state:'FL', lat:30.3322, lon:-81.6557,  types:['Franchise'],                  hitR:14, delay:440 },
+      // Illinois
+      { name:'Chicago',           state:'IL', lat:41.8781, lon:-87.6298,  types:['Law Firm'],                   hitR:14, delay:100 },
+      { name:'Evanston',          state:'IL', lat:42.0451, lon:-87.6877,  types:['Law Firm'],                   hitR:14, delay:120 },
+      { name:'Arlington Heights', state:'IL', lat:42.0884, lon:-87.9806,  types:['Law Firm'],                   hitR:14, delay:140 },
+      { name:'Schaumburg',        state:'IL', lat:42.0334, lon:-88.0834,  types:['Law Firm'],                   hitR:14, delay:160 },
+      { name:'Hoffman Estates',   state:'IL', lat:42.0629, lon:-88.1227,  types:['Law Firm'],                   hitR:14, delay:180 },
+      { name:'Aurora',            state:'IL', lat:41.7606, lon:-88.3201,  types:['Law Firm'],                   hitR:14, delay:200 },
+      { name:'Naperville',        state:'IL', lat:41.7508, lon:-88.1535,  types:['Law Firm'],                   hitR:14, delay:220 },
+      { name:'Plainfield',        state:'IL', lat:41.6260, lon:-88.2039,  types:['Law Firm'],                   hitR:14, delay:240 },
+      { name:'St. Charles',       state:'IL', lat:41.9142, lon:-88.3087,  types:['Law Firm'],                   hitR:14, delay:260 },
+      // Wisconsin
+      { name:'Kenosha',           state:'WI', lat:42.5847, lon:-87.8212,  types:['Law Firm','Medical Practice'], hitR:14, delay:250 },
+      { name:'Racine',            state:'WI', lat:42.7261, lon:-87.7829,  types:['Law Firm'],                   hitR:14, delay:270 },
+      { name:'Beloit',            state:'WI', lat:42.5083, lon:-89.0318,  types:['Law Firm'],                   hitR:14, delay:310 },
+      { name:'Janesville',        state:'WI', lat:42.6828, lon:-89.0187,  types:['Law Firm'],                   hitR:14, delay:300 },
+      { name:'Lake Geneva',       state:'WI', lat:42.5917, lon:-88.4334,  types:['Medical Practice'],           hitR:14, delay:330 },
+      { name:'Franklin',          state:'WI', lat:42.8886, lon:-88.0384,  types:['Medical Practice'],           hitR:14, delay:170 },
+      { name:'Milwaukee',         state:'WI', lat:43.0389, lon:-87.9065,  types:['Law Firm'],                   hitR:14, delay:140 },
+      { name:'Brookfield',        state:'WI', lat:43.0606, lon:-88.1065,  types:['Law Firm','Medical Practice'], hitR:14, delay:160 },
+      { name:'Waukesha',          state:'WI', lat:43.0117, lon:-88.2315,  types:['Law Firm'],                   hitR:14, delay:190 },
+      { name:'Delafield',         state:'WI', lat:43.0608, lon:-88.4037,  types:['Medical Practice'],           hitR:14, delay:210 },
+      { name:'Oconomowoc',        state:'WI', lat:43.1117, lon:-88.4993,  types:['Law Firm'],                   hitR:14, delay:220 },
+      { name:'Menomonee Falls',   state:'WI', lat:43.1789, lon:-88.1173,  types:['Law Firm'],                   hitR:14, delay:180 },
+      { name:'Mequon',            state:'WI', lat:43.2219, lon:-87.9823,  types:['Law Firm','Medical Practice'], hitR:14, delay:200 },
+      { name:'Middleton',         state:'WI', lat:43.0972, lon:-89.5043,  types:['Medical Practice'],           hitR:14, delay:290 },
+      { name:'Madison',           state:'WI', lat:43.0731, lon:-89.4012,  types:['Law Firm'],                   hitR:14, delay:280 },
+      { name:'Sheboygan',         state:'WI', lat:43.7508, lon:-87.7145,  types:['Medical Practice'],           hitR:14, delay:320 },
+      { name:'West Bend',         state:'WI', lat:43.4253, lon:-88.1834,  types:['Law Firm'],                   hitR:14, delay:240 },
+      { name:'Beaver Dam',        state:'WI', lat:43.4578, lon:-88.8373,  types:['Law Firm'],                   hitR:14, delay:340 },
+      { name:'Appleton',          state:'WI', lat:44.2619, lon:-88.4154,  types:['Law Firm'],                   hitR:14, delay:360 },
+      { name:'Baraboo',           state:'WI', lat:43.4711, lon:-89.7443,  types:['Law Firm'],                   hitR:14, delay:380 },
+      { name:'Green Bay',         state:'WI', lat:44.5133, lon:-88.0133,  types:['Law Firm'],                   hitR:14, delay:400 },
+      // Texas
+      { name:'Houston',           state:'TX', lat:29.7604, lon:-95.3698,  types:['Law Firm'],                   hitR:14, delay:500 },
+      { name:'Angleton',          state:'TX', lat:29.1694, lon:-95.4319,  types:['Law Firm'],                   hitR:14, delay:510 },
+      { name:'Dallas',            state:'TX', lat:32.7767, lon:-96.7970,  types:['Law Firm'],                   hitR:14, delay:520 },
+      { name:'Tyler',             state:'TX', lat:32.3513, lon:-95.3011,  types:['Law Firm'],                   hitR:14, delay:530 },
+      { name:'Pearland',          state:'TX', lat:29.5636, lon:-95.2860,  types:['Law Firm'],                   hitR:14, delay:540 },
+      { name:'League City',       state:'TX', lat:29.5075, lon:-95.0949,  types:['Law Firm'],                   hitR:14, delay:550 },
+      { name:'Rosenberg',         state:'TX', lat:29.5572, lon:-95.8086,  types:['Law Firm'],                   hitR:14, delay:560 },
+      { name:'Round Rock',        state:'TX', lat:30.5083, lon:-97.6789,  types:['Law Firm'],                   hitR:14, delay:570 },
+      { name:'McKinney',          state:'TX', lat:33.1976, lon:-96.6153,  types:['Law Firm'],                   hitR:14, delay:580 },
+      { name:'Frisco',            state:'TX', lat:33.1507, lon:-96.8236,  types:['Law Firm'],                   hitR:14, delay:590 },
+      { name:'San Antonio',       state:'TX', lat:29.4241, lon:-98.4936,  types:['Law Firm'],                   hitR:14, delay:620 },
+      { name:'Odessa',            state:'TX', lat:31.8457, lon:-102.3676, types:['Law Firm'],                   hitR:14, delay:640 },
+      { name:'Midland',           state:'TX', lat:31.9974, lon:-102.0779, types:['Law Firm'],                   hitR:14, delay:650 },
+      { name:'El Paso',           state:'TX', lat:31.7619, lon:-106.4850, types:['Law Firm'],                   hitR:14, delay:660 },
+      // Colorado
+      { name:'Colorado Springs',  state:'CO', lat:38.8339, lon:-104.8214, types:['Law Firm'],                   hitR:14, delay:710 },
+      { name:'Englewood',         state:'CO', lat:39.6478, lon:-104.9878, types:['Law Firm'],                   hitR:14, delay:720 },
+      { name:'Lakewood',          state:'CO', lat:39.7047, lon:-105.0814, types:['Law Firm'],                   hitR:14, delay:730 },
+      { name:'Denver',            state:'CO', lat:39.7392, lon:-104.9903, types:['Law Firm'],                   hitR:14, delay:740 },
+      { name:'Commerce City',     state:'CO', lat:39.8083, lon:-104.9339, types:['Law Firm'],                   hitR:14, delay:750 },
+      { name:'Golden',            state:'CO', lat:39.7555, lon:-105.2211, types:['Law Firm'],                   hitR:14, delay:760 },
+      { name:'Fort Collins',      state:'CO', lat:40.5853, lon:-105.0844, types:['Law Firm'],                   hitR:14, delay:770 },
+      // Georgia
+      { name:'Atlanta',           state:'GA', lat:33.7490, lon:-84.3880,  types:['Law Firm'],                   hitR:14, delay:900 },
+      // Alabama
+      { name:'Birmingham',        state:'AL', lat:33.5186, lon:-86.8104,  types:['Law Firm'],                   hitR:14, delay:920 },
+      { name:'Tuscaloosa',        state:'AL', lat:33.2098, lon:-87.5692,  types:['Law Firm'],                   hitR:14, delay:930 },
+      { name:'Florence',          state:'AL', lat:34.7998, lon:-87.6773,  types:['Law Firm'],                   hitR:14, delay:940 },
+      { name:'Athens',            state:'AL', lat:34.8029, lon:-86.9720,  types:['Law Firm'],                   hitR:14, delay:950 },
+      { name:'Huntsville',        state:'AL', lat:34.7304, lon:-86.5861,  types:['Law Firm'],                   hitR:14, delay:960 },
+      // California
+      { name:'Modesto',           state:'CA', lat:37.6391, lon:-120.9969, types:['Law Firm'],                   hitR:14, delay:800 },
+      { name:'Sonora',            state:'CA', lat:37.9841, lon:-120.3821, types:['Law Firm'],                   hitR:14, delay:820 },
+      { name:'Murphys',           state:'CA', lat:38.1374, lon:-120.4610, types:['Law Firm'],                   hitR:14, delay:840 },
+      // Nevada
+      { name:'Las Vegas',         state:'NV', lat:36.1699, lon:-115.1398, types:['Law Firm'],                   hitR:14, delay:780 },
+      // Pennsylvania
+      { name:'Lancaster',         state:'PA', lat:40.0379, lon:-76.3055,  types:['Law Firm'],                   hitR:14, delay:870 },
+      // Minnesota
+      { name:'Moorhead',          state:'MN', lat:46.8739, lon:-96.7678,  types:['Law Firm'],                   hitR:14, delay:290 },
+      // North Dakota
+      { name:'Fargo',             state:'ND', lat:46.8772, lon:-96.7898,  types:['Law Firm'],                   hitR:14, delay:340 },
+      // Wyoming
+      { name:'Cheyenne',          state:'WY', lat:41.1400, lon:-104.8202, types:['Law Firm'],                   hitR:14, delay:370 },
+      // Michigan
+      { name:'Bloomfield Hills',  state:'MI', lat:42.5836, lon:-83.2455,  types:['Law Firm'],                   hitR:14, delay:310 }
     ];
 
     // Load D3 + topojson
@@ -2353,7 +2285,7 @@ a { text-decoration: none; }
       var ttCity = document.getElementById('fp-tt-city');
       var ttLocs = document.getElementById('fp-tt-locs');
 
-      dots.forEach(function(d) {
+      CITIES.forEach(function(d) {
         var coords = projection([d.lon, d.lat]);
         if (!coords) return;
         var cx = coords[0], cy = coords[1];
@@ -2407,32 +2339,6 @@ a { text-decoration: none; }
         }, d.delay);
       });
 
-      // Cities with type and budget for progressive label detail
-      var cities = [
-        { name: 'Miami / South Florida', locs: '28 locations', lon: -80.19, lat: 25.77, hitR: 25, count: 28, type: 'Medical Office', budget: '$6.1K/mo' },
-        { name: 'Fort Lauderdale',        locs: '8 locations',  lon: -80.14, lat: 26.12, hitR: 18, count: 8,  type: 'Med Spa',        budget: '$3.4K/mo' },
-        { name: 'Tampa Bay',              locs: '8 locations',  lon: -82.46, lat: 27.95, hitR: 18, count: 8,  type: 'Dental Practice', budget: '$4.8K/mo' },
-        { name: 'Orlando',                locs: '6 locations',  lon: -81.38, lat: 28.54, hitR: 16, count: 6,  type: 'Law Firm',        budget: '$3.2K/mo' },
-        { name: 'Jacksonville',           locs: '5 locations',  lon: -81.66, lat: 30.33, hitR: 14, count: 5,  type: 'Chiropractic',    budget: '$2.1K/mo' },
-        { name: 'Chicago Metro',          locs: '24 locations', lon: -87.63, lat: 41.88, hitR: 22, count: 24, type: 'Law Firm',        budget: '$7.8K/mo' },
-        { name: 'Milwaukee',              locs: '10 locations', lon: -87.91, lat: 43.04, hitR: 18, count: 10, type: 'Medical Office',  budget: '$4.2K/mo' },
-        { name: 'Madison',                locs: '3 locations',  lon: -89.40, lat: 43.07, hitR: 12, count: 3,  type: 'Dental Practice', budget: '$1.8K/mo' },
-        { name: 'Houston',                locs: '5 locations',  lon: -95.37, lat: 29.76, hitR: 16, count: 5,  type: 'Med Spa',         budget: '$5.5K/mo' },
-        { name: 'Dallas / Fort Worth',    locs: '4 locations',  lon: -96.80, lat: 32.78, hitR: 14, count: 4,  type: 'Law Firm',        budget: '$4.0K/mo' },
-        { name: 'Phoenix / Scottsdale',   locs: '6 locations',  lon: -112.07, lat: 33.45, hitR: 16, count: 6, type: 'Med Spa',        budget: '$5.9K/mo' },
-        { name: 'Los Angeles',            locs: '4 locations',  lon: -118.24, lat: 34.05, hitR: 14, count: 4, type: 'Medical Office', budget: '$6.8K/mo' },
-        { name: 'San Francisco',          locs: '3 locations',  lon: -122.42, lat: 37.77, hitR: 12, count: 3, type: 'Law Firm',       budget: '$7.2K/mo' },
-        { name: 'Denver',                 locs: '3 locations',  lon: -104.99, lat: 39.74, hitR: 12, count: 3, type: 'Chiropractic',   budget: '$2.6K/mo' },
-        { name: 'Las Vegas',              locs: '3 locations',  lon: -115.14, lat: 36.17, hitR: 12, count: 3, type: 'Med Spa',        budget: '$3.8K/mo' },
-        { name: 'Atlanta',                locs: '5 locations',  lon: -84.39,  lat: 33.75, hitR: 14, count: 5, type: 'Law Firm',       budget: '$4.5K/mo' },
-        { name: 'Philadelphia',           locs: '4 locations',  lon: -75.16,  lat: 39.95, hitR: 14, count: 4, type: 'Medical Office', budget: '$5.2K/mo' },
-        { name: 'Pittsburgh',             locs: '3 locations',  lon: -79.99,  lat: 40.44, hitR: 12, count: 3, type: 'Dental Practice',budget: '$2.9K/mo' },
-        { name: 'Detroit',                locs: '3 locations',  lon: -83.05,  lat: 42.33, hitR: 12, count: 3, type: 'Chiropractic',   budget: '$2.2K/mo' },
-        { name: 'Minneapolis',            locs: '4 locations',  lon: -93.26,  lat: 44.98, hitR: 14, count: 4, type: 'Medical Office', budget: '$3.7K/mo' },
-        { name: 'Birmingham',             locs: '2 locations',  lon: -86.80,  lat: 33.52, hitR: 10, count: 2, type: 'Dental Practice',budget: '$1.5K/mo' },
-        { name: 'Fargo',                  locs: '2 locations',  lon: -96.79,  lat: 46.88, hitR: 10, count: 2, type: 'Law Firm',       budget: '$1.7K/mo' }
-      ];
-
       // Get or create the labels group (outside fp-content, in SVG viewport space)
       var labelsG = document.getElementById('fp-labels');
       if (!labelsG) {
@@ -2448,7 +2354,7 @@ a { text-decoration: none; }
 
       // Build city data: SVG coords, hit regions, label elements
       var cityData = [];
-      cities.forEach(function(c) {
+      CITIES.forEach(function(c) {
         var coords = projection([c.lon, c.lat]);
         if (!coords) return;
         var svgX = coords[0], svgY = coords[1];
@@ -2465,7 +2371,7 @@ a { text-decoration: none; }
         hit.addEventListener('mouseenter', function() {
           if (!tooltip) return;
           if (ttCity) ttCity.textContent = c.name;
-          if (ttLocs) ttLocs.textContent = c.locs;
+          if (ttLocs) ttLocs.textContent = c.types.join(' · ');
           // Use current viewport cx/cy (updated by updateHitPositions on zoom)
           var curX = parseFloat(hit.getAttribute('cx'));
           var curY = parseFloat(hit.getAttribute('cy'));
@@ -2500,30 +2406,23 @@ a { text-decoration: none; }
         typeText.setAttribute('text-anchor', 'middle');
         typeText.setAttribute('x', '0');
         typeText.setAttribute('y', '8');
-        typeText.textContent = c.type.toUpperCase();
+        typeText.textContent = c.types.map(function(t) { return t.toUpperCase(); }).join(' · ');
         typeText.style.display = 'none';
         labelG.appendChild(typeText);
-
-        // Monthly budget (zoom level 3 only)
-        var budgetText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        budgetText.setAttribute('class', 'fp-label-budget');
-        budgetText.setAttribute('text-anchor', 'middle');
-        budgetText.setAttribute('x', '0');
-        budgetText.setAttribute('y', '20');
-        budgetText.textContent = c.budget;
-        budgetText.style.display = 'none';
-        labelG.appendChild(budgetText);
 
         labelsG.appendChild(labelG);
 
         cityData.push({
-          city: c, svgX: svgX, svgY: svgY, count: c.count,
-          labelG: labelG, nameText: nameText, typeText: typeText, budgetText: budgetText
+          city: c, svgX: svgX, svgY: svgY,
+          labelG: labelG, nameText: nameText, typeText: typeText
         });
       });
 
-      // Sort by count descending so high-traffic cities get label placement priority
-      cityData.sort(function(a, b) { return b.count - a.count; });
+      // Multi-type cities get label placement priority; alphabetical name is used
+      // as a stable, deterministic tie-breaker when types.length is equal
+      cityData.sort(function(a, b) {
+        return (b.city.types.length - a.city.types.length) || a.city.name.localeCompare(b.city.name);
+      });
 
       // Approximate character widths for collision bbox estimates (in screen/viewport pixels)
       function approxTextWidth(str, fontSize) {
@@ -2545,10 +2444,9 @@ a { text-decoration: none; }
       // screen position of each city dot.
       function updateLabels(t) {
         var k = t.k, tx = t.x, ty = t.y;
-        // Map zoom scale to detail level
-        var level = (k >= 4.0) ? 3 : (k >= 2.0) ? 2 : 1;
 
-        if (level === 1) {
+        // Labels only appear at high zoom (k >= 4); dots-only below that
+        if (k < 4.0) {
           cityData.forEach(function(cd) { cd.labelG.style.display = 'none'; });
           return;
         }
@@ -2562,15 +2460,10 @@ a { text-decoration: none; }
 
           // Build the label's bounding box in viewport coordinates
           var nameW = approxTextWidth(cd.city.name, 11);
-          var bboxW = nameW;
-          var bboxH = 14; // city name only (level 2)
-
-          if (level === 3) {
-            var typeW = approxTextWidth(cd.city.type.toUpperCase(), 9);
-            var budgetW = approxTextWidth(cd.city.budget, 10);
-            bboxW = Math.max(nameW, typeW, budgetW);
-            bboxH = 34; // name + type + budget
-          }
+          var typeStr = cd.city.types.map(function(t) { return t.toUpperCase(); }).join(' · ');
+          var typeW = approxTextWidth(typeStr, 9);
+          var bboxW = Math.max(nameW, typeW);
+          var bboxH = 24; // name + type
 
           // Label sits above the dot with a small gap
           var labelY = vpY - 18; // top of label block (city name baseline approx)
@@ -2592,9 +2485,7 @@ a { text-decoration: none; }
             // Position label group in viewport space
             cd.labelG.setAttribute('transform', 'translate(' + vpX + ',' + (vpY - 18) + ')');
             cd.labelG.style.display = 'block';
-            // Show/hide type and budget based on level
-            cd.typeText.style.display = (level === 3) ? 'block' : 'none';
-            cd.budgetText.style.display = (level === 3) ? 'block' : 'none';
+            cd.typeText.style.display = 'block';
           } else {
             cd.labelG.style.display = 'none';
           }
@@ -2606,7 +2497,7 @@ a { text-decoration: none; }
         var k = t.k, tx = t.x, ty = t.y;
         var hits = hitsG.querySelectorAll('circle');
         var idx = 0;
-        cities.forEach(function(c) {
+        CITIES.forEach(function(c) {
           var coords = projection([c.lon, c.lat]);
           if (!coords) return;
           var vpX = coords[0] * k + tx;
