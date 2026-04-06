@@ -387,7 +387,7 @@ a { text-decoration: none; }
 .plan-phase__item { padding-left: 1.8em; position: relative; font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
 .plan-phase__item::before { content: '→'; position: absolute; left: 0; color: var(--color-accent); font-weight: 700; }
 .plan-phase__promise {
-  font-style: italic; color: var(--color-accent); font-size: var(--text-small); font-weight: 600;
+  font-family: var(--font-serif); font-style: italic; color: var(--color-accent); font-size: var(--text-small); font-weight: 600;
   border-left: 3px solid var(--color-accent); padding-left: var(--space-md);
 }
 .plan__outcome {
@@ -615,18 +615,19 @@ a { text-decoration: none; }
    FOOTER
    ============================================ */
 .footer {
-  background: var(--color-bg-subtle); border-top: 1px solid var(--color-border);
+  background: #0A0A12; border-top: 1px solid rgba(255,255,255,0.1);
   padding: var(--space-2xl) var(--side-padding); text-align: center;
+  color: rgba(255,255,255,0.5);
 }
 .footer__mono { margin: 0 auto var(--space-md); opacity: 0.35; }
 .footer__pairing {
   font-family: 'Montserrat', sans-serif; font-size: var(--text-small);
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--color-text-muted); margin-bottom: var(--space-xs);
+  color: rgba(255,255,255,0.5); margin-bottom: var(--space-xs);
 }
 .footer__sub {
   font-size: var(--text-label); letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--color-text-light);
+  color: rgba(255,255,255,0.3);
 }
 
 
@@ -727,10 +728,12 @@ a { text-decoration: none; }
   :root {
     --side-padding: 1.25rem;
     --space-section: clamp(3rem, 8vh, 5rem);
-    --text-hero: 2.2rem;
+    --text-hero: 2rem;
     --text-h1: 1.8rem;
     --text-h2: 1.5rem;
-    --text-h3: 1.15rem;
+    --text-h3: 1.1rem;
+    --text-body: 0.95rem;
+    --text-small: 0.82rem;
   }
   body { line-height: 1.75; }
   .section { min-height: auto; }
@@ -807,10 +810,12 @@ a { text-decoration: none; }
    ============================================ */
 @media (max-width: 480px) {
   :root {
-    --text-hero: 1.8rem;
+    --text-hero: 1.7rem;
     --text-h1: 1.5rem;
     --text-h2: 1.3rem;
   }
+  .quiet__statement { font-size: 1.3rem; }
+  .inaction__numbers { gap: var(--space-md); }
   .footprint__kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -909,13 +914,13 @@ a { text-decoration: none; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
   border-radius: var(--border-radius);
 }
-.inaction__amount { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; color: var(--color-text); line-height: 1; margin-bottom: var(--space-sm); }
+.inaction__amount { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; color: var(--color-text); line-height: 1; margin-bottom: var(--space-sm); }
 .inaction__type { font-size: var(--text-small); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-xs); }
 .inaction__detail { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.6; }
 .inaction__verdict { font-family: var(--font-serif); text-align: center; font-size: var(--text-h3); font-weight: 700; color: var(--color-text); padding: var(--space-xl); border-top: 3px solid var(--color-accent); margin-top: var(--space-xl); }
 .inaction__authority { text-align: center; font-size: var(--text-small); color: var(--color-accent); font-style: italic; margin-top: var(--space-sm); }
 .inaction__authority--spaced { margin-bottom: var(--space-xl); }
-.overview__intro { text-align: left; border-top: none; margin-top: 0; margin-bottom: var(--space-xl); font-size: var(--text-body); color: var(--color-text-secondary); font-weight: 400; font-style: italic; padding: 0; }
+.overview__intro { font-family: var(--font-serif); text-align: left; border-top: none; margin-top: 0; margin-bottom: var(--space-xl); font-size: var(--text-body); color: var(--color-text-secondary); font-weight: 400; font-style: italic; padding: 0; }
 
 /* ============================================
    SECTION 6 — FROM YOUR SEAT (timeline)
@@ -926,7 +931,7 @@ a { text-decoration: none; }
 .seat-entry { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-lg); padding: var(--space-lg) 0; position: relative; }
 .seat-entry__marker { text-align: right; padding-right: var(--space-lg); }
 .seat-entry__period { font-size: var(--text-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent); white-space: nowrap; padding-top: 0.25rem; }
-.seat-entry__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--color-accent); border: 2px solid var(--color-bg); position: absolute; left: 5rem; top: 1.6rem; box-shadow: 0 0 0 3px var(--color-accent-border); }
+.seat-entry__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--color-accent); border: 2px solid var(--color-bg-warm); position: absolute; left: 5rem; top: 1.6rem; box-shadow: 0 0 0 3px var(--color-accent-border); }
 @media (max-width: 600px) { .seat-entry { grid-template-columns: 1fr; gap: var(--space-xs); } .seat-entry__dot { display: none; } }
 .seat-entry__content h3 { font-family: var(--font-serif); font-size: var(--text-body); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-xs); }
 .seat-entry__items { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
@@ -961,12 +966,6 @@ a { text-decoration: none; }
   background: linear-gradient(to bottom, transparent, rgba(237,229,216,0.4));
   pointer-events: none;
 }
-.section--warm-deep { background: var(--color-bg-warm-deep); color: var(--color-text); }
-.section--warm-deep::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, rgba(230,220,204,0.5));
-  pointer-events: none;
-}
 /* Cards inside warm sections — near-invisible border */
 .section--warm .overview__card,
 .section--warm .concern,
@@ -974,9 +973,76 @@ a { text-decoration: none; }
 .section--warm .seat-entry__content {
   border-color: rgba(0,0,0,0.04);
 }
-.section--warm-deep .inaction__number-block {
-  border: 1px solid rgba(255,255,255,0.6);
+
+/* ============================================
+   BUTTER SECTIONS — WARNING / URGENCY
+   ============================================ */
+.section--butter {
+  background: #F5E6B8;
+  color: var(--color-text);
 }
+.section--butter::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(235,220,170,0.4));
+  pointer-events: none;
+}
+.section--butter .breaks__block { border-bottom-color: rgba(0,0,0,0.08); }
+.section--butter .breaks__num { color: var(--color-text); }
+.section--butter .inaction__number-block { background: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.8); }
+
+/* ============================================
+   BLUE SECTIONS — AUTHORITY / PROOF
+   ============================================ */
+.section--blue {
+  background: #0099BE;
+  color: #FFFFFF;
+}
+.section--blue::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(0,140,175,0.3));
+  pointer-events: none;
+}
+.section--blue .eyebrow { color: rgba(255,255,255,0.7); text-shadow: none; animation: none; }
+.section--blue .section-header h2 { color: #FFFFFF; }
+.section--blue .section-subtitle { color: rgba(255,255,255,0.8); }
+.section--blue .system-card { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: none; }
+.section--blue .system-card:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.35); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+.section--blue .system-card__title { color: #FFFFFF; }
+.section--blue .system-card p { color: rgba(255,255,255,0.8); }
+.section--blue .system__funnel { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+.section--blue .system__funnel-step { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #FFFFFF; }
+.section--blue .system__funnel-arrow { color: rgba(255,255,255,0.6); }
+.section--blue .system__funnel-label { color: rgba(255,255,255,0.7); }
+.section--blue .driver-card { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); border-top-color: #FFFFFF; backdrop-filter: blur(20px); box-shadow: none; }
+.section--blue .driver-card__stat { color: #FFFFFF; }
+.section--blue .driver-card__label { color: #FFFFFF; }
+.section--blue .driver-card__sub { color: rgba(255,255,255,0.75); }
+.section--blue .financial__col--without { background: rgba(0,0,0,0.15); border-color: rgba(255,255,255,0.15); }
+.section--blue .financial__col--without .financial__col-label { color: rgba(255,255,255,0.5); }
+.section--blue .financial__col--without .financial__col-items li { color: rgba(255,255,255,0.5); }
+.section--blue .financial__col--without .financial__col-items li::before { color: rgba(255,255,255,0.3); }
+.section--blue .financial__col--with { background: rgba(255,255,255,0.15); border-color: #FFFFFF; box-shadow: 0 0 30px rgba(255,255,255,0.15); }
+.section--blue .financial__col--with .financial__col-label { color: #FFFFFF; }
+.section--blue .financial__col--with .financial__col-items li { color: rgba(255,255,255,0.85); }
+.section--blue .financial__col--with .financial__col-items li::before { color: #FFFFFF; }
+.section--blue .inaction__authority { color: rgba(255,255,255,0.7); }
+
+/* ============================================
+   DARK INVERT SECTIONS — DRAMA / GRAVITAS
+   ============================================ */
+.section--dark-invert {
+  background: #0A0A12;
+  color: #FFFFFF;
+}
+.section--dark-invert .quiet__statement { color: rgba(255,255,255,0.6); }
+.section--dark-invert .eyebrow { color: var(--color-accent-bright); }
+.section--dark-invert .section-header h2 { color: #FFFFFF; }
+.section--dark-invert .section-subtitle { color: rgba(255,255,255,0.7); }
+.section--dark-invert .closing__statement p { color: rgba(255,255,255,0.75); }
+.section--dark-invert .closing__ownership { color: var(--color-accent-bright); border-left-color: var(--color-accent-bright); }
+.section--dark-invert .closing__signature { border-top-color: rgba(255,255,255,0.15); }
+.section--dark-invert .closing__name { color: #FFFFFF; }
+.section--dark-invert .closing__title-line { color: rgba(255,255,255,0.5); }
 
 /* ============================================
    QUIET SECTIONS — BREATHING MOMENTS
@@ -989,7 +1055,6 @@ a { text-decoration: none; }
   overflow: hidden; text-align: center;
   background: var(--color-bg);
 }
-.section--quiet-butter { background: var(--color-bg-butter); }
 .quiet__statement {
   font-family: var(--font-serif);
   font-size: var(--text-h1);
@@ -1200,7 +1265,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 3 — WHERE THIS BREAKS
      ================================================ -->
-<section class="section section--light" id="section-breaks">
+<section class="section section--butter" id="section-breaks">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">System Audit</span>
@@ -1245,14 +1310,14 @@ a { text-decoration: none; }
 <!-- ================================================
      QUIET SECTION — BREATHING MOMENT 1
      ================================================ -->
-<section class="section--quiet section--quiet-butter" aria-hidden="true">
+<section class="section--quiet section--dark-invert" aria-hidden="true">
   <p class="quiet__statement animate-on-scroll">Every month without a system is a month of compounding waste.</p>
 </section>
 
 <!-- ================================================
      SECTION 4 — COST OF INACTION
      ================================================ -->
-<section class="section section--warm-deep" id="section-inaction">
+<section class="section section--butter" id="section-inaction">
   <div class="section-inner">
     <div class="animate-on-scroll">
       <span class="eyebrow">The Real Cost</span>
@@ -1283,7 +1348,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 5 — CONCERNS SOLVED
      ================================================ -->
-<section class="section section--warm" id="section-concerns">
+<section class="section section--light" id="section-concerns">
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Hiring Objections</span>
@@ -1388,7 +1453,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 7 — PHILOSOPHY
      ================================================ -->
-<section class="section section--light-subtle" id="section-philosophy">
+<section class="section section--light" id="section-philosophy">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Operating Principle</span>
@@ -1428,7 +1493,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 8 — CORE SYSTEM
      ================================================ -->
-<section class="section section--light-subtle" id="section-system">
+<section class="section section--blue" id="section-system">
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Operating Infrastructure</span>
@@ -1550,7 +1615,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 10 — SEO + LLM
      ================================================ -->
-<section class="section section--light-subtle" id="section-seo">
+<section class="section section--warm" id="section-seo">
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Future Demand + Visibility</span>
@@ -1611,7 +1676,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 11 — FINANCIAL IMPACT
      ================================================ -->
-<section class="section section--light" id="section-financial">
+<section class="section section--blue" id="section-financial">
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">The Contrast</span>
@@ -1760,7 +1825,7 @@ a { text-decoration: none; }
 <!-- ================================================
      QUIET SECTION — BREATHING MOMENT 3
      ================================================ -->
-<section class="section--quiet" aria-hidden="true">
+<section class="section--quiet section--dark-invert" aria-hidden="true">
   <p class="quiet__statement animate-on-scroll">244 locations. 14 states. One system.</p>
 </section>
 
@@ -1798,7 +1863,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 14 — TEAM
      ================================================ -->
-<section class="section section--light-subtle" id="section-team">
+<section class="section section--warm" id="section-team">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Scalable Structure</span>
@@ -1834,7 +1899,7 @@ a { text-decoration: none; }
 <!-- ================================================
      SECTION 15 — CLOSE
      ================================================ -->
-<section class="section section--light" id="section-close">
+<section class="section section--dark-invert" id="section-close">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">The Standard</span>
@@ -1913,10 +1978,11 @@ a { text-decoration: none; }
     entries.forEach(function(e) {
       if (e.isIntersecting) {
         var id = e.target.id;
+        var target = e.target;
         dots.forEach(function(d) {
           d.classList.toggle('is-active', d.dataset.section === id);
         });
-        if (id === 'section-footprint') {
+        if (id === 'section-footprint' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue')) {
           navContainer.classList.add('nav-dots--dark');
         } else {
           navContainer.classList.remove('nav-dots--dark');
