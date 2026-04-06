@@ -510,25 +510,29 @@ a { text-decoration: none; }
 .footprint__header { text-align: center; margin-bottom: var(--space-xl); position: relative; z-index: 1; }
 .footprint__header h1 { font-family: var(--font-serif); font-size: var(--text-h1); font-weight: 700; color: var(--dark-text); margin-bottom: var(--space-sm); }
 .footprint__header p { font-size: var(--text-body); color: var(--dark-text-secondary); max-width: 600px; margin: 0 auto; }
-.footprint__kpi-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md);
-  margin-bottom: var(--space-2xl); position: relative; z-index: 1;
+.fp-dashboard-overlay {
+  position: absolute; top: 16px; left: 16px; z-index: 10;
+  display: flex; flex-direction: column; gap: 4px;
+  background: rgba(6,6,16,0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(78,197,191,0.2); border-radius: 12px; padding: 12px 14px;
+  pointer-events: auto;
 }
 .footprint-kpi-card {
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(78,197,191,0.2);
-  border-radius: var(--border-radius); padding: var(--space-lg) var(--space-xl);
-  text-align: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
-  min-width: 140px;
+  display: flex; align-items: center; gap: 10px;
+  background: transparent; border: none; border-radius: 0;
+  padding: 4px 0; min-width: unset;
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
 }
-.footprint-kpi-card:hover { border-color: rgba(78,197,191,0.5); box-shadow: 0 0 24px rgba(78,197,191,0.15); }
+.footprint-kpi-card + .footprint-kpi-card {
+  border-top: 1px solid rgba(78,197,191,0.1);
+  padding-top: 6px; margin-top: 2px;
+}
 .footprint-kpi__number {
-  display: block; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1;
+  display: block; font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 800; line-height: 1;
   color: var(--neon-cyan); text-shadow: var(--text-glow-cyan);
-  margin-bottom: var(--space-xs); cursor: default;
+  margin-bottom: 0; cursor: default; white-space: nowrap; flex-shrink: 0;
 }
-.footprint-kpi__label { font-size: var(--text-label); color: var(--dark-text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+.footprint-kpi__label { font-size: 0.7rem; color: var(--dark-text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; white-space: nowrap; }
 .footprint__map-container { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: visible; border-radius: 14px; border: 1px solid rgba(78,197,191,0.12); }
 .footprint__map-svg { width: 100%; min-height: 420px; display: block; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
@@ -784,21 +788,13 @@ a { text-decoration: none; }
   }
   .philosophy__before { text-align: center; }
   .philosophy__after { text-align: center; }
-  .footprint__kpi-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-sm);
+  .fp-dashboard-overlay {
+    position: static; flex-direction: row; flex-wrap: wrap; justify-content: center;
+    gap: 8px; border-radius: 8px; padding: 10px 12px;
+    margin-bottom: var(--space-md);
   }
-  .footprint-kpi-card {
-    padding: var(--space-md);
-    min-width: unset;
-  }
-  .footprint-kpi-card:nth-child(4),
-  .footprint-kpi-card:nth-child(5) {
-    grid-column: span 1;
-  }
-  .footprint-kpi__number {
-    font-size: 1.6rem;
-  }
+  .footprint-kpi-card { gap: 6px; }
+  .footprint-kpi-card + .footprint-kpi-card { border-top: none; padding-top: 4px; margin-top: 0; border-left: 1px solid rgba(78,197,191,0.1); padding-left: 8px; margin-left: 0; }
   .system__funnel-flow {
     flex-direction: column;
     gap: var(--space-xs);
@@ -854,9 +850,7 @@ a { text-decoration: none; }
   }
   .quiet__statement { font-size: 1.3rem; }
   .inaction__numbers { gap: var(--space-md); }
-  .footprint__kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .fp-dashboard-overlay { gap: 6px; padding: 8px 10px; }
   .opening__scope {
     justify-content: center;
   }
@@ -1785,33 +1779,31 @@ a { text-decoration: none; }
       <p>Every client, every market, every location — running on the same acquisition infrastructure before Silver Mirror joins it.</p>
     </div>
 
-    <!-- 5 KPI Cards -->
-    <div class="footprint__kpi-grid">
-      <div class="footprint-kpi-card animate-on-scroll stagger-1">
-        <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus" aria-live="polite">0+</span>
-        <span class="footprint-kpi__label">Total Locations</span>
-      </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-2">
-        <span class="footprint-kpi__number" data-kpi="915" data-format="dollar" aria-live="polite">$0K/mo</span>
-        <span class="footprint-kpi__label">Ad Spend</span>
-      </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-3">
-        <span class="footprint-kpi__number" data-kpi="23" data-format="count" aria-live="polite">0</span>
-        <span class="footprint-kpi__label">Clients</span>
-      </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-4">
-        <span class="footprint-kpi__number" data-kpi="15" data-format="count" aria-live="polite">0</span>
-        <span class="footprint-kpi__label">States</span>
-      </div>
-      <div class="footprint-kpi-card animate-on-scroll stagger-5">
-        <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus" aria-live="polite">0+</span>
-        <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
-      </div>
-    </div>
-    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
-
-    <!-- D3 Map -->
+    <!-- D3 Map (KPI overlay is inside the map container) -->
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
+      <!-- Glassmorphism KPI overlay — floats top-left on desktop, collapses to strip on mobile -->
+      <div class="fp-dashboard-overlay">
+        <div class="footprint-kpi-card animate-on-scroll stagger-1">
+          <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus" aria-live="polite">0+</span>
+          <span class="footprint-kpi__label">Locations</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-2">
+          <span class="footprint-kpi__number" data-kpi="915" data-format="dollar" aria-live="polite">$0K/mo</span>
+          <span class="footprint-kpi__label">Ad Spend</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-3">
+          <span class="footprint-kpi__number" data-kpi="23" data-format="count" aria-live="polite">0</span>
+          <span class="footprint-kpi__label">Clients</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-4">
+          <span class="footprint-kpi__number" data-kpi="15" data-format="count" aria-live="polite">0</span>
+          <span class="footprint-kpi__label">States</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-5">
+          <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus" aria-live="polite">0+</span>
+          <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
+        </div>
+      </div>
       <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-40 -20 1040 580" preserveAspectRatio="xMidYMid meet">
         <defs>
           <filter id="fp-glow-filter">
@@ -1857,6 +1849,7 @@ a { text-decoration: none; }
         Scroll to zoom
       </div>
     </div>
+    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
 
     <!-- Legend -->
     <div class="footprint__legend animate-on-scroll stagger-1">
@@ -2079,7 +2072,7 @@ a { text-decoration: none; }
       else el.textContent = val;
       if (p < 1) requestAnimationFrame(step);
       else {
-        if (format === 'dollar') el.textContent = '$' + target + 'K+/mo';
+        if (format === 'dollar') el.textContent = '$' + target + 'K/mo';
         else if (format === 'count-plus') el.textContent = target + '+';
         else el.textContent = target;
       }
