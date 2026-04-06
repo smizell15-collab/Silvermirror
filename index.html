@@ -83,8 +83,8 @@ a { text-decoration: none; }
    DARK / NEON THEME VARIABLES
    ============================================ */
 :root {
-  --dark-bg: #060610;
-  --dark-bg-subtle: #0a0a1a;
+  --dark-bg: #0d0d1e;
+  --dark-bg-subtle: #12122a;
   --dark-bg-card: rgba(255,255,255,0.03);
   --dark-border: rgba(78, 197, 191, 0.15);
   --dark-border-bright: rgba(78, 197, 191, 0.4);
@@ -198,7 +198,7 @@ a { text-decoration: none; }
 }
 .section--dark::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(78,197,191,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(78,197,191,0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 .section-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; }
@@ -479,7 +479,7 @@ a { text-decoration: none; }
    ============================================ */
 .footprint__dot-grid {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle, rgba(78,197,191,0.07) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(78,197,191,0.10) 1px, transparent 1px);
   background-size: 30px 30px; pointer-events: none; opacity: 0;
   transition: opacity 1s ease;
 }
@@ -487,13 +487,19 @@ a { text-decoration: none; }
 .footprint__glow-midwest {
   position: absolute; top: 38%; left: 48%;
   width: 480px; height: 480px;
-  background: radial-gradient(circle, rgba(58,175,169,0.07), transparent 70%);
+  background: radial-gradient(circle, rgba(58,175,169,0.10), transparent 70%);
   transform: translate(-50%, -50%); pointer-events: none;
 }
 .footprint__glow-florida {
   position: absolute; top: 72%; left: 74%;
   width: 320px; height: 320px;
-  background: radial-gradient(circle, rgba(58,175,169,0.05), transparent 70%);
+  background: radial-gradient(circle, rgba(58,175,169,0.08), transparent 70%);
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.footprint__glow-texas {
+  position: absolute; top: 62%; left: 38%;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(58,175,169,0.06), transparent 70%);
   transform: translate(-50%, -50%); pointer-events: none;
 }
 .footprint__header { text-align: center; margin-bottom: var(--space-xl); position: relative; z-index: 1; }
@@ -518,12 +524,12 @@ a { text-decoration: none; }
   margin-bottom: var(--space-xs); cursor: default;
 }
 .footprint-kpi__label { font-size: var(--text-label); color: var(--dark-text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
-.footprint__map-container { width: 100%; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; border-radius: 14px; border: 1px solid rgba(78,197,191,0.12); }
+.footprint__map-container { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: visible; border-radius: 14px; border: 1px solid rgba(78,197,191,0.12); }
 .footprint__map-svg { width: 100%; min-height: 420px; display: block; }
 @media (max-width: 600px) { .footprint__map-svg { min-height: 350px; } }
 .fp-state { transition: fill 0.6s ease, stroke 0.6s ease, opacity 0.6s ease; }
-.fp-state--base { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.12); stroke-width: 0.5; }
-.fp-state--active { fill: rgba(78,197,191,0.15); stroke: rgba(78,197,191,0.5); stroke-width: 1; filter: drop-shadow(0 0 8px rgba(78,197,191,0.3)); transition: fill 0.6s ease, stroke 0.6s ease; }
+.fp-state--base { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.18); stroke-width: 0.5; }
+.fp-state--active { fill: rgba(78,197,191,0.22); stroke: rgba(78,197,191,0.6); stroke-width: 1; filter: drop-shadow(0 0 8px rgba(78,197,191,0.3)); transition: fill 0.6s ease, stroke 0.6s ease; }
 .fp-pin-ring { fill: none; stroke: #4EC5BF; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
 .fp-pin-core { fill: #4EC5BF; filter: url(#fp-glow-filter); }
 .fp-pin-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 8px; fill: #080c14; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
@@ -1735,6 +1741,7 @@ a { text-decoration: none; }
   <div class="footprint__dot-grid" id="fp-dot-grid"></div>
   <div class="footprint__glow-midwest"></div>
   <div class="footprint__glow-florida"></div>
+  <div class="footprint__glow-texas"></div>
 
   <div class="section-inner section-inner--wide" style="position:relative;z-index:1;">
     <!-- Header -->
@@ -1759,7 +1766,7 @@ a { text-decoration: none; }
         <span class="footprint-kpi__label">Clients</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-4">
-        <span class="footprint-kpi__number" data-kpi="14" data-format="count" aria-live="polite">0</span>
+        <span class="footprint-kpi__number" data-kpi="15" data-format="count" aria-live="polite">0</span>
         <span class="footprint-kpi__label">States</span>
       </div>
       <div class="footprint-kpi-card animate-on-scroll stagger-5">
@@ -1771,7 +1778,7 @@ a { text-decoration: none; }
 
     <!-- D3 Map -->
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
-      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet">
+      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-20 -10 1000 540" preserveAspectRatio="xMidYMid meet">
         <defs>
           <filter id="fp-glow-filter">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -1803,7 +1810,7 @@ a { text-decoration: none; }
       <div class="footprint__pills">
         <div class="footprint-pill">⚖️ 150+ Attorneys &amp; Legal Professionals</div>
         <div class="footprint-pill">🩺 20+ Doctors, Surgeons &amp; Practice Owners</div>
-        <div class="footprint-pill">🏢 Franchise Brands Across 14 States</div>
+        <div class="footprint-pill">🏢 Franchise Brands Across 15 States</div>
       </div>
     </div>
 
@@ -1823,7 +1830,7 @@ a { text-decoration: none; }
      QUIET SECTION — BREATHING MOMENT 3
      ================================================ -->
 <section class="section--quiet section--dark-invert" aria-hidden="true">
-  <p class="quiet__statement animate-on-scroll">244 locations. 14 states. One system.</p>
+  <p class="quiet__statement animate-on-scroll">244 locations. 15 states. One system.</p>
 </section>
 
 <!-- ================================================
@@ -2071,7 +2078,7 @@ a { text-decoration: none; }
 
     var W = 960, H = 520;
 
-    // Single active set — all 14 states by FIPS id
+    // Single active set — all 15 states by FIPS id
     var ACTIVE = {'17':1,'55':1,'12':1,'04':1,'08':1,'48':1,'13':1,'01':1,'32':1,'06':1,'42':1,'27':1,'38':1,'56':1,'26':1};
 
     function isActive(id) {
@@ -2081,21 +2088,76 @@ a { text-decoration: none; }
     }
 
     var metros = [
-      { label:'Chicago Metro', sub:'~24 locations (IL)', lon:-87.65, lat:41.85, r:12, count:24, delay:400 },
-      { label:'Milwaukee / SE Wisconsin', sub:'~18 locations (WI)', lon:-87.9, lat:43.05, r:10, count:18, delay:500 },
-      { label:'Miami / South Florida', sub:'~28 locations (FL)', lon:-80.19, lat:25.77, r:13, count:28, delay:600 },
-      { label:'Tampa Bay', sub:'~16 locations (FL)', lon:-82.46, lat:27.95, r:10, count:16, delay:650 },
-      { label:'Orlando', sub:'~14 locations (FL)', lon:-81.38, lat:28.54, r:9, count:14, delay:700 },
-      { label:'Phoenix / Scottsdale', sub:'~8 locations (AZ)', lon:-111.93, lat:33.45, r:8, count:8, delay:750 },
-      { label:'Houston / Gulf Coast', sub:'~8 locations (TX)', lon:-95.37, lat:29.76, r:8, count:8, delay:800 },
-      { label:'Denver / Front Range', sub:'~6 locations (CO)', lon:-104.99, lat:39.74, r:7, count:6, delay:850 },
-      { label:'Atlanta', sub:'~4 locations (GA)', lon:-84.39, lat:33.75, r:7, count:4, delay:900 },
-      { label:'Las Vegas', sub:'~4 locations (NV)', lon:-115.14, lat:36.17, r:7, count:4, delay:950 },
-      { label:'Los Angeles', sub:'~6 locations (CA)', lon:-118.24, lat:34.05, r:8, count:6, delay:1000 },
-      { label:'Pittsburgh / Philadelphia', sub:'~5 locations (PA)', lon:-79.99, lat:40.44, r:7, count:5, delay:1050 },
-      { label:'Minneapolis', sub:'~4 locations (MN)', lon:-93.26, lat:44.98, r:7, count:4, delay:1100 },
-      { label:'Detroit', sub:'~4 locations (MI)', lon:-83.05, lat:42.33, r:7, count:4, delay:1150 },
-      { label:'Birmingham', sub:'~3 locations (AL)', lon:-86.80, lat:33.52, r:6, count:3, delay:1200 }
+      // Florida — 8 pins
+      { label:'Miami / South Florida', sub:'~12 locations (FL)', lon:-80.19, lat:25.77, r:8, count:12, delay:300 },
+      { label:'Fort Lauderdale', sub:'~8 locations (FL)', lon:-80.14, lat:26.12, r:7, count:8, delay:340 },
+      { label:'West Palm Beach', sub:'~4 locations (FL)', lon:-80.05, lat:26.72, r:5, count:4, delay:380 },
+      { label:'Tampa Bay', sub:'~8 locations (FL)', lon:-82.46, lat:27.95, r:7, count:8, delay:420 },
+      { label:'Sarasota / Bradenton', sub:'~3 locations (FL)', lon:-82.53, lat:27.34, r:5, count:3, delay:460 },
+      { label:'Orlando', sub:'~6 locations (FL)', lon:-81.38, lat:28.54, r:6, count:6, delay:500 },
+      { label:'Jacksonville', sub:'~5 locations (FL)', lon:-81.66, lat:30.33, r:6, count:5, delay:540 },
+      { label:'Gainesville / North FL', sub:'~2 locations (FL)', lon:-82.32, lat:29.65, r:4, count:2, delay:580 },
+      // Illinois — 6 pins
+      { label:'Chicago Downtown', sub:'~8 locations (IL)', lon:-87.63, lat:41.88, r:8, count:8, delay:620 },
+      { label:'Chicago North Shore / Evanston', sub:'~5 locations (IL)', lon:-87.68, lat:42.05, r:6, count:5, delay:660 },
+      { label:'Chicago Western Suburbs', sub:'~4 locations (IL)', lon:-87.79, lat:41.85, r:5, count:4, delay:700 },
+      { label:'Naperville / Aurora', sub:'~3 locations (IL)', lon:-88.15, lat:41.77, r:5, count:3, delay:740 },
+      { label:'Schaumburg / NW Suburbs', sub:'~2 locations (IL)', lon:-88.08, lat:42.03, r:4, count:2, delay:780 },
+      { label:'Joliet / South Suburbs', sub:'~2 locations (IL)', lon:-88.08, lat:41.53, r:4, count:2, delay:820 },
+      // Wisconsin — 5 pins
+      { label:'Milwaukee', sub:'~6 locations (WI)', lon:-87.91, lat:43.04, r:7, count:6, delay:860 },
+      { label:'Waukesha / West Milwaukee', sub:'~4 locations (WI)', lon:-88.23, lat:43.01, r:5, count:4, delay:900 },
+      { label:'Madison', sub:'~3 locations (WI)', lon:-89.40, lat:43.07, r:5, count:3, delay:940 },
+      { label:'Green Bay', sub:'~3 locations (WI)', lon:-88.02, lat:44.51, r:5, count:3, delay:980 },
+      { label:'Racine / Kenosha', sub:'~2 locations (WI)', lon:-87.78, lat:42.73, r:4, count:2, delay:1020 },
+      // Texas — 5 pins
+      { label:'Houston', sub:'~5 locations (TX)', lon:-95.37, lat:29.76, r:6, count:5, delay:1060 },
+      { label:'Dallas / Fort Worth', sub:'~4 locations (TX)', lon:-96.80, lat:32.78, r:5, count:4, delay:1100 },
+      { label:'Austin', sub:'~3 locations (TX)', lon:-97.74, lat:30.27, r:5, count:3, delay:1140 },
+      { label:'San Antonio', sub:'~2 locations (TX)', lon:-98.49, lat:29.42, r:4, count:2, delay:1180 },
+      { label:'El Paso', sub:'~2 locations (TX)', lon:-106.44, lat:31.76, r:4, count:2, delay:1220 },
+      // California — 5 pins
+      { label:'Los Angeles', sub:'~4 locations (CA)', lon:-118.24, lat:34.05, r:5, count:4, delay:1260 },
+      { label:'San Francisco Bay Area', sub:'~3 locations (CA)', lon:-122.42, lat:37.77, r:5, count:3, delay:1300 },
+      { label:'San Diego', sub:'~3 locations (CA)', lon:-117.16, lat:32.72, r:5, count:3, delay:1340 },
+      { label:'Sacramento', sub:'~2 locations (CA)', lon:-121.49, lat:38.58, r:4, count:2, delay:1380 },
+      { label:'Inland Empire / Riverside', sub:'~2 locations (CA)', lon:-117.40, lat:33.95, r:4, count:2, delay:1420 },
+      // Arizona — 3 pins
+      { label:'Phoenix / Scottsdale', sub:'~4 locations (AZ)', lon:-112.07, lat:33.45, r:5, count:4, delay:1460 },
+      { label:'Tempe / Mesa', sub:'~2 locations (AZ)', lon:-111.94, lat:33.43, r:4, count:2, delay:1500 },
+      { label:'Tucson', sub:'~2 locations (AZ)', lon:-110.97, lat:32.22, r:4, count:2, delay:1540 },
+      // Pennsylvania — 3 pins
+      { label:'Philadelphia', sub:'~3 locations (PA)', lon:-75.16, lat:39.95, r:5, count:3, delay:1580 },
+      { label:'Pittsburgh', sub:'~3 locations (PA)', lon:-79.99, lat:40.44, r:5, count:3, delay:1620 },
+      { label:'Allentown / Lehigh Valley', sub:'~2 locations (PA)', lon:-75.49, lat:40.60, r:4, count:2, delay:1660 },
+      // Georgia — 3 pins
+      { label:'Atlanta', sub:'~3 locations (GA)', lon:-84.39, lat:33.75, r:5, count:3, delay:1700 },
+      { label:'Marietta / North Atlanta', sub:'~2 locations (GA)', lon:-84.55, lat:33.95, r:4, count:2, delay:1740 },
+      { label:'Savannah', sub:'~2 locations (GA)', lon:-81.10, lat:32.08, r:4, count:2, delay:1780 },
+      // Michigan — 3 pins
+      { label:'Detroit', sub:'~3 locations (MI)', lon:-83.05, lat:42.33, r:5, count:3, delay:1820 },
+      { label:'Grand Rapids', sub:'~2 locations (MI)', lon:-85.67, lat:42.96, r:4, count:2, delay:1860 },
+      { label:'Ann Arbor', sub:'~1 location (MI)', lon:-83.74, lat:42.28, r:4, count:1, delay:1900 },
+      // Colorado — 3 pins
+      { label:'Denver', sub:'~3 locations (CO)', lon:-104.99, lat:39.74, r:5, count:3, delay:1940 },
+      { label:'Colorado Springs', sub:'~2 locations (CO)', lon:-104.82, lat:38.83, r:4, count:2, delay:1980 },
+      { label:'Boulder', sub:'~1 location (CO)', lon:-105.27, lat:40.01, r:4, count:1, delay:2020 },
+      // Minnesota — 3 pins
+      { label:'Minneapolis', sub:'~3 locations (MN)', lon:-93.26, lat:44.98, r:5, count:3, delay:2060 },
+      { label:'St. Paul', sub:'~2 locations (MN)', lon:-93.09, lat:44.95, r:4, count:2, delay:2100 },
+      { label:'Rochester', sub:'~1 location (MN)', lon:-92.47, lat:44.02, r:4, count:1, delay:2140 },
+      // Nevada — 2 pins
+      { label:'Las Vegas', sub:'~3 locations (NV)', lon:-115.14, lat:36.17, r:5, count:3, delay:2180 },
+      { label:'Reno', sub:'~2 locations (NV)', lon:-119.81, lat:39.53, r:4, count:2, delay:2220 },
+      // Alabama — 2 pins
+      { label:'Birmingham', sub:'~2 locations (AL)', lon:-86.80, lat:33.52, r:4, count:2, delay:2260 },
+      { label:'Huntsville', sub:'~2 locations (AL)', lon:-86.59, lat:34.73, r:4, count:2, delay:2300 },
+      // North Dakota — 2 pins
+      { label:'Fargo', sub:'~2 locations (ND)', lon:-96.79, lat:46.88, r:4, count:2, delay:2340 },
+      { label:'Bismarck', sub:'~1 location (ND)', lon:-100.78, lat:46.81, r:4, count:1, delay:2380 },
+      // Wyoming — 2 pins
+      { label:'Cheyenne', sub:'~1 location (WY)', lon:-104.82, lat:41.14, r:4, count:1, delay:2420 },
+      { label:'Casper', sub:'~1 location (WY)', lon:-106.31, lat:42.87, r:4, count:1, delay:2460 }
     ];
 
     // Load D3 + topojson
@@ -2164,11 +2226,13 @@ a { text-decoration: none; }
         pin.setAttribute('d', d);
         g.appendChild(pin);
 
-        if (m.count >= 2) {
+        if (m.count >= 3) {
           var countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           countText.setAttribute('class', 'fp-pin-count');
           countText.setAttribute('x', '0');
           countText.setAttribute('y', '0');
+          var fontSize = m.count >= 10 ? '9px' : m.count >= 6 ? '8px' : '7px';
+          countText.setAttribute('font-size', fontSize);
           countText.textContent = String(m.count);
           g.appendChild(countText);
         }
