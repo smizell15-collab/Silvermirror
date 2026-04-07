@@ -69,6 +69,7 @@ a { text-decoration: none; }
   --border-radius: 16px;
   --border-radius-sm: 8px;
   --border-radius-lg: 24px;
+  --color-status-active: #22C55E;
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
@@ -387,11 +388,16 @@ a { text-decoration: none; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #22C55E;
+  background: var(--color-status-active);
   box-shadow: 0 0 5px rgba(34,197,94,0.7);
   flex-shrink: 0;
   display: inline-block;
   animation: status-pulse 3s ease-in-out infinite;
+}
+/* Small variant — used inside compact tags */
+.sys-dot--sm {
+  width: 5px;
+  height: 5px;
 }
 
 @keyframes status-pulse {
@@ -551,8 +557,9 @@ a { text-decoration: none; }
   font-weight: 700;
   line-height: 1;
 }
-.sys-card__trend--up   { color: #16a34a; }
-.sys-card__trend--down { color: #16a34a; }
+.sys-card__trend--up   { color: var(--color-status-active); }
+/* ↓ on cost metrics (CPC, CPL) means lower cost = positive outcome — same green */
+.sys-card__trend--down { color: var(--color-status-active); }
 .sys-card__tag {
   display: inline-flex;
   align-items: center;
@@ -1821,7 +1828,7 @@ a { text-decoration: none; }
                   <span class="sys-dot"></span>
                   74% Show Rate
                 </div>
-                <span class="sys-card__tag"><span class="sys-dot" style="width:5px;height:5px;"></span> Active</span>
+                <span class="sys-card__tag"><span class="sys-dot sys-dot--sm"></span> Active</span>
               </div>
             </div>
 
