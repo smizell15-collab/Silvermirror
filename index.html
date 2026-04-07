@@ -264,11 +264,13 @@ a { text-decoration: none; }
 }
 
 /* ============================================
-   SECTION 2 — ACQUISITION SYSTEM
+   SECTION 2 — ACQUISITION SYSTEM (Dashboard)
    ============================================ */
+
+/* Quote: compact, left-aligned, accent left border */
 .acq-system__quote {
-  max-width: 68%;
-  margin-bottom: var(--space-lg);
+  max-width: 620px;
+  margin-bottom: var(--space-md);
   position: relative;
   padding-left: var(--space-md);
 }
@@ -283,17 +285,17 @@ a { text-decoration: none; }
 }
 .acq-system__quote-text {
   font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.01em;
   color: var(--color-text);
-  line-height: 1.65;
-  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+  margin-bottom: 4px;
 }
 .acq-system__quote-attr {
   font-family: var(--font-family);
-  font-size: var(--text-small);
+  font-size: var(--text-label);
   color: var(--color-text-secondary);
   font-weight: 600;
   opacity: 0.85;
@@ -301,28 +303,302 @@ a { text-decoration: none; }
   text-transform: uppercase;
   font-style: normal;
 }
-.acq-system__connector {
-  width: 2px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--color-accent), rgba(36,162,236,0.08));
-  margin: 0 auto var(--space-lg);
-  border-radius: 2px;
+
+/* Section header: left-aligned override */
+#section-overview .section-header {
+  text-align: left;
+  margin-bottom: var(--space-lg);
 }
-.acq-system__viz-wrap {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+#section-overview .section-header h2 {
+  max-width: 720px;
+  font-size: clamp(1.45rem, 2.8vw, 2.1rem);
+  line-height: 1.2;
 }
-.acq-system__svg {
-  width: 100%;
-  height: auto;
+
+/* ── System Dashboard Wrapper ── */
+.sys-dash {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Attribution control bar */
+.sys-dash__attr-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 20px;
+  background: rgba(36,162,236,0.05);
+  border-bottom: 1px solid var(--color-accent-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.sys-dash__attr-bar-left {
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.sys-dash__attr-bar-right {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Zones row */
+.sys-dash__zones {
+  display: flex;
+  align-items: stretch;
+  padding: 20px 16px 20px;
+  gap: 0;
+}
+
+/* Operational zones */
+.sys-dash__zone {
+  display: flex;
+  flex-direction: column;
+}
+.sys-dash__zone--left   { flex: 0 0 23%; }
+.sys-dash__zone--center { flex: 0 0 38%; padding: 0 6px; }
+.sys-dash__zone--right  { flex: 0 0 31%; }
+
+/* Zone label */
+.sys-dash__zone-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: 10px;
   display: block;
-  overflow: visible;
 }
-@media (max-width: 768px) {
+
+/* Zone inner container */
+.sys-dash__zone-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  padding: 12px;
+  flex: 1;
+}
+.sys-dash__zone--right .sys-dash__zone-inner {
+  background: rgba(36,162,236,0.025);
+  border-color: var(--color-accent-border);
+  box-shadow: 0 0 28px rgba(36,162,236,0.09), inset 0 0 0 1px rgba(36,162,236,0.08);
+}
+
+/* Flow connector between zones */
+.sys-dash__connector {
+  flex: 0 0 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 24px 2px 0;
+}
+.sys-dash__connector-line {
+  width: 100%;
+  height: 2px;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-border);
+  border-radius: 1px;
+}
+.sys-dash__connector-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -50%;
+  height: 100%; width: 50%;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  border-radius: 1px;
+  animation: flow-pulse 2.8s ease-in-out infinite;
+}
+.sys-dash__connector-arrow {
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+/* Dashboard card widget */
+.sys-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: 10px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.sys-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-border);
+}
+.sys-card__icon {
+  font-size: 13px;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: 3px;
+  opacity: 0.8;
+}
+.sys-card__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+.sys-card__subtitle {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  flex: 1;
+  line-height: 1.4;
+}
+.sys-card__kpi {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--color-accent-muted);
+  border: 1px solid var(--color-accent-border);
+  border-radius: 100px;
+  padding: 2px 8px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  letter-spacing: 0.05em;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+.sys-card__trend-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  display: inline-block;
+  box-shadow: 0 0 4px rgba(34,197,94,0.6);
+}
+
+/* Hero card — Membership (right zone, dominant) */
+.sys-card--hero {
+  background: linear-gradient(145deg, rgba(36,162,236,0.04) 0%, rgba(36,162,236,0.1) 100%);
+  border: 1px solid rgba(36,162,236,0.28);
+  border-radius: 12px;
+  padding: 20px 16px;
+  flex: 1;
+  box-shadow: 0 0 32px rgba(36,162,236,0.13);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sys-card--hero .sys-card__icon {
+  font-size: 18px;
+  opacity: 1;
+}
+.sys-card--hero .sys-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.sys-card__revenue-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+.sys-card__kpi-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.sys-card__kpi--prominent {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: transparent;
+  font-size: 0.65rem;
+  box-shadow: 0 2px 8px rgba(36,162,236,0.3);
+}
+.sys-card__tagline {
+  font-size: 0.65rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  line-height: 1.45;
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-accent-border);
+}
+
+/* Feedback loop bar */
+.sys-dash__feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-top: 1px solid var(--color-border-light);
+  background: rgba(36,162,236,0.03);
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+.sys-dash__feedback-icon {
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  opacity: 0.65;
+  line-height: 1;
+}
+
+/* Flow pulse animation */
+@keyframes flow-pulse {
+  0%   { left: -55%; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { left: 140%; opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .sys-dash__zones {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sys-dash__zone--left,
+  .sys-dash__zone--center,
+  .sys-dash__zone--right {
+    flex: none;
+    width: 100%;
+  }
+  .sys-dash__zone--center { padding: 0; }
+  .sys-dash__connector {
+    flex-direction: row;
+    padding: 0;
+    justify-content: flex-start;
+    height: 20px;
+  }
+  .sys-dash__connector-line {
+    width: 48px;
+    height: 2px;
+  }
+  .sys-dash__connector-arrow { transform: rotate(90deg); }
+  .sys-dash__attr-bar { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+@media (max-width: 640px) {
   .acq-system__quote { max-width: 100%; }
-  .acq-system__viz-wrap { overflow-x: scroll; }
-  .acq-system__svg { min-width: 720px; }
+  .sys-dash__zones { padding: 14px 12px; }
+  .sys-dash__zone-inner { padding: 10px; }
+  .sys-card--hero { min-height: 0; }
 }
 
 /* ============================================
@@ -1273,241 +1549,124 @@ a { text-decoration: none; }
 <section class="section section--warm" id="section-overview">
   <div class="section-inner section-inner--wide">
 
-    <!-- LAYER 1: Leadership Quote -->
+    <!-- Leadership Quote: compact, left-aligned -->
     <blockquote class="acq-system__quote animate-on-scroll">
       <p class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
       <cite class="acq-system__quote-attr">Matt Maroone</cite>
     </blockquote>
 
-    <!-- Vertical Connector -->
-    <div class="acq-system__connector animate-on-scroll stagger-2"></div>
-
-    <!-- LAYERS 2–5: SVG Acquisition System Visualization -->
-    <div class="acq-system__viz-wrap animate-on-scroll stagger-3">
-      <svg class="acq-system__svg" viewBox="0 0 1100 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Premium Closed-Loop Acquisition System — 6-step pipeline from paid traffic to membership revenue">
-        <title>Closed-Loop Acquisition System</title>
-        <desc>A 6-step paid acquisition pipeline: Traffic Input (Meta and Google ads) flows through Ad Engine (creative testing), Landing System (mobile-first pages), Conversion Capture (lead forms), and Automation Layer (CRM, SMS, Email) to reach the anchor outcome — Membership Conversion. An intelligence layer monitors every stage. A revenue layer below Membership tracks LTV and retention. A closed-loop arc returns performance feedback from revenue back to traffic and ad engine, enabling continuous optimization.</desc>
-        <defs>
-          <!-- Flow line gradient (left→right, strengthens toward Membership) -->
-          <linearGradient id="acq-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#24A2EC" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#24A2EC" stop-opacity="0.8"/>
-          </linearGradient>
-          <!-- Closed-loop arc gradient -->
-          <linearGradient id="acq-loop-grad" x1="100%" y1="0%" x2="0%" y2="0%">
-            <stop offset="0%" stop-color="#24A2EC" stop-opacity="0.12"/>
-            <stop offset="45%" stop-color="#24A2EC" stop-opacity="0.45"/>
-            <stop offset="100%" stop-color="#24A2EC" stop-opacity="0.1"/>
-          </linearGradient>
-          <!-- Glow for Membership node -->
-          <filter id="acq-node-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <!-- Subtle glow for flow lines -->
-          <filter id="acq-line-glow" x="-5%" y="-200%" width="110%" height="500%">
-            <feGaussianBlur stdDeviation="1.5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        <!-- ═══════════════════════════════════════════════════════
-             LAYER 3: INTELLIGENCE OVERLAY (above pipeline)
-             ═══════════════════════════════════════════════════════ -->
-        <g id="acq-intel">
-          <!-- Section label -->
-          <text x="30" y="18" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#888888" letter-spacing="0.14em" opacity="0.55">INTELLIGENCE LAYER — EVERY STAGE MEASURED &amp; OPTIMIZED</text>
-          <!-- Horizontal intelligence strip -->
-          <line x1="30" y1="30" x2="1070" y2="30" stroke="#24A2EC" stroke-width="0.7" opacity="0.28"/>
-          <!-- Data points on strip (one per node) -->
-          <circle cx="75"   cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <circle cx="265"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <circle cx="455"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <circle cx="645"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <circle cx="835"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <circle cx="1025" cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
-          <!-- Tiny line-chart strokes between nodes -->
-          <polyline points="120,34 128,25 136,28 144,21 152,26" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="360,34 368,26 376,29 384,22 392,27" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="700,34 708,25 716,28 724,21 732,27" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="900,34 908,24 916,28 924,21 932,26" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Gear outlines (optimisation icons) -->
-          <circle cx="220" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
-          <circle cx="220" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
-          <circle cx="550" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
-          <circle cx="550" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
-          <circle cx="880" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
-          <circle cx="880" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
-          <!-- Dashed drop lines from strip to each pipeline node -->
-          <line x1="75"   y1="33" x2="75"   y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-          <line x1="265"  y1="33" x2="265"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-          <line x1="455"  y1="33" x2="455"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-          <line x1="645"  y1="33" x2="645"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-          <line x1="835"  y1="33" x2="835"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-          <line x1="1025" y1="33" x2="1025" y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
-        </g>
-
-        <!-- ═══════════════════════════════════════════════════════
-             LAYER 2: PIPELINE FLOW LINES (behind nodes)
-             ═══════════════════════════════════════════════════════ -->
-        <g id="acq-flow-lines">
-          <!-- N1 Traffic → N2 Ad Engine -->
-          <path d="M 97 175 L 243 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
-          <!-- N2 Ad Engine → N3 Landing -->
-          <path d="M 287 175 L 440 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
-          <!-- N3 Landing → N4 Conversion -->
-          <path d="M 470 175 L 621 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
-          <!-- N4 Conversion → N5 Automation -->
-          <path d="M 669 175 L 810 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
-          <!-- N5 Automation → N6 Membership -->
-          <path d="M 863 175 L 987 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
-        </g>
-
-        <!-- ═══════════════════════════════════════════════════════
-             LAYER 2: PIPELINE NODES
-             ═══════════════════════════════════════════════════════ -->
-
-        <!-- NODE 1: Traffic Input — smallest, x=75 -->
-        <g id="acq-n1" transform="translate(75,175)">
-          <circle r="22" fill="rgba(36,162,236,0.04)" stroke="#24A2EC" stroke-width="1.3" opacity="0.6"/>
-          <!-- Meta (left) -->
-          <circle cx="-8" cy="0" r="8" fill="none" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
-          <circle cx="-8" cy="0" r="2.5" fill="#24A2EC" opacity="0.45"/>
-          <!-- Google (right) -->
-          <circle cx="8" cy="0" r="8" fill="none" stroke="#888888" stroke-width="1.3" opacity="0.5"/>
-          <circle cx="8" cy="0" r="2.5" fill="#888888" opacity="0.35"/>
-        </g>
-        <text x="75" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Traffic Input</text>
-        <text x="75" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Meta · Google</text>
-        <text x="75" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CPC</text>
-
-        <!-- NODE 2: Ad Engine — x=265 -->
-        <g id="acq-n2" transform="translate(265,175)">
-          <rect x="-22" y="-18" width="44" height="36" rx="5" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
-          <!-- 2×2 creative grid -->
-          <rect x="-17" y="-13" width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
-          <rect x="3"   y="-13" width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
-          <rect x="-17" y="2"   width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
-          <!-- Active/highlighted creative (bottom-right) -->
-          <rect x="3"   y="2"   width="18" height="11" rx="2" fill="rgba(36,162,236,0.18)" stroke="#24A2EC" stroke-width="1.2" opacity="0.85"/>
-        </g>
-        <text x="265" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Ad Engine</text>
-        <text x="265" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Creative · Testing</text>
-        <text x="265" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CPL</text>
-
-        <!-- NODE 3: Landing System — x=455 -->
-        <g id="acq-n3" transform="translate(455,175)">
-          <!-- Phone outline -->
-          <rect x="-14" y="-26" width="28" height="52" rx="6" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.7"/>
-          <!-- UI header line -->
-          <rect x="-9" y="-19" width="18" height="3" rx="1.5" fill="#24A2EC" opacity="0.3"/>
-          <!-- UI content lines -->
-          <rect x="-9" y="-13" width="14" height="2" rx="1" fill="#24A2EC" opacity="0.2"/>
-          <!-- CTA block -->
-          <rect x="-9" y="-8" width="18" height="8" rx="2" fill="rgba(36,162,236,0.18)" stroke="#24A2EC" stroke-width="0.9" opacity="0.55"/>
-          <!-- Form field hint -->
-          <rect x="-9" y="4"  width="18" height="4" rx="1.5" fill="rgba(36,162,236,0.6)" opacity="0.55"/>
-          <!-- Home indicator -->
-          <circle cx="0" cy="16" r="3" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.45"/>
-        </g>
-        <text x="455" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Landing System</text>
-        <text x="455" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Mobile-First</text>
-        <text x="455" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CVR</text>
-
-        <!-- NODE 4: Conversion Capture — x=645 -->
-        <g id="acq-n4" transform="translate(645,175)">
-          <rect x="-24" y="-22" width="48" height="44" rx="5" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.7"/>
-          <!-- Form label -->
-          <rect x="-18" y="-16" width="24" height="2.5" rx="1" fill="#888888" opacity="0.3"/>
-          <!-- Input field 1 -->
-          <rect x="-18" y="-11" width="36" height="7" rx="2" fill="none" stroke="#888888" stroke-width="0.9" opacity="0.45"/>
-          <!-- Input field 2 -->
-          <rect x="-18" y="0"   width="36" height="7" rx="2" fill="none" stroke="#888888" stroke-width="0.9" opacity="0.45"/>
-          <!-- Active field (highlighted) -->
-          <rect x="-18" y="11"  width="36" height="7" rx="2" fill="rgba(36,162,236,0.14)" stroke="#24A2EC" stroke-width="1.2" opacity="0.85"/>
-        </g>
-        <text x="645" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Conversion Capture</text>
-        <text x="645" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Lead Form</text>
-
-        <!-- NODE 5: Automation Layer — x=835 -->
-        <g id="acq-n5" transform="translate(835,175)">
-          <!-- CRM (top-center) -->
-          <rect x="-12" y="-32" width="24" height="16" rx="3" fill="rgba(36,162,236,0.08)" stroke="#24A2EC" stroke-width="1.3" opacity="0.75"/>
-          <text x="0" y="-21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.8" letter-spacing="0.05em">CRM</text>
-          <!-- SMS (bottom-left) -->
-          <rect x="-30" y="10" width="22" height="16" rx="3" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
-          <text x="-19" y="21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.7" letter-spacing="0.05em">SMS</text>
-          <!-- Email (bottom-right) -->
-          <rect x="8"   y="10" width="22" height="16" rx="3" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
-          <text x="19"  y="21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.7" letter-spacing="0.05em">Email</text>
-          <!-- Circuitry connections -->
-          <circle cx="0" cy="0" r="2.8" fill="#24A2EC" opacity="0.38"/>
-          <line x1="0" y1="-16" x2="0"   y2="-2.8" stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
-          <line x1="-2" y1="2"  x2="-19" y2="10"   stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
-          <line x1="2"  y1="2"  x2="19"  y2="10"   stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
-        </g>
-        <text x="835" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Automation Layer</text>
-        <text x="835" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">CRM · SMS · Email</text>
-
-        <!-- NODE 6: Membership Conversion — DOMINANT, x=1025 -->
-        <g id="acq-n6" transform="translate(1025,175)" filter="url(#acq-node-glow)">
-          <!-- Outer ambient ring -->
-          <circle r="42" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="0.7" opacity="0.3"/>
-          <!-- Main ring -->
-          <circle r="30" fill="rgba(36,162,236,0.09)" stroke="#24A2EC" stroke-width="2" opacity="0.9"/>
-          <!-- Inner ring -->
-          <circle r="19" fill="rgba(36,162,236,0.14)" stroke="#24A2EC" stroke-width="1.5" opacity="0.85"/>
-          <!-- Core -->
-          <circle r="6" fill="#24A2EC" opacity="0.7"/>
-        </g>
-        <text x="1025" y="232" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="10" fill="#2C2C2C" font-weight="600" letter-spacing="0.03em">Membership</text>
-        <text x="1025" y="245" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="10" fill="#2C2C2C" font-weight="600" letter-spacing="0.03em">Conversion</text>
-        <text x="1025" y="258" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Anchor Outcome</text>
-        <text x="1025" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">LTV</text>
-
-        <!-- ═══════════════════════════════════════════════════════
-             LAYER 4: REVENUE LAYER (below Membership node)
-             ═══════════════════════════════════════════════════════ -->
-        <g id="acq-revenue">
-          <!-- Vertical line from membership bottom -->
-          <line x1="1025" y1="218" x2="1025" y2="285" stroke="#24A2EC" stroke-width="1.4" opacity="0.4"/>
-          <!-- Revenue badge -->
-          <rect x="968" y="285" width="114" height="28" rx="7" fill="rgba(36,162,236,0.07)" stroke="#24A2EC" stroke-width="1" opacity="0.5"/>
-          <text x="1025" y="304" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9" fill="#24A2EC" font-weight="700" letter-spacing="0.1em" opacity="0.72">REVENUE</text>
-          <!-- LTV badge -->
-          <rect x="968" y="323" width="50" height="22" rx="5" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="0.9" opacity="0.48"/>
-          <text x="993" y="338" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#545454" font-weight="600" letter-spacing="0.07em" opacity="0.72">LTV</text>
-          <!-- Retention badge -->
-          <rect x="1032" y="323" width="64" height="22" rx="5" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="0.9" opacity="0.48"/>
-          <text x="1064" y="338" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#545454" font-weight="600" letter-spacing="0.07em" opacity="0.72">RETENTION</text>
-          <!-- Retention loop arrow (small curved path) -->
-          <path d="M 968 334 C 945 334, 938 358, 958 364 C 978 370, 994 358, 968 348" fill="none" stroke="#24A2EC" stroke-width="1" stroke-dasharray="3,2" opacity="0.38"/>
-        </g>
-
-        <!-- ═══════════════════════════════════════════════════════
-             LAYER 5: CLOSED-LOOP RETURN PATH
-             ═══════════════════════════════════════════════════════ -->
-        <g id="acq-loop">
-          <!-- The arc: from Revenue area → sweeps down → returns to Traffic Input -->
-          <path d="M 1025 380 C 1075 430, 1075 465, 550 462 C 25 459, 18 360, 52 198"
-            fill="none"
-            stroke="url(#acq-loop-grad)"
-            stroke-width="1.8"
-            stroke-dasharray="6,4"
-            opacity="0.6"
-            filter="url(#acq-line-glow)"/>
-          <!-- Loop label at bottom of arc -->
-          <text x="550" y="455" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8.5" fill="#24A2EC" letter-spacing="0.1em" opacity="0.55">FEEDBACK · LEARNING · SCALING EFFICIENCY</text>
-          <!-- Return-point indicator at Traffic node -->
-          <circle cx="57" cy="207" r="2.8" fill="#24A2EC" opacity="0.3"/>
-        </g>
-
-      </svg>
+    <!-- Section Header -->
+    <div class="section-header animate-on-scroll stagger-2">
+      <span class="eyebrow">Acquisition Architecture</span>
+      <h2>Closed-Loop Acquisition System Built for Revenue, Not Leads</h2>
     </div>
+
+    <!-- System Dashboard -->
+    <div class="sys-dash animate-on-scroll stagger-3">
+
+      <!-- Attribution / Control Bar -->
+      <div class="sys-dash__attr-bar">
+        <span class="sys-dash__attr-bar-left">Full Attribution Layer — Every Step Tracked from Click to Member</span>
+        <span class="sys-dash__attr-bar-right">AI + SEO + Paid Media Operating as One System</span>
+      </div>
+
+      <!-- 3 Operational Zones -->
+      <div class="sys-dash__zones">
+
+        <!-- LEFT ZONE: Acquisition Control -->
+        <div class="sys-dash__zone sys-dash__zone--left">
+          <span class="sys-dash__zone-label">Acquisition Control</span>
+          <div class="sys-dash__zone-inner">
+
+            <div class="sys-card">
+              <span class="sys-card__icon">◆</span>
+              <div class="sys-card__title">Traffic Input</div>
+              <div class="sys-card__subtitle">Meta · Google · SEO</div>
+              <div class="sys-card__kpi"><span class="sys-card__trend-dot"></span>$4.20 CPC</div>
+            </div>
+
+            <div class="sys-card">
+              <span class="sys-card__icon">⚡</span>
+              <div class="sys-card__title">Ad Engine</div>
+              <div class="sys-card__subtitle">Creative Testing &amp; AI</div>
+              <div class="sys-card__kpi"><span class="sys-card__trend-dot"></span>3.2% CTR</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flow Connector -->
+        <div class="sys-dash__connector" aria-hidden="true">
+          <div class="sys-dash__connector-line"></div>
+          <div class="sys-dash__connector-arrow">›</div>
+        </div>
+
+        <!-- CENTER ZONE: Conversion Engine -->
+        <div class="sys-dash__zone sys-dash__zone--center">
+          <span class="sys-dash__zone-label">Conversion Engine</span>
+          <div class="sys-dash__zone-inner">
+
+            <div class="sys-card">
+              <span class="sys-card__icon">▣</span>
+              <div class="sys-card__title">Landing System</div>
+              <div class="sys-card__subtitle">Mobile-First Pages</div>
+              <div class="sys-card__kpi">8.4% CVR</div>
+            </div>
+
+            <div class="sys-card">
+              <span class="sys-card__icon">⊡</span>
+              <div class="sys-card__title">Conversion Capture</div>
+              <div class="sys-card__subtitle">Forms · Booking</div>
+              <div class="sys-card__kpi">$32 CPL</div>
+            </div>
+
+            <div class="sys-card">
+              <span class="sys-card__icon">⟳</span>
+              <div class="sys-card__title">Automation Layer</div>
+              <div class="sys-card__subtitle">CRM · SMS · Email</div>
+              <div class="sys-card__kpi">74% Show Rate</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flow Connector -->
+        <div class="sys-dash__connector" aria-hidden="true">
+          <div class="sys-dash__connector-line"></div>
+          <div class="sys-dash__connector-arrow">›</div>
+        </div>
+
+        <!-- RIGHT ZONE: Business Impact (dominant) -->
+        <div class="sys-dash__zone sys-dash__zone--right">
+          <span class="sys-dash__zone-label">Business Impact</span>
+          <div class="sys-dash__zone-inner">
+
+            <div class="sys-card sys-card--hero">
+              <span class="sys-card__icon">◉</span>
+              <div class="sys-card__title">Membership Conversion</div>
+              <div class="sys-card__revenue-label">Revenue</div>
+              <div class="sys-card__kpi-group">
+                <div class="sys-card__kpi sys-card__kpi--prominent">$2,400 LTV</div>
+                <div class="sys-card__kpi">92% Retention</div>
+              </div>
+              <div class="sys-card__tagline">System optimized for revenue, not leads</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /.sys-dash__zones -->
+
+      <!-- Feedback Loop Bar -->
+      <div class="sys-dash__feedback">
+        <span class="sys-dash__feedback-icon">↺</span>
+        <span>Continuous Optimization Loop — Data → Insight → Action → Revenue</span>
+      </div>
+
+    </div><!-- /.sys-dash -->
 
   </div>
 </section>
-
 <!-- ================================================
      SECTION 3 — WHERE THIS BREAKS
      ================================================ -->
