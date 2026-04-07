@@ -290,7 +290,6 @@ a { text-decoration: none; }
   color: var(--color-text);
   line-height: 1.65;
   margin-bottom: var(--space-sm);
-  display: block;
 }
 .acq-system__quote-attr {
   font-family: var(--font-family);
@@ -1276,7 +1275,7 @@ a { text-decoration: none; }
 
     <!-- LAYER 1: Leadership Quote -->
     <blockquote class="acq-system__quote animate-on-scroll">
-      <span class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</span>
+      <p class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
       <cite class="acq-system__quote-attr">Matt Maroone</cite>
     </blockquote>
 
@@ -1287,6 +1286,7 @@ a { text-decoration: none; }
     <div class="acq-system__viz-wrap animate-on-scroll stagger-3">
       <svg class="acq-system__svg" viewBox="0 0 1100 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Premium Closed-Loop Acquisition System — 6-step pipeline from paid traffic to membership revenue">
         <title>Closed-Loop Acquisition System</title>
+        <desc>A 6-step paid acquisition pipeline: Traffic Input (Meta and Google ads) flows through Ad Engine (creative testing), Landing System (mobile-first pages), Conversion Capture (lead forms), and Automation Layer (CRM, SMS, Email) to reach the anchor outcome — Membership Conversion. An intelligence layer monitors every stage. A revenue layer below Membership tracks LTV and retention. A closed-loop arc returns performance feedback from revenue back to traffic and ad engine, enabling continuous optimization.</desc>
         <defs>
           <!-- Flow line gradient (left→right, strengthens toward Membership) -->
           <linearGradient id="acq-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1316,7 +1316,7 @@ a { text-decoration: none; }
              ═══════════════════════════════════════════════════════ -->
         <g id="acq-intel">
           <!-- Section label -->
-          <text x="30" y="18" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#888888" letter-spacing="0.14em" opacity="0.55">INTELLIGENCE LAYER — EVERY STAGE MEASURED &amp; OPTIMISED</text>
+          <text x="30" y="18" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#888888" letter-spacing="0.14em" opacity="0.55">INTELLIGENCE LAYER — EVERY STAGE MEASURED &amp; OPTIMIZED</text>
           <!-- Horizontal intelligence strip -->
           <line x1="30" y1="30" x2="1070" y2="30" stroke="#24A2EC" stroke-width="0.7" opacity="0.28"/>
           <!-- Data points on strip (one per node) -->
@@ -1497,7 +1497,7 @@ a { text-decoration: none; }
             opacity="0.6"
             filter="url(#acq-line-glow)"/>
           <!-- Loop label at bottom of arc -->
-          <text x="550" y="455" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#24A2EC" letter-spacing="0.12em" opacity="0.5">FEEDBACK · LEARNING · SCALING EFFICIENCY</text>
+          <text x="550" y="455" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8.5" fill="#24A2EC" letter-spacing="0.1em" opacity="0.55">FEEDBACK · LEARNING · SCALING EFFICIENCY</text>
           <!-- Return-point indicator at Traffic node -->
           <circle cx="57" cy="207" r="2.8" fill="#24A2EC" opacity="0.3"/>
         </g>
