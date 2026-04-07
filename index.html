@@ -264,42 +264,67 @@ a { text-decoration: none; }
 }
 
 /* ============================================
-   SECTION 2 — OVERVIEW
+   SECTION 2 — ACQUISITION SYSTEM
    ============================================ */
-.overview__cards {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-md); margin-bottom: var(--space-xl);
+.acq-system__quote {
+  max-width: 68%;
+  margin-bottom: var(--space-lg);
+  position: relative;
+  padding-left: var(--space-md);
 }
-.overview__card {
-  background: #FFFFFF;
-  border: 1px solid rgba(0,0,0,0.06); border-radius: var(--border-radius);
-  padding: var(--space-lg); box-shadow: var(--shadow-md);
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+.acq-system__quote::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px rgba(36,162,236,0.4);
+  border-radius: 2px;
 }
-.overview__card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.overview__card-icon { font-size: 2rem; margin-bottom: var(--space-sm); }
-.overview__card-title { font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 700; margin-bottom: var(--space-sm); color: var(--color-text); }
-.overview__card-text { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
-.overview__question {
+.acq-system__quote-text {
   font-family: var(--font-serif);
-  text-align: center; font-size: var(--text-h3); font-weight: 600;
-  color: var(--color-text); padding: var(--space-xl) var(--space-lg);
-  border-top: 1px solid var(--color-border-light); margin-top: var(--space-lg);
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  line-height: 1.65;
+  margin-bottom: var(--space-sm);
+  display: block;
 }
-.overview__quote {
-  border-left: 3px solid var(--color-accent); padding: var(--space-lg) var(--space-xl);
-  background: var(--color-accent-muted); border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  margin-bottom: var(--space-md);
+.acq-system__quote-attr {
+  font-family: var(--font-family);
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  opacity: 0.85;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-style: normal;
 }
-.overview__quote-text { font-family: var(--font-serif); font-size: var(--text-body); color: var(--color-text); font-style: italic; line-height: 1.7; margin-bottom: var(--space-xs); }
-.overview__quote-attr { font-size: var(--text-small); color: var(--color-text-muted); font-weight: 600; }
-.overview__landscape {
-  background: #FFFFFF;
-  border: 1px solid rgba(0,0,0,0.06); border-radius: var(--border-radius);
-  padding: var(--space-lg); box-shadow: var(--shadow-sm); margin-bottom: var(--space-md);
+.acq-system__connector {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--color-accent), rgba(36,162,236,0.08));
+  margin: 0 auto var(--space-lg);
+  border-radius: 2px;
 }
-.overview__landscape-label { display: block; text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--text-label); color: var(--color-accent); font-weight: 600; margin-bottom: var(--space-xs); }
-.overview__landscape-text { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
+.acq-system__viz-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.acq-system__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+@media (max-width: 768px) {
+  .acq-system__quote { max-width: 100%; }
+  .acq-system__viz-wrap { overflow-x: scroll; }
+  .acq-system__svg { min-width: 720px; }
+}
 
 /* ============================================
    SECTION 3 — CONCERNS
@@ -1247,33 +1272,239 @@ a { text-decoration: none; }
      SECTION 2 — YOUR BUSINESS
      ================================================ -->
 <section class="section section--warm" id="section-overview">
-  <div class="section-inner">
-    <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Business Context</span>
-      <h2>This Is the Acquisition Model</h2>
+  <div class="section-inner section-inner--wide">
+
+    <!-- LAYER 1: Leadership Quote -->
+    <blockquote class="acq-system__quote animate-on-scroll">
+      <span class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</span>
+      <cite class="acq-system__quote-attr">Matt Maroone</cite>
+    </blockquote>
+
+    <!-- Vertical Connector -->
+    <div class="acq-system__connector animate-on-scroll stagger-2"></div>
+
+    <!-- LAYERS 2–5: SVG Acquisition System Visualization -->
+    <div class="acq-system__viz-wrap animate-on-scroll stagger-3">
+      <svg class="acq-system__svg" viewBox="0 0 1100 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Premium Closed-Loop Acquisition System — 6-step pipeline from paid traffic to membership revenue">
+        <title>Closed-Loop Acquisition System</title>
+        <defs>
+          <!-- Flow line gradient (left→right, strengthens toward Membership) -->
+          <linearGradient id="acq-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#24A2EC" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#24A2EC" stop-opacity="0.8"/>
+          </linearGradient>
+          <!-- Closed-loop arc gradient -->
+          <linearGradient id="acq-loop-grad" x1="100%" y1="0%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#24A2EC" stop-opacity="0.12"/>
+            <stop offset="45%" stop-color="#24A2EC" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#24A2EC" stop-opacity="0.1"/>
+          </linearGradient>
+          <!-- Glow for Membership node -->
+          <filter id="acq-node-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Subtle glow for flow lines -->
+          <filter id="acq-line-glow" x="-5%" y="-200%" width="110%" height="500%">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ═══════════════════════════════════════════════════════
+             LAYER 3: INTELLIGENCE OVERLAY (above pipeline)
+             ═══════════════════════════════════════════════════════ -->
+        <g id="acq-intel">
+          <!-- Section label -->
+          <text x="30" y="18" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#888888" letter-spacing="0.14em" opacity="0.55">INTELLIGENCE LAYER — EVERY STAGE MEASURED &amp; OPTIMISED</text>
+          <!-- Horizontal intelligence strip -->
+          <line x1="30" y1="30" x2="1070" y2="30" stroke="#24A2EC" stroke-width="0.7" opacity="0.28"/>
+          <!-- Data points on strip (one per node) -->
+          <circle cx="75"   cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <circle cx="265"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <circle cx="455"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <circle cx="645"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <circle cx="835"  cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <circle cx="1025" cy="30" r="2.2" fill="#24A2EC" opacity="0.45"/>
+          <!-- Tiny line-chart strokes between nodes -->
+          <polyline points="120,34 128,25 136,28 144,21 152,26" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="360,34 368,26 376,29 384,22 392,27" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="700,34 708,25 716,28 724,21 732,27" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="900,34 908,24 916,28 924,21 932,26" fill="none" stroke="#24A2EC" stroke-width="1.2" opacity="0.42" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Gear outlines (optimisation icons) -->
+          <circle cx="220" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
+          <circle cx="220" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
+          <circle cx="550" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
+          <circle cx="550" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
+          <circle cx="880" cy="30" r="5" fill="none" stroke="#24A2EC" stroke-width="0.9" opacity="0.38"/>
+          <circle cx="880" cy="30" r="2.2" fill="none" stroke="#24A2EC" stroke-width="0.8" opacity="0.38"/>
+          <!-- Dashed drop lines from strip to each pipeline node -->
+          <line x1="75"   y1="33" x2="75"   y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+          <line x1="265"  y1="33" x2="265"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+          <line x1="455"  y1="33" x2="455"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+          <line x1="645"  y1="33" x2="645"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+          <line x1="835"  y1="33" x2="835"  y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+          <line x1="1025" y1="33" x2="1025" y2="130" stroke="#24A2EC" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.28"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════════════════
+             LAYER 2: PIPELINE FLOW LINES (behind nodes)
+             ═══════════════════════════════════════════════════════ -->
+        <g id="acq-flow-lines">
+          <!-- N1 Traffic → N2 Ad Engine -->
+          <path d="M 97 175 L 243 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
+          <!-- N2 Ad Engine → N3 Landing -->
+          <path d="M 287 175 L 440 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
+          <!-- N3 Landing → N4 Conversion -->
+          <path d="M 470 175 L 621 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
+          <!-- N4 Conversion → N5 Automation -->
+          <path d="M 669 175 L 810 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
+          <!-- N5 Automation → N6 Membership -->
+          <path d="M 863 175 L 987 175" fill="none" stroke="url(#acq-flow-grad)" stroke-width="1.5" filter="url(#acq-line-glow)" opacity="0.85"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════════════════
+             LAYER 2: PIPELINE NODES
+             ═══════════════════════════════════════════════════════ -->
+
+        <!-- NODE 1: Traffic Input — smallest, x=75 -->
+        <g id="acq-n1" transform="translate(75,175)">
+          <circle r="22" fill="rgba(36,162,236,0.04)" stroke="#24A2EC" stroke-width="1.3" opacity="0.6"/>
+          <!-- Meta (left) -->
+          <circle cx="-8" cy="0" r="8" fill="none" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
+          <circle cx="-8" cy="0" r="2.5" fill="#24A2EC" opacity="0.45"/>
+          <!-- Google (right) -->
+          <circle cx="8" cy="0" r="8" fill="none" stroke="#888888" stroke-width="1.3" opacity="0.5"/>
+          <circle cx="8" cy="0" r="2.5" fill="#888888" opacity="0.35"/>
+        </g>
+        <text x="75" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Traffic Input</text>
+        <text x="75" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Meta · Google</text>
+        <text x="75" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CPC</text>
+
+        <!-- NODE 2: Ad Engine — x=265 -->
+        <g id="acq-n2" transform="translate(265,175)">
+          <rect x="-22" y="-18" width="44" height="36" rx="5" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
+          <!-- 2×2 creative grid -->
+          <rect x="-17" y="-13" width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
+          <rect x="3"   y="-13" width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
+          <rect x="-17" y="2"   width="18" height="11" rx="2" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.6"/>
+          <!-- Active/highlighted creative (bottom-right) -->
+          <rect x="3"   y="2"   width="18" height="11" rx="2" fill="rgba(36,162,236,0.18)" stroke="#24A2EC" stroke-width="1.2" opacity="0.85"/>
+        </g>
+        <text x="265" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Ad Engine</text>
+        <text x="265" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Creative · Testing</text>
+        <text x="265" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CPL</text>
+
+        <!-- NODE 3: Landing System — x=455 -->
+        <g id="acq-n3" transform="translate(455,175)">
+          <!-- Phone outline -->
+          <rect x="-14" y="-26" width="28" height="52" rx="6" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.7"/>
+          <!-- UI header line -->
+          <rect x="-9" y="-19" width="18" height="3" rx="1.5" fill="#24A2EC" opacity="0.3"/>
+          <!-- UI content lines -->
+          <rect x="-9" y="-13" width="14" height="2" rx="1" fill="#24A2EC" opacity="0.2"/>
+          <!-- CTA block -->
+          <rect x="-9" y="-8" width="18" height="8" rx="2" fill="rgba(36,162,236,0.18)" stroke="#24A2EC" stroke-width="0.9" opacity="0.55"/>
+          <!-- Form field hint -->
+          <rect x="-9" y="4"  width="18" height="4" rx="1.5" fill="rgba(36,162,236,0.6)" opacity="0.55"/>
+          <!-- Home indicator -->
+          <circle cx="0" cy="16" r="3" fill="none" stroke="#24A2EC" stroke-width="1" opacity="0.45"/>
+        </g>
+        <text x="455" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Landing System</text>
+        <text x="455" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Mobile-First</text>
+        <text x="455" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">CVR</text>
+
+        <!-- NODE 4: Conversion Capture — x=645 -->
+        <g id="acq-n4" transform="translate(645,175)">
+          <rect x="-24" y="-22" width="48" height="44" rx="5" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="1.3" opacity="0.7"/>
+          <!-- Form label -->
+          <rect x="-18" y="-16" width="24" height="2.5" rx="1" fill="#888888" opacity="0.3"/>
+          <!-- Input field 1 -->
+          <rect x="-18" y="-11" width="36" height="7" rx="2" fill="none" stroke="#888888" stroke-width="0.9" opacity="0.45"/>
+          <!-- Input field 2 -->
+          <rect x="-18" y="0"   width="36" height="7" rx="2" fill="none" stroke="#888888" stroke-width="0.9" opacity="0.45"/>
+          <!-- Active field (highlighted) -->
+          <rect x="-18" y="11"  width="36" height="7" rx="2" fill="rgba(36,162,236,0.14)" stroke="#24A2EC" stroke-width="1.2" opacity="0.85"/>
+        </g>
+        <text x="645" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Conversion Capture</text>
+        <text x="645" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Lead Form</text>
+
+        <!-- NODE 5: Automation Layer — x=835 -->
+        <g id="acq-n5" transform="translate(835,175)">
+          <!-- CRM (top-center) -->
+          <rect x="-12" y="-32" width="24" height="16" rx="3" fill="rgba(36,162,236,0.08)" stroke="#24A2EC" stroke-width="1.3" opacity="0.75"/>
+          <text x="0" y="-21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.8" letter-spacing="0.05em">CRM</text>
+          <!-- SMS (bottom-left) -->
+          <rect x="-30" y="10" width="22" height="16" rx="3" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
+          <text x="-19" y="21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.7" letter-spacing="0.05em">SMS</text>
+          <!-- Email (bottom-right) -->
+          <rect x="8"   y="10" width="22" height="16" rx="3" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="1.3" opacity="0.65"/>
+          <text x="19"  y="21" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="5.5" fill="#24A2EC" opacity="0.7" letter-spacing="0.05em">Email</text>
+          <!-- Circuitry connections -->
+          <circle cx="0" cy="0" r="2.8" fill="#24A2EC" opacity="0.38"/>
+          <line x1="0" y1="-16" x2="0"   y2="-2.8" stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
+          <line x1="-2" y1="2"  x2="-19" y2="10"   stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
+          <line x1="2"  y1="2"  x2="19"  y2="10"   stroke="#24A2EC" stroke-width="1" opacity="0.35"/>
+        </g>
+        <text x="835" y="212" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9.5" fill="#545454" font-weight="500" letter-spacing="0.03em">Automation Layer</text>
+        <text x="835" y="224" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">CRM · SMS · Email</text>
+
+        <!-- NODE 6: Membership Conversion — DOMINANT, x=1025 -->
+        <g id="acq-n6" transform="translate(1025,175)" filter="url(#acq-node-glow)">
+          <!-- Outer ambient ring -->
+          <circle r="42" fill="rgba(36,162,236,0.05)" stroke="#24A2EC" stroke-width="0.7" opacity="0.3"/>
+          <!-- Main ring -->
+          <circle r="30" fill="rgba(36,162,236,0.09)" stroke="#24A2EC" stroke-width="2" opacity="0.9"/>
+          <!-- Inner ring -->
+          <circle r="19" fill="rgba(36,162,236,0.14)" stroke="#24A2EC" stroke-width="1.5" opacity="0.85"/>
+          <!-- Core -->
+          <circle r="6" fill="#24A2EC" opacity="0.7"/>
+        </g>
+        <text x="1025" y="232" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="10" fill="#2C2C2C" font-weight="600" letter-spacing="0.03em">Membership</text>
+        <text x="1025" y="245" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="10" fill="#2C2C2C" font-weight="600" letter-spacing="0.03em">Conversion</text>
+        <text x="1025" y="258" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#888888" letter-spacing="0.05em">Anchor Outcome</text>
+        <text x="1025" y="140" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7.5" fill="#24A2EC" font-weight="600" letter-spacing="0.08em" opacity="0.4">LTV</text>
+
+        <!-- ═══════════════════════════════════════════════════════
+             LAYER 4: REVENUE LAYER (below Membership node)
+             ═══════════════════════════════════════════════════════ -->
+        <g id="acq-revenue">
+          <!-- Vertical line from membership bottom -->
+          <line x1="1025" y1="218" x2="1025" y2="285" stroke="#24A2EC" stroke-width="1.4" opacity="0.4"/>
+          <!-- Revenue badge -->
+          <rect x="968" y="285" width="114" height="28" rx="7" fill="rgba(36,162,236,0.07)" stroke="#24A2EC" stroke-width="1" opacity="0.5"/>
+          <text x="1025" y="304" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="9" fill="#24A2EC" font-weight="700" letter-spacing="0.1em" opacity="0.72">REVENUE</text>
+          <!-- LTV badge -->
+          <rect x="968" y="323" width="50" height="22" rx="5" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="0.9" opacity="0.48"/>
+          <text x="993" y="338" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#545454" font-weight="600" letter-spacing="0.07em" opacity="0.72">LTV</text>
+          <!-- Retention badge -->
+          <rect x="1032" y="323" width="64" height="22" rx="5" fill="rgba(36,162,236,0.06)" stroke="#24A2EC" stroke-width="0.9" opacity="0.48"/>
+          <text x="1064" y="338" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="#545454" font-weight="600" letter-spacing="0.07em" opacity="0.72">RETENTION</text>
+          <!-- Retention loop arrow (small curved path) -->
+          <path d="M 968 334 C 945 334, 938 358, 958 364 C 978 370, 994 358, 968 348" fill="none" stroke="#24A2EC" stroke-width="1" stroke-dasharray="3,2" opacity="0.38"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════════════════
+             LAYER 5: CLOSED-LOOP RETURN PATH
+             ═══════════════════════════════════════════════════════ -->
+        <g id="acq-loop">
+          <!-- The arc: from Revenue area → sweeps down → returns to Traffic Input -->
+          <path d="M 1025 380 C 1075 430, 1075 465, 550 462 C 25 459, 18 360, 52 198"
+            fill="none"
+            stroke="url(#acq-loop-grad)"
+            stroke-width="1.8"
+            stroke-dasharray="6,4"
+            opacity="0.6"
+            filter="url(#acq-line-glow)"/>
+          <!-- Loop label at bottom of arc -->
+          <text x="550" y="455" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="#24A2EC" letter-spacing="0.12em" opacity="0.5">FEEDBACK · LEARNING · SCALING EFFICIENCY</text>
+          <!-- Return-point indicator at Traffic node -->
+          <circle cx="57" cy="207" r="2.8" fill="#24A2EC" opacity="0.3"/>
+        </g>
+
+      </svg>
     </div>
-    <div class="overview__cards">
-      <div class="overview__card animate-on-scroll stagger-2">
-        <div class="overview__card-icon">🔄</div>
-        <h3 class="overview__card-title">The Flow</h3>
-        <p class="overview__card-text">Ad → Booking → Visit → Enrolled Member → Recurring Revenue</p>
-      </div>
-      <div class="overview__card animate-on-scroll stagger-3">
-        <div class="overview__card-icon">💎</div>
-        <h3 class="overview__card-title">What Drives Value</h3>
-        <p class="overview__card-text">Bookings create volume. Memberships create revenue.</p>
-      </div>
-      <div class="overview__card animate-on-scroll stagger-4">
-        <div class="overview__card-icon">📊</div>
-        <h3 class="overview__card-title">How It's Measured</h3>
-        <p class="overview__card-text">Performance is determined by how efficiently bookings turn into members — at each location.</p>
-      </div>
-    </div>
-    <div class="overview__quote animate-on-scroll stagger-5">
-      <p class="overview__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
-      <p class="overview__quote-attr">Matt Maroone</p>
-    </div>
-    <p class="overview__question animate-on-scroll">Every location runs this system. The goal is to make it measurable and controllable.</p>
+
   </div>
 </section>
 
