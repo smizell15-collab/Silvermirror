@@ -796,6 +796,14 @@ a { text-decoration: none; }
   opacity: 0.85;
   line-height: 1.3;
 }
+.sys-card__ltv-note {
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  font-style: italic;
+  margin-top: 4px;
+}
 
 /* ── Platform icon hover ── */
 .sys-card__platforms { transition: opacity var(--transition-fast); }
@@ -1814,19 +1822,19 @@ a { text-decoration: none; }
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Leads</span>
-            <span class="sys-status__kpi-value">1,840</span>
+            <span class="sys-status__kpi-value">1,200</span>
           </div>
           <span class="sys-status__sep" aria-hidden="true">·</span>
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Members</span>
-            <span class="sys-status__kpi-value">285</span>
+            <span class="sys-status__kpi-value">180</span>
           </div>
           <span class="sys-status__sep" aria-hidden="true">·</span>
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Revenue</span>
-            <span class="sys-status__kpi-value">$1.36M</span>
+            <span class="sys-status__kpi-value">$268K</span>
           </div>
         </div>
         <div class="sys-status__badge">
@@ -1973,6 +1981,7 @@ a { text-decoration: none; }
                   $54 CPL
                   <span class="sys-card__trend sys-card__trend--down">↓</span>
                 </div>
+                <div class="sys-card__kpi">62% Qualified</div>
               </div>
             </div>
 
@@ -1993,6 +2002,7 @@ a { text-decoration: none; }
                   <span class="sys-dot"></span>
                   78% Show Rate
                 </div>
+                <div class="sys-card__kpi">48% Book Rate</div>
                 <span class="sys-card__tag"><span class="sys-dot sys-dot--sm"></span> Active</span>
               </div>
             </div>
@@ -2015,15 +2025,18 @@ a { text-decoration: none; }
               <div class="sys-card__title">Membership Conversion</div>
               <div class="sys-card__revenue-label">Revenue</div>
               <div class="sys-card__kpi-group">
-                <div class="sys-card__kpi sys-card__kpi--prominent">$4,800 LTV</div>
-                <div class="sys-card__kpi sys-card__kpi--cac">$245 CAC</div>
+                <div class="sys-card__kpi sys-card__kpi--prominent">$1,490 LTV</div>
+                <div class="sys-card__kpi sys-card__kpi--cac">$361 CAC</div>
                 <div class="sys-card__kpi">89% Retention</div>
+                <div class="sys-card__kpi">15% Lead → Member</div>
               </div>
               <div class="sys-card__acq-label">Per Member</div>
               <div class="sys-card__ratio-line">
-                <span class="sys-card__ratio-number">19.6x</span>
-                <span class="sys-card__ratio-label">Return on Acquisition</span>
+                <span class="sys-card__ratio-number">4.1x</span>
+                <span class="sys-card__ratio-label">LTV:CAC</span>
               </div>
+              <div class="sys-card__ltv-note">Based on membership + usage over time</div>
+              <div class="sys-card__ltv-note">Membership: $129/mo · Avg Retention: 10 months · Avg Add-On Value: ~$20/mo</div>
               <div class="sys-card__tagline">System optimized for revenue, not leads</div>
             </div>
 
