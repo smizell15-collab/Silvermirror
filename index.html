@@ -1321,38 +1321,122 @@ a { text-decoration: none; }
 </section>
 
 <!-- ================================================
-     SECTION 5 — CONCERNS SOLVED
+     SECTION 13 — FOOTPRINT MAP (DARK)
      ================================================ -->
-<section class="section section--light" id="section-concerns">
-  <div class="section-inner">
-    <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Hiring Objectives</span>
-      <h2>Your Concerns Are Already Covered</h2>
+<div class="section-transition-dark" style="height:18vh;background:linear-gradient(to bottom,var(--color-bg-subtle),var(--dark-bg));pointer-events:none;"></div>
+<section class="section section--dark" id="section-footprint" style="background:var(--dark-bg);padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+  <!-- Dot grid + glow hotspots -->
+  <div class="footprint__dot-grid" id="fp-dot-grid"></div>
+  <div class="footprint__glow-midwest"></div>
+  <div class="footprint__glow-florida"></div>
+  <div class="footprint__glow-texas"></div>
+
+  <div class="section-inner section-inner--wide" style="position:relative;z-index:1;">
+    <!-- Header -->
+    <div class="footprint__header animate-on-scroll">
+      <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">CURRENT SCALE</span>
+      <h1>The System Already Runs at This Scale</h1>
+      <p>244+ locations. $915K+/month in spend. Operated through one system — with each location tracked, managed, and optimized independently.</p>
     </div>
-    <div class="concerns__grid">
-      <div class="concern animate-on-scroll stagger-1">
-        <div class="concern__number">01</div>
-        <h3 class="concern__title">Can one person manage 10 locations?</h3>
-        <p class="concern__answer">10 locations is a focused system. Currently operating across 200+ locations where each runs independently with its own targets, budgets, and performance accountability.</p>
-      </div>
-      <div class="concern animate-on-scroll stagger-2">
-        <div class="concern__number">02</div>
-        <h3 class="concern__title">Can performance be maintained — and improved?</h3>
-        <p class="concern__answer">The transition is managed alongside current agencies — not against them. For 30 days, everything runs in parallel: audits, validation, and baseline tracking. No disruption. No drop in performance. Optimization begins only after the system is fully understood.</p>
-        <div class="concern__case-study">
-          <span class="concern__case-label">Proof</span>
-          <p>A family law client shifted from lead-based optimization to signed-client optimization. Cost per signed case dropped from $5,600 to $1,200 (−77%) while volume increased.</p>
+
+    <!-- D3 Map (KPI overlay is inside the map container) -->
+    <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
+      <!-- Glassmorphism KPI overlay — floats top-left on desktop, collapses to strip on mobile -->
+      <div class="fp-dashboard-overlay">
+        <div class="footprint-kpi-card animate-on-scroll stagger-1">
+          <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus" aria-live="polite">0+</span>
+          <span class="footprint-kpi__label">Locations</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-2">
+          <span class="footprint-kpi__number" data-kpi="915" data-format="dollar" aria-live="polite">$0K/mo</span>
+          <span class="footprint-kpi__label">Ad Spend</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-3">
+          <span class="footprint-kpi__number" data-kpi="23" data-format="count" aria-live="polite">0</span>
+          <span class="footprint-kpi__label">Clients</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-4">
+          <span class="footprint-kpi__number" data-kpi="15" data-format="count" aria-live="polite">0</span>
+          <span class="footprint-kpi__label">States</span>
+        </div>
+        <div class="footprint-kpi-card animate-on-scroll stagger-5">
+          <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus" aria-live="polite">0+</span>
+          <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
         </div>
       </div>
-      <div class="concern animate-on-scroll stagger-3">
-        <div class="concern__number">03</div>
-        <h3 class="concern__title">AI, SEO, and future search readiness</h3>
-        <p class="concern__answer">Local SEO and Map Pack visibility are actively measured at the location level. Structured data (schema), FAQs, and page structure are used to influence how services appear in AI-driven search (Google AI Overviews, LLMs). AI supports monitoring, reporting, and decision-making — while SEO ensures visibility where customers search next.</p>
+      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-40 -20 1040 580" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="fp-glow-filter">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="fp-dot-blur" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="5" />
+          </filter>
+          <filter id="fp-dot-blur-sm" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="2.5" />
+          </filter>
+        </defs>
+        <!-- Zoomable content group (states + pins transform together) -->
+        <g id="fp-content">
+          <!-- States rendered by JS below -->
+          <g id="fp-states"></g>
+          <!-- Pins rendered by JS below -->
+          <g id="fp-pins"></g>
+        </g>
+        <!-- Tooltip (outside zoom group so it stays readable) -->
+        <g id="fp-tooltip" style="display:none;" pointer-events="none">
+          <rect class="fp-tooltip-bg" width="200" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
+          <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
+          <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
+        </g>
+      </svg>
+      <!-- Zoom controls -->
+      <div class="fp-zoom-controls">
+        <button class="fp-zoom-btn" id="fp-zoom-in" aria-label="Zoom in">+</button>
+        <button class="fp-zoom-btn" id="fp-zoom-out" aria-label="Zoom out">−</button>
+        <button class="fp-zoom-btn fp-zoom-btn--reset" id="fp-zoom-reset" aria-label="Reset zoom">RST</button>
+      </div>
+      <!-- Scroll-to-zoom hint (fades after first interaction) -->
+      <div class="fp-zoom-hint" id="fp-zoom-hint" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <circle cx="6" cy="6" r="4.5"/>
+          <line x1="6" y1="3" x2="6" y2="9"/>
+          <line x1="3" y1="6" x2="9" y2="6"/>
+        </svg>
+        Scroll to zoom
       </div>
     </div>
-    <p class="breaks__closer animate-on-scroll">This isn't new capability. It's already being operated — at a larger scale.</p>
+    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
+    <p class="footprint__footnote" style="margin-top:var(--space-xs);">Independently managed locations — centralized system, location-level control.</p>
+
+    <!-- Legend -->
+    <div class="footprint__legend animate-on-scroll stagger-1">
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active Market</div>
+      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--base"></span>Coverage Area</div>
+    </div>
+
+    <!-- Who Relies -->
+    <div class="footprint__who-relies animate-on-scroll stagger-2">
+      <span class="footprint__who-label">WHO ALREADY RUNS ON THIS SYSTEM</span>
+      <div class="footprint__pills">
+        <div class="footprint-pill">⚖️ 150+ Attorneys &amp; Legal Professionals</div>
+        <div class="footprint-pill">🩺 20+ Doctors, Surgeons &amp; Practice Owners</div>
+        <div class="footprint-pill">🏢 Franchise Brands Across 15 States</div>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="footprint__rule-wrap animate-on-scroll stagger-3">
+      <span class="footprint__rule" id="fp-rule"></span>
+    </div>
+    <div class="footprint__closing animate-on-scroll stagger-4">
+      <p class="footprint__closing-muted">This is already being operated at scale — across multiple markets, teams, and service models.</p>
+      <p class="footprint__closing-glow">Silver Mirror becomes the most focused version of it.</p>
+    </div>
   </div>
 </section>
+<div class="section-transition-light" style="height:18vh;background:linear-gradient(to bottom,var(--dark-bg),var(--color-bg));pointer-events:none;"></div>
 
 <!-- ================================================
      SECTION 6 — FROM YOUR SEAT
@@ -1583,6 +1667,40 @@ a { text-decoration: none; }
 </section>
 
 <!-- ================================================
+     SECTION 5 — CONCERNS SOLVED
+     ================================================ -->
+<section class="section section--light" id="section-concerns">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="eyebrow">Hiring Objectives</span>
+      <h2>Your Concerns Are Already Covered</h2>
+    </div>
+    <div class="concerns__grid">
+      <div class="concern animate-on-scroll stagger-1">
+        <div class="concern__number">01</div>
+        <h3 class="concern__title">Can one person manage 10 locations?</h3>
+        <p class="concern__answer">10 locations is a focused system. Currently operating across 200+ locations where each runs independently with its own targets, budgets, and performance accountability.</p>
+      </div>
+      <div class="concern animate-on-scroll stagger-2">
+        <div class="concern__number">02</div>
+        <h3 class="concern__title">Can performance be maintained — and improved?</h3>
+        <p class="concern__answer">The transition is managed alongside current agencies — not against them. For 30 days, everything runs in parallel: audits, validation, and baseline tracking. No disruption. No drop in performance. Optimization begins only after the system is fully understood.</p>
+        <div class="concern__case-study">
+          <span class="concern__case-label">Proof</span>
+          <p>A family law client shifted from lead-based optimization to signed-client optimization. Cost per signed case dropped from $5,600 to $1,200 (−77%) while volume increased.</p>
+        </div>
+      </div>
+      <div class="concern animate-on-scroll stagger-3">
+        <div class="concern__number">03</div>
+        <h3 class="concern__title">AI, SEO, and future search readiness</h3>
+        <p class="concern__answer">Local SEO and Map Pack visibility are actively measured at the location level. Structured data (schema), FAQs, and page structure are used to influence how services appear in AI-driven search (Google AI Overviews, LLMs). AI supports monitoring, reporting, and decision-making — while SEO ensures visibility where customers search next.</p>
+      </div>
+    </div>
+    <p class="breaks__closer animate-on-scroll">This isn't new capability. It's already being operated — at a larger scale.</p>
+  </div>
+</section>
+
+<!-- ================================================
      SECTION 10 — SEO + LLM
      ================================================ -->
 <section class="section section--warm" id="section-seo">
@@ -1643,124 +1761,6 @@ a { text-decoration: none; }
     <p class="breaks__closer animate-on-scroll">This ensures Silver Mirror is not just found — it's recommended.</p>
   </div>
 </section>
-
-<!-- ================================================
-     SECTION 13 — FOOTPRINT MAP (DARK)
-     ================================================ -->
-<div class="section-transition-dark" style="height:18vh;background:linear-gradient(to bottom,var(--color-bg-subtle),var(--dark-bg));pointer-events:none;"></div>
-<section class="section section--dark" id="section-footprint" style="background:var(--dark-bg);padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
-  <!-- Dot grid + glow hotspots -->
-  <div class="footprint__dot-grid" id="fp-dot-grid"></div>
-  <div class="footprint__glow-midwest"></div>
-  <div class="footprint__glow-florida"></div>
-  <div class="footprint__glow-texas"></div>
-
-  <div class="section-inner section-inner--wide" style="position:relative;z-index:1;">
-    <!-- Header -->
-    <div class="footprint__header animate-on-scroll">
-      <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">CURRENT SCALE</span>
-      <h1>The System Already Runs at This Scale</h1>
-      <p>244+ locations. $915K+/month in spend. Operated through one system — with each location tracked, managed, and optimized independently.</p>
-    </div>
-
-    <!-- D3 Map (KPI overlay is inside the map container) -->
-    <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
-      <!-- Glassmorphism KPI overlay — floats top-left on desktop, collapses to strip on mobile -->
-      <div class="fp-dashboard-overlay">
-        <div class="footprint-kpi-card animate-on-scroll stagger-1">
-          <span class="footprint-kpi__number" data-kpi="244" data-format="count-plus" aria-live="polite">0+</span>
-          <span class="footprint-kpi__label">Locations</span>
-        </div>
-        <div class="footprint-kpi-card animate-on-scroll stagger-2">
-          <span class="footprint-kpi__number" data-kpi="915" data-format="dollar" aria-live="polite">$0K/mo</span>
-          <span class="footprint-kpi__label">Ad Spend</span>
-        </div>
-        <div class="footprint-kpi-card animate-on-scroll stagger-3">
-          <span class="footprint-kpi__number" data-kpi="23" data-format="count" aria-live="polite">0</span>
-          <span class="footprint-kpi__label">Clients</span>
-        </div>
-        <div class="footprint-kpi-card animate-on-scroll stagger-4">
-          <span class="footprint-kpi__number" data-kpi="15" data-format="count" aria-live="polite">0</span>
-          <span class="footprint-kpi__label">States</span>
-        </div>
-        <div class="footprint-kpi-card animate-on-scroll stagger-5">
-          <span class="footprint-kpi__number" data-kpi="100" data-format="count-plus" aria-live="polite">0+</span>
-          <span class="footprint-kpi__label">Law &amp; Medical<sup class="footprint__kpi-sup">*</sup></span>
-        </div>
-      </div>
-      <svg class="footprint__map-svg" id="fp-map-svg" viewBox="-40 -20 1040 580" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <filter id="fp-glow-filter">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="fp-dot-blur" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="5" />
-          </filter>
-          <filter id="fp-dot-blur-sm" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="2.5" />
-          </filter>
-        </defs>
-        <!-- Zoomable content group (states + pins transform together) -->
-        <g id="fp-content">
-          <!-- States rendered by JS below -->
-          <g id="fp-states"></g>
-          <!-- Pins rendered by JS below -->
-          <g id="fp-pins"></g>
-        </g>
-        <!-- Tooltip (outside zoom group so it stays readable) -->
-        <g id="fp-tooltip" style="display:none;" pointer-events="none">
-          <rect class="fp-tooltip-bg" width="200" height="46" fill="rgba(6,6,16,0.92)" stroke="rgba(78,197,191,0.5)" stroke-width="1"/>
-          <text id="fp-tt-city" x="10" y="17" fill="#4EC5BF" font-size="12" font-weight="700" font-family="Montserrat,Arial,sans-serif"/>
-          <text id="fp-tt-locs" x="10" y="34" fill="#CCCCCC" font-size="10" font-family="Montserrat,Arial,sans-serif"/>
-        </g>
-      </svg>
-      <!-- Zoom controls -->
-      <div class="fp-zoom-controls">
-        <button class="fp-zoom-btn" id="fp-zoom-in" aria-label="Zoom in">+</button>
-        <button class="fp-zoom-btn" id="fp-zoom-out" aria-label="Zoom out">−</button>
-        <button class="fp-zoom-btn fp-zoom-btn--reset" id="fp-zoom-reset" aria-label="Reset zoom">RST</button>
-      </div>
-      <!-- Scroll-to-zoom hint (fades after first interaction) -->
-      <div class="fp-zoom-hint" id="fp-zoom-hint" aria-hidden="true">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
-          <circle cx="6" cy="6" r="4.5"/>
-          <line x1="6" y1="3" x2="6" y2="9"/>
-          <line x1="3" y1="6" x2="9" y2="6"/>
-        </svg>
-        Scroll to zoom
-      </div>
-    </div>
-    <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
-    <p class="footprint__footnote" style="margin-top:var(--space-xs);">Independently managed locations — centralized system, location-level control.</p>
-
-    <!-- Legend -->
-    <div class="footprint__legend animate-on-scroll stagger-1">
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active Market</div>
-      <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--base"></span>Coverage Area</div>
-    </div>
-
-    <!-- Who Relies -->
-    <div class="footprint__who-relies animate-on-scroll stagger-2">
-      <span class="footprint__who-label">WHO ALREADY RUNS ON THIS SYSTEM</span>
-      <div class="footprint__pills">
-        <div class="footprint-pill">⚖️ 150+ Attorneys &amp; Legal Professionals</div>
-        <div class="footprint-pill">🩺 20+ Doctors, Surgeons &amp; Practice Owners</div>
-        <div class="footprint-pill">🏢 Franchise Brands Across 15 States</div>
-      </div>
-    </div>
-
-    <!-- Closing -->
-    <div class="footprint__rule-wrap animate-on-scroll stagger-3">
-      <span class="footprint__rule" id="fp-rule"></span>
-    </div>
-    <div class="footprint__closing animate-on-scroll stagger-4">
-      <p class="footprint__closing-muted">This is already being operated at scale — across multiple markets, teams, and service models.</p>
-      <p class="footprint__closing-glow">Silver Mirror becomes the most focused version of it.</p>
-    </div>
-  </div>
-</section>
-<div class="section-transition-light" style="height:18vh;background:linear-gradient(to bottom,var(--dark-bg),var(--color-bg));pointer-events:none;"></div>
 
 <!-- ================================================
      SECTION 14 — TEAM
