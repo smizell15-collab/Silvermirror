@@ -69,6 +69,7 @@ a { text-decoration: none; }
   --border-radius: 16px;
   --border-radius-sm: 8px;
   --border-radius-lg: 24px;
+  --color-status-active: #22C55E;
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
@@ -278,7 +279,7 @@ a { text-decoration: none; }
   content: '';
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 2px;
+  width: 3px;
   background: var(--color-accent);
   box-shadow: 0 0 10px rgba(36,162,236,0.4);
   border-radius: 2px;
@@ -317,11 +318,91 @@ a { text-decoration: none; }
 
 /* ── System Dashboard Wrapper ── */
 .sys-dash {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.65);
+  border: 1px solid var(--color-border-light);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.08), 0 2px 12px rgba(0,0,0,0.04);
+}
+
+/* ── System Status Bar ── */
+.sys-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: rgba(255,255,255,0.8);
+  border-bottom: 1px solid var(--color-border-light);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sys-status__kpis {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.sys-status__kpi {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sys-status__kpi-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.sys-status__kpi-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.sys-status__sep {
+  color: var(--color-border);
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+}
+.sys-status__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.22);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #16a34a;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* Green status dot */
+.sys-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-status-active);
+  box-shadow: 0 0 5px rgba(34,197,94,0.7);
+  flex-shrink: 0;
+  display: inline-block;
+  animation: status-pulse 3s ease-in-out infinite;
+}
+/* Small variant — used inside compact tags */
+.sys-dot--sm {
+  width: 5px;
+  height: 5px;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.25); box-shadow: 0 0 8px rgba(34,197,94,0.8); }
 }
 
 /* Attribution control bar */
@@ -329,8 +410,8 @@ a { text-decoration: none; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 20px;
-  background: rgba(36,162,236,0.05);
+  padding: 7px 24px;
+  background: rgba(36,162,236,0.04);
   border-bottom: 1px solid var(--color-accent-border);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -338,40 +419,42 @@ a { text-decoration: none; }
   flex-wrap: wrap;
 }
 .sys-dash__attr-bar-left {
-  font-size: 0.63rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-accent);
+  opacity: 0.7;
 }
 .sys-dash__attr-bar-right {
-  font-size: 0.68rem;
+  font-size: 0.58rem;
+  font-weight: 600;
   color: var(--color-text-muted);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
-/* Zones row */
+/* ── Zones: CSS Grid, asymmetric ── */
 .sys-dash__zones {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1.4fr;
+  padding: 22px 20px 24px;
+  gap: 16px;
   align-items: stretch;
-  padding: 20px 16px 20px;
-  gap: 0;
 }
 
 /* Operational zones */
 .sys-dash__zone {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
-.sys-dash__zone--left   { flex: 0 0 23%; }
-.sys-dash__zone--center { flex: 0 0 38%; padding: 0 6px; }
-.sys-dash__zone--right  { flex: 0 0 31%; }
 
 /* Zone label */
 .sys-dash__zone-label {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-text-light);
   margin-bottom: 10px;
@@ -382,162 +465,160 @@ a { text-decoration: none; }
 .sys-dash__zone-inner {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 10px;
   background: var(--color-bg-subtle);
   border: 1px solid var(--color-border-light);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
   flex: 1;
 }
 .sys-dash__zone--right .sys-dash__zone-inner {
   background: rgba(36,162,236,0.025);
-  border-color: var(--color-accent-border);
-  box-shadow: 0 0 28px rgba(36,162,236,0.09), inset 0 0 0 1px rgba(36,162,236,0.08);
+  border-color: rgba(36,162,236,0.2);
+  box-shadow: 0 0 32px rgba(36,162,236,0.1);
 }
 
-/* Flow connector between zones */
-.sys-dash__connector {
-  flex: 0 0 4%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 24px 2px 0;
+/* Center zone: 2-column mini-grid, last card full-width */
+.sys-dash__zone--center .sys-dash__zone-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
 }
-.sys-dash__connector-line {
-  width: 100%;
-  height: 2px;
-  position: relative;
-  overflow: hidden;
-  background: var(--color-border);
-  border-radius: 1px;
-}
-.sys-dash__connector-line::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -50%;
-  height: 100%; width: 50%;
-  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-  border-radius: 1px;
-  animation: flow-pulse 2.8s ease-in-out infinite;
-}
-.sys-dash__connector-arrow {
-  font-size: 0.75rem;
-  color: var(--color-accent);
-  opacity: 0.55;
-  line-height: 1;
+.sys-dash__zone--center .sys-card:last-child {
+  grid-column: 1 / -1;
 }
 
 /* Dashboard card widget */
 .sys-card {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-light);
-  border-radius: 10px;
-  padding: 11px 13px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  gap: 4px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 .sys-card:hover {
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
   border-color: var(--color-accent-border);
 }
 .sys-card__icon {
-  font-size: 13px;
-  color: var(--color-accent);
-  line-height: 1;
-  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
   opacity: 0.8;
 }
 .sys-card__title {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--color-text);
   letter-spacing: 0.01em;
   line-height: 1.25;
 }
 .sys-card__subtitle {
-  font-size: 0.68rem;
+  font-size: 0.69rem;
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
-  flex: 1;
   line-height: 1.4;
+}
+.sys-card__platforms {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 4px 0 0;
+  opacity: 0.65;
+}
+.sys-card__kpi-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
 }
 .sys-card__kpi {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: var(--color-accent-muted);
   border: 1px solid var(--color-accent-border);
   border-radius: 100px;
-  padding: 2px 8px;
-  font-size: 0.62rem;
+  padding: 3px 10px;
+  font-size: 0.66rem;
   font-weight: 700;
   color: var(--color-accent-dark);
-  letter-spacing: 0.05em;
-  align-self: flex-start;
-  margin-top: 5px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
-.sys-card__trend-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #22c55e;
-  flex-shrink: 0;
-  display: inline-block;
-  box-shadow: 0 0 4px rgba(34,197,94,0.6);
+.sys-card__trend {
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.sys-card__trend--up   { color: var(--color-status-active); }
+/* ↓ on cost metrics (CPC, CPL) means lower cost = positive outcome — same green */
+.sys-card__trend--down { color: var(--color-status-active); }
+.sys-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-light);
+  border-radius: 100px;
+  padding: 2px 8px;
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
-/* Hero card — Membership (right zone, dominant) */
+/* Hero card — Membership Conversion (dominant) */
 .sys-card--hero {
-  background: linear-gradient(145deg, rgba(36,162,236,0.04) 0%, rgba(36,162,236,0.1) 100%);
-  border: 1px solid rgba(36,162,236,0.28);
-  border-radius: 12px;
-  padding: 20px 16px;
+  background: linear-gradient(145deg, rgba(36,162,236,0.04) 0%, rgba(36,162,236,0.09) 100%);
+  border: 2px solid rgba(36,162,236,0.3);
+  border-radius: 14px;
+  padding: 26px 22px;
   flex: 1;
-  box-shadow: 0 0 32px rgba(36,162,236,0.13);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  animation: revenue-breathe 5s ease-in-out infinite;
 }
-.sys-card--hero .sys-card__icon {
-  font-size: 18px;
-  opacity: 1;
-}
+.sys-card--hero .sys-card__icon { opacity: 1; margin-bottom: 6px; }
 .sys-card--hero .sys-card__title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 .sys-card__revenue-label {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--color-accent);
-  letter-spacing: 0.01em;
-  line-height: 1.15;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 .sys-card__kpi-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
   margin-top: 2px;
 }
 .sys-card__kpi--prominent {
   background: var(--color-accent);
   color: #fff;
   border-color: transparent;
-  font-size: 0.65rem;
-  box-shadow: 0 2px 8px rgba(36,162,236,0.3);
+  font-size: 0.68rem;
+  box-shadow: 0 3px 10px rgba(36,162,236,0.35);
 }
 .sys-card__tagline {
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   color: var(--color-text-secondary);
   font-style: italic;
-  line-height: 1.45;
+  line-height: 1.5;
   margin-top: auto;
-  padding-top: 6px;
-  border-top: 1px solid var(--color-accent-border);
+  padding-top: 10px;
+  border-top: 1px solid rgba(36,162,236,0.15);
 }
 
 /* Feedback loop bar */
@@ -546,18 +627,24 @@ a { text-decoration: none; }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 9px 20px;
+  padding: 11px 24px;
   border-top: 1px solid var(--color-border-light);
   background: rgba(36,162,236,0.03);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted);
   letter-spacing: 0.04em;
 }
 .sys-dash__feedback-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--color-accent);
-  opacity: 0.65;
+  opacity: 0.6;
   line-height: 1;
+}
+
+/* Revenue breathing glow */
+@keyframes revenue-breathe {
+  0%, 100% { box-shadow: 0 0 20px rgba(36,162,236,0.08), 0 4px 16px rgba(0,0,0,0.04); }
+  50%       { box-shadow: 0 0 44px rgba(36,162,236,0.22), 0 4px 16px rgba(0,0,0,0.04); }
 }
 
 /* Flow pulse animation */
@@ -568,37 +655,49 @@ a { text-decoration: none; }
   100% { left: 140%; opacity: 0; }
 }
 
-/* Responsive */
-@media (max-width: 960px) {
+/* Responsive — Tablet */
+@media (max-width: 1024px) {
   .sys-dash__zones {
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .sys-dash__zone--right {
+    grid-column: 1 / -1;
+  }
+  .sys-dash__zone--center .sys-dash__zone-inner {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .sys-dash__zone--center .sys-card:last-child {
+    grid-column: auto;
+  }
+}
+/* Responsive — Mobile */
+@media (max-width: 768px) {
+  .sys-dash__zones {
+    grid-template-columns: 1fr;
+    padding: 16px 14px;
     gap: 12px;
   }
-  .sys-dash__zone--left,
-  .sys-dash__zone--center,
-  .sys-dash__zone--right {
-    flex: none;
-    width: 100%;
+  .sys-dash__zone--right { grid-column: 1; }
+  .sys-dash__zone--center .sys-dash__zone-inner {
+    grid-template-columns: 1fr 1fr;
   }
-  .sys-dash__zone--center { padding: 0; }
-  .sys-dash__connector {
-    flex-direction: row;
-    padding: 0;
-    justify-content: flex-start;
-    height: 20px;
+  .sys-dash__zone--center .sys-card:last-child {
+    grid-column: 1 / -1;
   }
-  .sys-dash__connector-line {
-    width: 48px;
-    height: 2px;
-  }
-  .sys-dash__connector-arrow { transform: rotate(90deg); }
+  .sys-status { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sys-status__kpis { gap: 12px; }
   .sys-dash__attr-bar { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .acq-system__quote { max-width: 100%; }
-  .sys-dash__zones { padding: 14px 12px; }
-  .sys-dash__zone-inner { padding: 10px; }
-  .sys-card--hero { min-height: 0; }
+  .sys-dash__zone--center .sys-dash__zone-inner {
+    grid-template-columns: 1fr;
+  }
+  .sys-dash__zone--center .sys-card:last-child { grid-column: auto; }
+  .sys-status__kpis { gap: 8px; }
+  .sys-card--hero { padding: 20px 16px; }
+  .sys-card__revenue-label { font-size: 1.6rem; }
 }
 
 /* ============================================
@@ -1549,7 +1648,7 @@ a { text-decoration: none; }
 <section class="section section--warm" id="section-overview">
   <div class="section-inner section-inner--wide">
 
-    <!-- Leadership Quote: compact, left-aligned -->
+    <!-- Leadership Quote: compact, left-aligned, accent left border -->
     <blockquote class="acq-system__quote animate-on-scroll">
       <p class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
       <cite class="acq-system__quote-attr">Matt Maroone</cite>
@@ -1564,13 +1663,46 @@ a { text-decoration: none; }
     <!-- System Dashboard -->
     <div class="sys-dash animate-on-scroll stagger-3">
 
+      <!-- System Status Bar: live KPI indicators -->
+      <div class="sys-status">
+        <div class="sys-status__kpis">
+          <div class="sys-status__kpi">
+            <span class="sys-dot"></span>
+            <span class="sys-status__kpi-label">Spend</span>
+            <span class="sys-status__kpi-value">$42K/mo</span>
+          </div>
+          <span class="sys-status__sep" aria-hidden="true">·</span>
+          <div class="sys-status__kpi">
+            <span class="sys-dot"></span>
+            <span class="sys-status__kpi-label">Leads</span>
+            <span class="sys-status__kpi-value">1,240</span>
+          </div>
+          <span class="sys-status__sep" aria-hidden="true">·</span>
+          <div class="sys-status__kpi">
+            <span class="sys-dot"></span>
+            <span class="sys-status__kpi-label">Members</span>
+            <span class="sys-status__kpi-value">312</span>
+          </div>
+          <span class="sys-status__sep" aria-hidden="true">·</span>
+          <div class="sys-status__kpi">
+            <span class="sys-dot"></span>
+            <span class="sys-status__kpi-label">Revenue</span>
+            <span class="sys-status__kpi-value">$748K</span>
+          </div>
+        </div>
+        <div class="sys-status__badge">
+          <span class="sys-dot"></span>
+          System Active
+        </div>
+      </div>
+
       <!-- Attribution / Control Bar -->
       <div class="sys-dash__attr-bar">
         <span class="sys-dash__attr-bar-left">Full Attribution Layer — Every Step Tracked from Click to Member</span>
         <span class="sys-dash__attr-bar-right">AI + SEO + Paid Media Operating as One System</span>
       </div>
 
-      <!-- 3 Operational Zones -->
+      <!-- 3 Operational Zones — CSS Grid: 1fr 1.6fr 1.4fr -->
       <div class="sys-dash__zones">
 
         <!-- LEFT ZONE: Acquisition Control -->
@@ -1578,27 +1710,64 @@ a { text-decoration: none; }
           <span class="sys-dash__zone-label">Acquisition Control</span>
           <div class="sys-dash__zone-inner">
 
+            <!-- Card 1: Traffic Input -->
             <div class="sys-card">
-              <span class="sys-card__icon">◆</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7.5" cy="7.5" r="6" stroke="#24A2EC" stroke-width="1.4"/>
+                  <circle cx="7.5" cy="7.5" r="2.5" fill="#24A2EC"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Traffic Input</div>
-              <div class="sys-card__subtitle">Meta · Google · SEO</div>
-              <div class="sys-card__kpi"><span class="sys-card__trend-dot"></span>$4.20 CPC</div>
+              <!-- Platform icons: Meta, Google, TikTok -->
+              <div class="sys-card__platforms" aria-label="Platforms: Meta, Google, TikTok">
+                <!-- Meta -->
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Meta">
+                  <rect width="15" height="15" rx="3" fill="#1877F2" fill-opacity="0.12"/>
+                  <path d="M8 4.5H7.2C6.37 4.5 5.7 5.17 5.7 6V6.5H4.7v1.5h1V11h1.6V8H8.5l.25-1.5H7.3V6c0-.28.22-.5.5-.5H9V4.5H8z" fill="#1877F2"/>
+                </svg>
+                <!-- Google -->
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Google">
+                  <rect width="15" height="15" rx="3" fill="#EA4335" fill-opacity="0.08"/>
+                  <path d="M11 7.58c0-.32-.03-.63-.08-.93H7.5v1.76H9.5c-.09.5-.37.94-.8 1.23v1.02h1.3C10.6 9.87 11 8.83 11 7.58z" fill="#4285F4"/>
+                  <path d="M7.5 12c1.35 0 2.48-.45 3.3-1.22l-1.3-1.01c-.41.28-.95.44-2 .44-1.54 0-2.84-1.04-3.3-2.44H2.84v1.04A4.99 4.99 0 007.5 12z" fill="#34A853"/>
+                  <path d="M4.2 7.77A2.98 2.98 0 014.04 7c0-.27.04-.53.16-.77V5.19H2.84A4.99 4.99 0 002 7c0 .8.19 1.56.84 2.81L4.2 7.77z" fill="#FBBC05"/>
+                  <path d="M7.5 4.53c.87 0 1.64.3 2.25.88l1.68-1.68C10.48 2.74 9.1 2 7.5 2A4.99 4.99 0 002.84 5.19L4.2 6.23C4.66 4.83 5.96 4 7.5 4.53z" fill="#EA4335"/>
+                </svg>
+                <!-- TikTok -->
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TikTok">
+                  <rect width="15" height="15" rx="3" fill="#000" fill-opacity="0.07"/>
+                  <path d="M10 2.5c.1 1.1.77 2 1.6 2.36V6.3c-.8.02-1.54-.26-2.1-.7v3.36A2.93 2.93 0 017.6 12a2.93 2.93 0 01-2.93-2.93A2.93 2.93 0 017.6 6.14c.17 0 .33.01.5.04v1.7c-.16-.04-.33-.06-.5-.06a1.26 1.26 0 00-1.26 1.26A1.26 1.26 0 007.6 10.34a1.26 1.26 0 001.26-1.26V2.5H10z" fill="#2D2D2D"/>
+                </svg>
+              </div>
+              <div class="sys-card__kpi-row">
+                <div class="sys-card__kpi">
+                  <span class="sys-dot"></span>
+                  $4.20 CPC
+                  <span class="sys-card__trend sys-card__trend--down">↓</span>
+                </div>
+              </div>
             </div>
 
+            <!-- Card 2: Ad Engine -->
             <div class="sys-card">
-              <span class="sys-card__icon">⚡</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 1.5L9.3 6H13.5L10.1 8.6L11.4 13L7.5 10.4L3.6 13L4.9 8.6L1.5 6H5.7L7.5 1.5Z" stroke="#24A2EC" stroke-width="1.3" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Ad Engine</div>
               <div class="sys-card__subtitle">Creative Testing &amp; AI</div>
-              <div class="sys-card__kpi"><span class="sys-card__trend-dot"></span>3.2% CTR</div>
+              <div class="sys-card__kpi-row">
+                <div class="sys-card__kpi">
+                  <span class="sys-dot"></span>
+                  3.2% CTR
+                  <span class="sys-card__trend sys-card__trend--up">↑</span>
+                </div>
+              </div>
             </div>
 
           </div>
-        </div>
-
-        <!-- Flow Connector -->
-        <div class="sys-dash__connector" aria-hidden="true">
-          <div class="sys-dash__connector-line"></div>
-          <div class="sys-dash__connector-arrow">›</div>
         </div>
 
         <!-- CENTER ZONE: Conversion Engine -->
@@ -1606,43 +1775,78 @@ a { text-decoration: none; }
           <span class="sys-dash__zone-label">Conversion Engine</span>
           <div class="sys-dash__zone-inner">
 
+            <!-- Card 3: Landing System -->
             <div class="sys-card">
-              <span class="sys-card__icon">▣</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="1.5" width="11" height="12" rx="1.5" stroke="#24A2EC" stroke-width="1.3"/>
+                  <line x1="4.5" y1="5.5" x2="10.5" y2="5.5" stroke="#24A2EC" stroke-width="1.1" stroke-linecap="round"/>
+                  <line x1="4.5" y1="8" x2="10.5" y2="8" stroke="#24A2EC" stroke-width="1.1" stroke-linecap="round"/>
+                  <line x1="4.5" y1="10.5" x2="8" y2="10.5" stroke="#24A2EC" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Landing System</div>
               <div class="sys-card__subtitle">Mobile-First Pages</div>
-              <div class="sys-card__kpi">8.4% CVR</div>
+              <div class="sys-card__kpi-row">
+                <div class="sys-card__kpi">8.4% CVR</div>
+                <span class="sys-card__tag">Mobile</span>
+              </div>
             </div>
 
+            <!-- Card 4: Conversion Capture -->
             <div class="sys-card">
-              <span class="sys-card__icon">⊡</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1.5" y="1.5" width="12" height="12" rx="1.5" stroke="#24A2EC" stroke-width="1.3"/>
+                  <path d="M5 7.5L6.8 9.5L10 5.5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Conversion Capture</div>
               <div class="sys-card__subtitle">Forms · Booking</div>
-              <div class="sys-card__kpi">$32 CPL</div>
+              <div class="sys-card__kpi-row">
+                <div class="sys-card__kpi">
+                  $32 CPL
+                  <span class="sys-card__trend sys-card__trend--down">↓</span>
+                </div>
+              </div>
             </div>
 
+            <!-- Card 5: Automation Layer (full-width in center grid) -->
             <div class="sys-card">
-              <span class="sys-card__icon">⟳</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 2.5C4.74 2.5 2.5 4.74 2.5 7.5" stroke="#24A2EC" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M12.5 7.5C12.5 10.26 10.26 12.5 7.5 12.5" stroke="#24A2EC" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M11 3l1.5-1.5m0 0H11m1.5 0V3" stroke="#24A2EC" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 13l-1.5 1.5m0 0H4m-1.5 0V13" stroke="#24A2EC" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Automation Layer</div>
               <div class="sys-card__subtitle">CRM · SMS · Email</div>
-              <div class="sys-card__kpi">74% Show Rate</div>
+              <div class="sys-card__kpi-row">
+                <div class="sys-card__kpi">
+                  <span class="sys-dot"></span>
+                  74% Show Rate
+                </div>
+                <span class="sys-card__tag"><span class="sys-dot sys-dot--sm"></span> Active</span>
+              </div>
             </div>
 
           </div>
         </div>
 
-        <!-- Flow Connector -->
-        <div class="sys-dash__connector" aria-hidden="true">
-          <div class="sys-dash__connector-line"></div>
-          <div class="sys-dash__connector-arrow">›</div>
-        </div>
-
-        <!-- RIGHT ZONE: Business Impact (dominant) -->
+        <!-- RIGHT ZONE: Business Impact — DOMINANT HERO -->
         <div class="sys-dash__zone sys-dash__zone--right">
           <span class="sys-dash__zone-label">Business Impact</span>
           <div class="sys-dash__zone-inner">
 
+            <!-- Card 6: Membership Conversion — Hero -->
             <div class="sys-card sys-card--hero">
-              <span class="sys-card__icon">◉</span>
+              <div class="sys-card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 2L12.5 8H19L13.5 11.8L15.5 18L10 14.2L4.5 18L6.5 11.8L1 8H7.5L10 2Z" fill="rgba(36,162,236,0.18)" stroke="#24A2EC" stroke-width="1.4" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <div class="sys-card__title">Membership Conversion</div>
               <div class="sys-card__revenue-label">Revenue</div>
               <div class="sys-card__kpi-group">
