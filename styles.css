@@ -193,6 +193,16 @@ a { text-decoration: none; }
 .section-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; }
 .section-inner--narrow { max-width: var(--max-width-narrow); }
 .section-inner--wide { max-width: var(--max-width-wide); }
+.section-transition-dark {
+  height: 18vh;
+  background: linear-gradient(to bottom, var(--color-bg-subtle), var(--dark-bg));
+  pointer-events: none;
+}
+.section-transition-light {
+  height: 18vh;
+  background: linear-gradient(to bottom, var(--dark-bg), var(--color-bg));
+  pointer-events: none;
+}
 
 /* ============================================
    TYPOGRAPHY COMPONENTS
@@ -1123,6 +1133,10 @@ a { text-decoration: none; }
 }
 .footprint__rule.is-visible { width: 200px; }
 .footprint__footnote { font-size:0.65rem; color:var(--dark-text-muted); text-align:center; margin-top:-2rem; margin-bottom:var(--space-xl); }
+.footprint__footnote--spaced { margin-top: var(--space-xs); }
+.footprint__section { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+.footprint__inner { position: relative; z-index: 1; }
+.eyebrow--cyan { color: var(--neon-cyan); animation: pulse-glow 5s ease-in-out infinite; }
 .footprint__kpi-sup { font-size:0.6em; vertical-align:super; }
 .footprint__closing { text-align: center; position: relative; z-index: 1; }
 .footprint__closing-muted { font-size: var(--text-body); color: var(--dark-text-muted); margin-bottom: var(--space-md); }

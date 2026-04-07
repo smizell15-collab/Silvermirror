@@ -12,14 +12,21 @@
 </head>
 <body>
 
+<!-- Hidden SVG symbol definitions — reused via <use href="#sm-mono"> -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
+  <defs>
+    <symbol id="sm-mono" viewBox="0 0 108 88">
+      <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- ================================================
      LOADING SCREEN
      ================================================ -->
 <div id="sm-loading-screen" aria-hidden="true">
-  <svg class="loading-screen__mono" width="108" height="88" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-    <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  </svg>
+  <svg class="loading-screen__mono" width="108" height="88" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
   <div class="loading-screen__lockup">
     <span class="loading-screen__brand">Silver Mirror</span>
     <span class="loading-screen__x">×</span>
@@ -64,10 +71,7 @@
         <p class="opening__hook animate-on-scroll stagger-5">The system exists. Ownership is what determines how it performs.</p>
       </div>
       <div class="hook__image-placeholder animate-on-scroll stagger-3">
-        <svg class="hook__image-mono" width="64" height="52" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-          <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
+        <svg class="hook__image-mono" width="64" height="52" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#sm-mono"/></svg>
         <span class="hook__image-label">Location Image</span>
       </div>
     </div>
@@ -387,18 +391,18 @@
 <!-- ================================================
      SECTION 13 — FOOTPRINT MAP (DARK)
      ================================================ -->
-<div class="section-transition-dark" style="height:18vh;background:linear-gradient(to bottom,var(--color-bg-subtle),var(--dark-bg));pointer-events:none;"></div>
-<section class="section section--dark" id="section-footprint" style="background:var(--dark-bg);padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+<div class="section-transition-dark"></div>
+<section class="section section--dark footprint__section" id="section-footprint">
   <!-- Dot grid + glow hotspots -->
   <div class="footprint__dot-grid" id="fp-dot-grid"></div>
   <div class="footprint__glow-midwest"></div>
   <div class="footprint__glow-florida"></div>
   <div class="footprint__glow-texas"></div>
 
-  <div class="section-inner section-inner--wide" style="position:relative;z-index:1;">
+  <div class="section-inner section-inner--wide footprint__inner">
     <!-- Header -->
     <div class="footprint__header animate-on-scroll">
-      <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">CURRENT SCALE</span>
+      <span class="eyebrow eyebrow--cyan">CURRENT SCALE</span>
       <h1>The System Already Runs at This Scale</h1>
       <p>244+ locations. $915K+/month in spend. Operated through one system — with each location tracked, managed, and optimized independently.</p>
     </div>
@@ -472,7 +476,7 @@
       </div>
     </div>
     <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
-    <p class="footprint__footnote" style="margin-top:var(--space-xs);">Independently managed locations — centralized system, location-level control.</p>
+    <p class="footprint__footnote footprint__footnote--spaced">Independently managed locations — centralized system, location-level control.</p>
 
     <!-- Legend -->
     <div class="footprint__legend animate-on-scroll stagger-1">
@@ -500,7 +504,7 @@
     </div>
   </div>
 </section>
-<div class="section-transition-light" style="height:18vh;background:linear-gradient(to bottom,var(--dark-bg),var(--color-bg));pointer-events:none;"></div>
+<div class="section-transition-light"></div>
 
 <!-- ================================================
      SECTION 6 — FROM YOUR SEAT
@@ -915,10 +919,7 @@
 </section>
 
 <footer class="footer">
-  <svg class="footer__mono" width="72" height="58" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-    <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  </svg>
+  <svg class="footer__mono" width="72" height="58" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
   <p class="footer__pairing">Silver Mirror × Sheldon Mizell</p>
   <p class="footer__sub">Confidential Growth Strategy Document — 2026</p>
 </footer>
