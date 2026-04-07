@@ -705,6 +705,16 @@ a { text-decoration: none; }
   .sys-card__revenue-label { font-size: 1.6rem; }
 }
 
+/* ── Section 2 local color tokens ── */
+#section-overview {
+  --color-cac-amber: #b45309;
+  --color-cac-amber-bg: rgba(245,158,11,0.1);
+  --color-cac-amber-border: rgba(245,158,11,0.3);
+  --color-ratio-green: #16a34a;
+  --color-ratio-green-bg: rgba(34,197,94,0.08);
+  --color-ratio-green-border: rgba(34,197,94,0.22);
+}
+
 /* ── Flow connector strip (between attr-bar and zones) ── */
 .sys-dash__flow-strip {
   padding: 0 20px;
@@ -736,6 +746,7 @@ a { text-decoration: none; }
   animation: flow-chevron 2.5s ease-in-out infinite;
 }
 .sys-dash__zone--center::after { animation-delay: 0.9s; }
+/* translateY(-50%) repeated in keyframes to maintain vertical centering during transform */
 @keyframes flow-chevron {
   0%, 100% { opacity: 0.12; transform: translateY(-50%) translateX(-3px); }
   50%       { opacity: 0.55; transform: translateY(-50%) translateX(2px); }
@@ -743,15 +754,15 @@ a { text-decoration: none; }
 
 /* ── CAC chip — amber accent ── */
 .sys-card__kpi--cac {
-  background: rgba(245,158,11,0.1);
-  border-color: rgba(245,158,11,0.3);
-  color: #b45309;
+  background: var(--color-cac-amber-bg);
+  border-color: var(--color-cac-amber-border);
+  color: var(--color-cac-amber);
 }
 
 /* ── Acquisition cost sublabel ── */
 .sys-card__acq-label {
   font-size: 0.57rem;
-  color: #b45309;
+  color: var(--color-cac-amber);
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -765,22 +776,22 @@ a { text-decoration: none; }
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: rgba(34,197,94,0.08);
-  border: 1px solid rgba(34,197,94,0.22);
+  background: var(--color-ratio-green-bg);
+  border: 1px solid var(--color-ratio-green-border);
   border-radius: 10px;
   margin-top: 4px;
 }
 .sys-card__ratio-number {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #16a34a;
+  color: var(--color-ratio-green);
   letter-spacing: -0.02em;
   line-height: 1;
 }
 .sys-card__ratio-label {
   font-size: 0.62rem;
   font-weight: 600;
-  color: #16a34a;
+  color: var(--color-ratio-green);
   letter-spacing: 0.04em;
   opacity: 0.85;
   line-height: 1.3;
@@ -788,7 +799,7 @@ a { text-decoration: none; }
 
 /* ── Platform icon hover ── */
 .sys-card__platforms { transition: opacity var(--transition-fast); }
-.sys-card__platforms svg:hover { opacity: 0.95 !important; }
+.sys-card__platforms:hover { opacity: 0.9; }
 
 /* ── Zone gradient differentiation (lighter left → richer right) ── */
 .sys-dash__zone--left .sys-dash__zone-inner {
