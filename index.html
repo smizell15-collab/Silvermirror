@@ -527,9 +527,14 @@ a { text-decoration: none; }
 .sys-card__platforms {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   margin: 4px 0 0;
-  opacity: 0.65;
+  opacity: 0.7;
+}
+.sys-card__platforms svg {
+  color: var(--color-text-muted);
+  transition: opacity var(--transition-fast);
+  cursor: default;
 }
 .sys-card__kpi-row {
   display: flex;
@@ -698,6 +703,146 @@ a { text-decoration: none; }
   .sys-status__kpis { gap: 8px; }
   .sys-card--hero { padding: 20px 16px; }
   .sys-card__revenue-label { font-size: 1.6rem; }
+}
+
+/* ── Section 2 local color tokens ── */
+#section-overview {
+  --color-cac-amber: #b45309;
+  --color-cac-amber-bg: rgba(245,158,11,0.1);
+  --color-cac-amber-border: rgba(245,158,11,0.3);
+  --color-ratio-green: #16a34a;
+  --color-ratio-green-bg: rgba(34,197,94,0.08);
+  --color-ratio-green-border: rgba(34,197,94,0.22);
+}
+
+/* ── Flow connector strip (between attr-bar and zones) ── */
+.sys-dash__flow-strip {
+  padding: 0 20px;
+  height: 22px;
+  overflow: hidden;
+  position: relative;
+}
+.sys-dash__flow-svg {
+  width: 100%;
+  height: 22px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Animated chevron connectors between zones ── */
+.sys-dash__zone { position: relative; }
+.sys-dash__zone--left::after,
+.sys-dash__zone--center::after {
+  content: '›';
+  position: absolute;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-accent);
+  pointer-events: none;
+  z-index: 5;
+  animation: flow-chevron 2.5s ease-in-out infinite;
+}
+.sys-dash__zone--center::after { animation-delay: 0.9s; }
+/* translateY(-50%) repeated in keyframes to maintain vertical centering during transform */
+@keyframes flow-chevron {
+  0%, 100% { opacity: 0.12; transform: translateY(-50%) translateX(-3px); }
+  50%       { opacity: 0.55; transform: translateY(-50%) translateX(2px); }
+}
+
+/* ── CAC chip — amber accent ── */
+.sys-card__kpi--cac {
+  background: var(--color-cac-amber-bg);
+  border-color: var(--color-cac-amber-border);
+  color: var(--color-cac-amber);
+}
+
+/* ── Acquisition cost sublabel ── */
+.sys-card__acq-label {
+  font-size: 0.57rem;
+  color: var(--color-cac-amber);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: -3px;
+}
+
+/* ── LTV:CAC ratio highlight ── */
+.sys-card__ratio-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-ratio-green-bg);
+  border: 1px solid var(--color-ratio-green-border);
+  border-radius: 10px;
+  margin-top: 4px;
+}
+.sys-card__ratio-number {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-ratio-green);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.sys-card__ratio-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--color-ratio-green);
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+  line-height: 1.3;
+}
+
+/* ── Platform icon hover ── */
+.sys-card__platforms { transition: opacity var(--transition-fast); }
+.sys-card__platforms:hover { opacity: 0.9; }
+
+/* ── Zone gradient differentiation (lighter left → richer right) ── */
+.sys-dash__zone--left .sys-dash__zone-inner {
+  background: rgba(248,246,242,0.75);
+}
+.sys-dash__zone--center .sys-dash__zone-inner {
+  background: rgba(242,239,234,0.88);
+}
+
+/* ── Feedback bar enhanced: animated return arrows ── */
+.sys-dash__feedback-arrows {
+  font-size: 0.6rem;
+  color: var(--color-accent);
+  letter-spacing: 4px;
+  animation: feedback-return 2.2s ease-in-out infinite;
+  margin-left: auto;
+}
+@keyframes feedback-return {
+  0%, 100% { opacity: 0.15; transform: translateX(4px); }
+  50%       { opacity: 0.5;  transform: translateX(-2px); }
+}
+
+/* ── Quote at bottom of section ── */
+.acq-system__quote--bottom {
+  max-width: 620px;
+  margin-top: var(--space-md);
+  position: relative;
+  padding-left: var(--space-md);
+}
+.acq-system__quote--bottom::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px rgba(36,162,236,0.4);
+  border-radius: 2px;
+}
+
+/* Responsive — hide flow chevrons on mobile (no space) */
+@media (max-width: 1024px) {
+  .sys-dash__zone--left::after,
+  .sys-dash__zone--center::after { display: none; }
 }
 
 /* ============================================
@@ -1648,12 +1793,6 @@ a { text-decoration: none; }
 <section class="section section--warm" id="section-overview">
   <div class="section-inner section-inner--wide">
 
-    <!-- Leadership Quote: compact, left-aligned, accent left border -->
-    <blockquote class="acq-system__quote animate-on-scroll">
-      <p class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
-      <cite class="acq-system__quote-attr">Matt Maroone</cite>
-    </blockquote>
-
     <!-- Section Header -->
     <div class="section-header animate-on-scroll stagger-2">
       <span class="eyebrow">Acquisition Architecture</span>
@@ -1669,25 +1808,25 @@ a { text-decoration: none; }
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Spend</span>
-            <span class="sys-status__kpi-value">$42K/mo</span>
+            <span class="sys-status__kpi-value">$65K/mo</span>
           </div>
           <span class="sys-status__sep" aria-hidden="true">·</span>
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Leads</span>
-            <span class="sys-status__kpi-value">1,240</span>
+            <span class="sys-status__kpi-value">1,840</span>
           </div>
           <span class="sys-status__sep" aria-hidden="true">·</span>
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Members</span>
-            <span class="sys-status__kpi-value">312</span>
+            <span class="sys-status__kpi-value">285</span>
           </div>
           <span class="sys-status__sep" aria-hidden="true">·</span>
           <div class="sys-status__kpi">
             <span class="sys-dot"></span>
             <span class="sys-status__kpi-label">Revenue</span>
-            <span class="sys-status__kpi-value">$748K</span>
+            <span class="sys-status__kpi-value">$1.36M</span>
           </div>
         </div>
         <div class="sys-status__badge">
@@ -1700,6 +1839,17 @@ a { text-decoration: none; }
       <div class="sys-dash__attr-bar">
         <span class="sys-dash__attr-bar-left">Full Attribution Layer — Every Step Tracked from Click to Member</span>
         <span class="sys-dash__attr-bar-right">AI + SEO + Paid Media Operating as One System</span>
+      </div>
+
+      <!-- Flow Direction Strip — animated dashes showing Traffic → Revenue -->
+      <div class="sys-dash__flow-strip" aria-hidden="true">
+        <svg class="sys-dash__flow-svg" viewBox="0 0 900 22" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="11" x2="900" y2="11" stroke="rgba(36,162,236,0.18)" stroke-width="1.5" stroke-dasharray="6 5">
+            <animate attributeName="stroke-dashoffset" from="0" to="-11" dur="3s" repeatCount="indefinite"/>
+          </line>
+          <polygon points="263,5 271,11 263,17" fill="rgba(36,162,236,0.28)"/>
+          <polygon points="573,5 581,11 573,17" fill="rgba(36,162,236,0.28)"/>
+        </svg>
       </div>
 
       <!-- 3 Operational Zones — CSS Grid: 1fr 1.6fr 1.4fr -->
@@ -1719,31 +1869,46 @@ a { text-decoration: none; }
                 </svg>
               </div>
               <div class="sys-card__title">Traffic Input</div>
-              <!-- Platform icons: Meta, Google, TikTok -->
-              <div class="sys-card__platforms" aria-label="Platforms: Meta, Google, TikTok">
-                <!-- Meta -->
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Meta">
-                  <rect width="15" height="15" rx="3" fill="#1877F2" fill-opacity="0.12"/>
-                  <path d="M8 4.5H7.2C6.37 4.5 5.7 5.17 5.7 6V6.5H4.7v1.5h1V11h1.6V8H8.5l.25-1.5H7.3V6c0-.28.22-.5.5-.5H9V4.5H8z" fill="#1877F2"/>
+              <!-- Platform icons: all 7 channels, monochrome -->
+              <div class="sys-card__platforms" aria-label="Platforms: Meta, Google Ads, LSA, TikTok, YouTube, Bing, Yelp">
+                <!-- Meta: infinity loop -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Meta">
+                  <path d="M9 9.3C8.1 7.8 6.9 6.5 5.5 6.5 3.6 6.5 2 8 2 9.8S3.6 13 5.5 13C6.9 13 8.1 11.7 9 10.2c.9 1.5 2.1 2.8 3.5 2.8 1.9 0 3.5-1.4 3.5-3.2S14.4 6.5 12.5 6.5C11.1 6.5 9.9 7.8 9 9.3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <!-- Google -->
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Google">
-                  <rect width="15" height="15" rx="3" fill="#EA4335" fill-opacity="0.08"/>
-                  <path d="M11 7.58c0-.32-.03-.63-.08-.93H7.5v1.76H9.5c-.09.5-.37.94-.8 1.23v1.02h1.3C10.6 9.87 11 8.83 11 7.58z" fill="#4285F4"/>
-                  <path d="M7.5 12c1.35 0 2.48-.45 3.3-1.22l-1.3-1.01c-.41.28-.95.44-2 .44-1.54 0-2.84-1.04-3.3-2.44H2.84v1.04A4.99 4.99 0 007.5 12z" fill="#34A853"/>
-                  <path d="M4.2 7.77A2.98 2.98 0 014.04 7c0-.27.04-.53.16-.77V5.19H2.84A4.99 4.99 0 002 7c0 .8.19 1.56.84 2.81L4.2 7.77z" fill="#FBBC05"/>
-                  <path d="M7.5 4.53c.87 0 1.64.3 2.25.88l1.68-1.68C10.48 2.74 9.1 2 7.5 2A4.99 4.99 0 002.84 5.19L4.2 6.23C4.66 4.83 5.96 4 7.5 4.53z" fill="#EA4335"/>
+                <!-- Google Ads: ascending bar chart -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Google Ads">
+                  <rect x="2.5" y="11" width="3" height="5" rx="0.8"/>
+                  <rect x="7.5" y="7" width="3" height="9" rx="0.8"/>
+                  <rect x="12.5" y="3" width="3" height="13" rx="0.8"/>
                 </svg>
-                <!-- TikTok -->
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TikTok">
-                  <rect width="15" height="15" rx="3" fill="#000" fill-opacity="0.07"/>
-                  <path d="M10 2.5c.1 1.1.77 2 1.6 2.36V6.3c-.8.02-1.54-.26-2.1-.7v3.36A2.93 2.93 0 017.6 12a2.93 2.93 0 01-2.93-2.93A2.93 2.93 0 017.6 6.14c.17 0 .33.01.5.04v1.7c-.16-.04-.33-.06-.5-.06a1.26 1.26 0 00-1.26 1.26A1.26 1.26 0 007.6 10.34a1.26 1.26 0 001.26-1.26V2.5H10z" fill="#2D2D2D"/>
+                <!-- LSA: shield with checkmark -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="LSA">
+                  <path d="M9 2L3 4.5V9.5C3 13 5.7 15.8 9 16.5 12.3 15.8 15 13 15 9.5V4.5L9 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                  <path d="M6.5 9.5L8 11 11.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <!-- TikTok: d-note shape -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="TikTok Ads">
+                  <path d="M12.5 4.8C11.9 4.5 11.3 3.9 11 3H9.5v9C9.5 13.4 8.4 14.5 7 14.5S4.5 13.4 4.5 12 5.6 9.5 7 9.5c.3 0 .5 0 .7.1V7.1C7.5 7 7.2 7 7 7 4.3 7 2 9.2 2 12S4.3 17 7 17s5-2.2 5-5V7.8c1 .5 2 .7 3 .7V6c-.6 0-1.9-.5-2.5-1.2z"/>
+                </svg>
+                <!-- YouTube: rectangle + play triangle -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="YouTube">
+                  <rect x="1.5" y="4.5" width="15" height="9" rx="2.5" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M7.5 6.8 12 9 7.5 11.2V6.8z" fill="currentColor"/>
+                </svg>
+                <!-- Bing: vertical bar + wing -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Bing">
+                  <rect x="4.5" y="2" width="2" height="14" rx="1"/>
+                  <path d="M6.5 7.5L14.5 11 6.5 14.5V7.5z"/>
+                </svg>
+                <!-- Yelp: starburst -->
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Yelp">
+                  <path d="M9 2l1.2 3.8 4-1.5-2.4 3.5 3.8 2.2H12l.8 3.8-3-2.2-1.8 3.4-1.8-3.4-3 2.2.8-3.8H1.4l3.8-2.2-2.4-3.5 4 1.5z"/>
                 </svg>
               </div>
               <div class="sys-card__kpi-row">
                 <div class="sys-card__kpi">
                   <span class="sys-dot"></span>
-                  $4.20 CPC
+                  $2.80 Blended CPC
                   <span class="sys-card__trend sys-card__trend--down">↓</span>
                 </div>
               </div>
@@ -1761,7 +1926,7 @@ a { text-decoration: none; }
               <div class="sys-card__kpi-row">
                 <div class="sys-card__kpi">
                   <span class="sys-dot"></span>
-                  3.2% CTR
+                  4.2% CTR
                   <span class="sys-card__trend sys-card__trend--up">↑</span>
                 </div>
               </div>
@@ -1788,7 +1953,7 @@ a { text-decoration: none; }
               <div class="sys-card__title">Landing System</div>
               <div class="sys-card__subtitle">Mobile-First Pages</div>
               <div class="sys-card__kpi-row">
-                <div class="sys-card__kpi">8.4% CVR</div>
+                <div class="sys-card__kpi">12.8% CVR</div>
                 <span class="sys-card__tag">Mobile</span>
               </div>
             </div>
@@ -1805,7 +1970,7 @@ a { text-decoration: none; }
               <div class="sys-card__subtitle">Forms · Booking</div>
               <div class="sys-card__kpi-row">
                 <div class="sys-card__kpi">
-                  $32 CPL
+                  $54 CPL
                   <span class="sys-card__trend sys-card__trend--down">↓</span>
                 </div>
               </div>
@@ -1826,7 +1991,7 @@ a { text-decoration: none; }
               <div class="sys-card__kpi-row">
                 <div class="sys-card__kpi">
                   <span class="sys-dot"></span>
-                  74% Show Rate
+                  78% Show Rate
                 </div>
                 <span class="sys-card__tag"><span class="sys-dot sys-dot--sm"></span> Active</span>
               </div>
@@ -1850,8 +2015,14 @@ a { text-decoration: none; }
               <div class="sys-card__title">Membership Conversion</div>
               <div class="sys-card__revenue-label">Revenue</div>
               <div class="sys-card__kpi-group">
-                <div class="sys-card__kpi sys-card__kpi--prominent">$2,400 LTV</div>
-                <div class="sys-card__kpi">92% Retention</div>
+                <div class="sys-card__kpi sys-card__kpi--prominent">$4,800 LTV</div>
+                <div class="sys-card__kpi sys-card__kpi--cac">$245 CAC</div>
+                <div class="sys-card__kpi">89% Retention</div>
+              </div>
+              <div class="sys-card__acq-label">Per Member</div>
+              <div class="sys-card__ratio-line">
+                <span class="sys-card__ratio-number">19.6x</span>
+                <span class="sys-card__ratio-label">Return on Acquisition</span>
               </div>
               <div class="sys-card__tagline">System optimized for revenue, not leads</div>
             </div>
@@ -1865,9 +2036,16 @@ a { text-decoration: none; }
       <div class="sys-dash__feedback">
         <span class="sys-dash__feedback-icon">↺</span>
         <span>Continuous Optimization Loop — Data → Insight → Action → Revenue</span>
+        <span class="sys-dash__feedback-arrows" aria-hidden="true">← ← ←</span>
       </div>
 
     </div><!-- /.sys-dash -->
+
+    <!-- Matt Maroone Quote — closing thought after seeing the system -->
+    <blockquote class="acq-system__quote acq-system__quote--bottom animate-on-scroll">
+      <p class="acq-system__quote-text">"When you're growing via your own investment… you have to be very disciplined. Every dollar counts."</p>
+      <cite class="acq-system__quote-attr">Matt Maroone</cite>
+    </blockquote>
 
   </div>
 </section>
