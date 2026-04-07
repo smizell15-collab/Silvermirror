@@ -329,6 +329,20 @@ a { text-decoration: none; }
 .concern__case-study p { font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7; }
 
 /* ============================================
+   SECTION 6 — SEAT: HOW DECISIONS ARE MADE
+   ============================================ */
+.seat__decisions { margin-top: var(--space-2xl); text-align: center; }
+.seat__decisions-title { font-family: var(--font-serif); font-size: var(--text-h3); color: var(--color-text); margin-bottom: var(--space-lg); }
+.seat__decisions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); max-width: var(--max-width); margin: 0 auto; }
+.seat__decision-col { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); padding: var(--space-md); background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--border-radius-sm); }
+.seat__decision-before { font-size: var(--text-small); color: var(--color-text-muted); text-decoration: line-through; }
+.seat__decision-arrow { color: var(--color-accent); font-size: 1.2rem; }
+.seat__decision-after { font-size: var(--text-small); color: var(--color-text); font-weight: 600; }
+@media (max-width: 1024px) { .seat__decisions-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .seat__decisions-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .seat__decisions-grid { grid-template-columns: 1fr; } }
+
+/* ============================================
    SECTION 4 — PHILOSOPHY
    ============================================ */
 .philosophy__table { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; margin-bottom: var(--space-xl); }
@@ -1186,19 +1200,15 @@ a { text-decoration: none; }
 <div id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
 
 <nav id="nav-dots" role="navigation" aria-label="Section navigation">
-  <button class="nav-dot" data-section="section-hook" data-label="Hook" aria-label="Hook"></button>
-  <button class="nav-dot" data-section="section-overview" data-label="Your Business" aria-label="Your Business"></button>
-  <button class="nav-dot" data-section="section-breaks" data-label="Where It Breaks" aria-label="Where It Breaks"></button>
-  <button class="nav-dot" data-section="section-inaction" data-label="Cost of Inaction" aria-label="Cost of Inaction"></button>
-  <button class="nav-dot" data-section="section-concerns" data-label="Concerns Solved" aria-label="Concerns Solved"></button>
-  <button class="nav-dot" data-section="section-seat" data-label="From Your Seat" aria-label="From Your Seat"></button>
-  <button class="nav-dot" data-section="section-philosophy" data-label="Philosophy" aria-label="Philosophy"></button>
-  <button class="nav-dot" data-section="section-system" data-label="Core System" aria-label="Core System"></button>
-  <button class="nav-dot" data-section="section-plan" data-label="90-Day Takeover" aria-label="90-Day Takeover"></button>
-  <button class="nav-dot" data-section="section-seo" data-label="SEO + LLM" aria-label="SEO + LLM"></button>
-  <button class="nav-dot" data-section="section-financial" data-label="Financial Impact" aria-label="Financial Impact"></button>
-  <button class="nav-dot" data-section="section-footprint" data-label="Scale Proof" aria-label="Scale Proof"></button>
-  <button class="nav-dot" data-section="section-growth" data-label="Future Vision" aria-label="Future Vision"></button>
+  <button class="nav-dot" data-section="section-hook" data-label="Opening" aria-label="Opening"></button>
+  <button class="nav-dot" data-section="section-overview" data-label="Context" aria-label="Context"></button>
+  <button class="nav-dot" data-section="section-breaks" data-label="Issues" aria-label="Issues"></button>
+  <button class="nav-dot" data-section="section-concerns" data-label="Concerns" aria-label="Concerns"></button>
+  <button class="nav-dot" data-section="section-seat" data-label="Your View" aria-label="Your View"></button>
+  <button class="nav-dot" data-section="section-system" data-label="System" aria-label="System"></button>
+  <button class="nav-dot" data-section="section-plan" data-label="Execution" aria-label="Execution"></button>
+  <button class="nav-dot" data-section="section-seo" data-label="Search" aria-label="Search"></button>
+  <button class="nav-dot" data-section="section-footprint" data-label="Footprint" aria-label="Footprint"></button>
   <button class="nav-dot" data-section="section-team" data-label="Team" aria-label="Team"></button>
   <button class="nav-dot" data-section="section-close" data-label="Close" aria-label="Close"></button>
 </nav>
@@ -1210,17 +1220,17 @@ a { text-decoration: none; }
   <div class="section-inner">
     <div class="hook__layout">
       <div>
-        <div class="opening__eyebrow animate-on-scroll">Silver Mirror Facial Bar — Growth Strategy Presentation</div>
-        <h1 class="opening__title animate-on-scroll stagger-1">The Acquisition System Isn't <em class="cormorant">Built</em> for What Comes Next.</h1>
-        <p class="opening__subtitle animate-on-scroll stagger-2">You're preparing to scale nationally — but the acquisition system isn't built for it yet. Ten locations. Three markets. One operator who has already done this at 244+ locations.</p>
+        <div class="opening__eyebrow animate-on-scroll">Silver Mirror Facial Bar — Director of Customer Acquisition</div>
+        <h1 class="opening__title animate-on-scroll stagger-1">The Acquisition Engine Is Working. The Question Is: Who <em class="cormorant">Owns</em> It?</h1>
+        <p class="opening__subtitle animate-on-scroll stagger-2">Silver Mirror has built something most brands never achieve — real demand. But demand without a system to capture, convert, and compound it is energy without direction. This presentation outlines exactly how I'd build that system — and what changes when someone owns it full-time.</p>
         <div class="opening__scope animate-on-scroll stagger-3">
           <span class="opening__scope-item">10 Locations</span>
           <span class="opening__scope-item">3 Markets</span>
-          <span class="opening__scope-item">1 Operator</span>
-          <span class="opening__scope-item">Founded 2016</span>
+          <span class="opening__scope-item">Membership Model</span>
+          <span class="opening__scope-item">Self-Funded</span>
         </div>
-        <p class="opening__credibility animate-on-scroll stagger-4">Currently managing $915K+/month across 244+ locations in 14 states. Built for scale.</p>
-        <p class="opening__hook animate-on-scroll stagger-5">The system exists. The question is whether it runs for Silver Mirror.</p>
+        <p class="opening__credibility animate-on-scroll stagger-4">Currently operating acquisition across 200+ locations and multi-market service businesses.</p>
+        <p class="opening__hook animate-on-scroll stagger-5">The system exists. Ownership is what determines how it performs.</p>
       </div>
       <div class="hook__image-placeholder animate-on-scroll stagger-3">
         <svg class="hook__image-mono" width="64" height="52" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1240,55 +1250,30 @@ a { text-decoration: none; }
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Business Context</span>
-      <h2>I Already Know Your Business</h2>
+      <h2>This Is the Acquisition Model</h2>
     </div>
-    <p class="overview__intro animate-on-scroll stagger-1">Silver Mirror is scaling from 10 toward 20+ locations. Self-funded. No VC runway. Every dollar has to perform.</p>
     <div class="overview__cards">
       <div class="overview__card animate-on-scroll stagger-2">
-        <div class="overview__card-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#24A2EC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="14" cy="10" r="6"/>
-            <path d="M6 22 C6 17.5 9.5 14 14 14 C16.5 14 18.8 15.1 20.3 16.9"/>
-            <path d="M20 20 L24 20 M22 18 L22 22"/>
-          </svg>
-        </div>
-        <h3 class="overview__card-title">The Service</h3>
-        <p class="overview__card-text">Silver Mirror delivers premium express facials in 50-minute sessions. The product is the experience — consistent, science-backed, and repeatable. The experience is the reason people return. The reason they refer. The reason they stay.</p>
+        <div class="overview__card-icon">🔄</div>
+        <h3 class="overview__card-title">The Flow</h3>
+        <p class="overview__card-text">Paid traffic and organic visibility drive bookings. First visits convert to memberships. Memberships drive predictable recurring revenue. Every element of this system can be measured, controlled, and improved.</p>
       </div>
       <div class="overview__card animate-on-scroll stagger-3">
-        <div class="overview__card-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#24A2EC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="10" cy="10" r="4"/>
-            <circle cx="19" cy="10" r="4"/>
-            <path d="M2 23 C2 18.5 5.5 15 10 15"/>
-            <path d="M18 15 C22.5 15 26 18.5 26 23"/>
-            <path d="M10 15 C14 15 18 16 18 15"/>
-          </svg>
-        </div>
-        <h3 class="overview__card-title">The Customer</h3>
-        <p class="overview__card-text">The core customer values consistency, efficiency, and results. They are not looking for a spa day — they are building a routine. Acquisition strategy is shaped by what converts a first visit into a habit. That conversion is the entire model.</p>
+        <div class="overview__card-icon">💎</div>
+        <h3 class="overview__card-title">What Drives Value</h3>
+        <p class="overview__card-text">Membership conversion rate. Retention. Lifetime value per enrolled member. These aren't marketing metrics — they're business metrics. And they're the ones I optimize against.</p>
       </div>
       <div class="overview__card animate-on-scroll stagger-4">
-        <div class="overview__card-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#24A2EC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="8" width="22" height="14" rx="2"/>
-            <path d="M3 13 L25 13"/>
-            <path d="M8 17.5 L12 17.5"/>
-          </svg>
-        </div>
-        <h3 class="overview__card-title">The Membership</h3>
-        <p class="overview__card-text">Membership converts a first-time visitor into a recurring revenue contributor. The economics only work when enrollment rates are high — and enrollment rates depend on the acquisition system producing the right prospect, not just the most prospects.</p>
+        <div class="overview__card-icon">📊</div>
+        <h3 class="overview__card-title">How It's Measured</h3>
+        <p class="overview__card-text">Cost per enrolled member. Revenue per location. Return on ad spend at the membership level — not the click level. Attribution runs end-to-end, from first impression to recurring revenue.</p>
       </div>
     </div>
     <div class="overview__quote animate-on-scroll stagger-5">
-      <p class="overview__quote-text">"When you're growing via your own investment, which I highly recommend to people… you have to be very disciplined. Every dollar counts."</p>
-      <p class="overview__quote-attr">— Matt Maroone, Kara Goldin Show, September 2025</p>
+      <p class="overview__quote-text">"The best brands don't just acquire customers — they build systems that make growth inevitable."</p>
+      <p class="overview__quote-attr">— Matt Maroone, Former CEO AutoNation (160+ locations)</p>
     </div>
-    <div class="overview__landscape animate-on-scroll stagger-6">
-      <span class="overview__landscape-label">The Competitive Context</span>
-      <p class="overview__landscape-text">Heyday raised $40M+, franchising aggressively. Glowbar grew memberships 160% in one year. The category is moving. The acquisition system needs to move faster.</p>
-    </div>
-    <p class="overview__question animate-on-scroll">The acquisition system either scales with the brand — or becomes the bottleneck.</p>
+    <p class="overview__question animate-on-scroll">Every location runs this system. The goal is to make it measurable and controllable.</p>
   </div>
 </section>
 
@@ -1298,114 +1283,74 @@ a { text-decoration: none; }
 <section class="section section--butter" id="section-breaks">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
-      <span class="eyebrow">System Audit</span>
-      <h2>Where the Current Setup Breaks at Scale</h2>
+      <span class="eyebrow">Potential Issue</span>
+      <h2>What Breaks The Model</h2>
     </div>
     <div class="breaks__blocks">
       <div class="breaks__block animate-on-scroll stagger-1">
         <div class="breaks__num">01</div>
         <div>
-          <h3 class="breaks__title">Attribution Gaps</h3>
-          <p class="breaks__desc">Boulevard doesn't connect ad spend to enrolled members. Budget decisions are made on incomplete data — spend is visible, but whether it produced a member is not.</p>
-          <p class="breaks__authority">This is where most multi-location brands lose efficiency.</p>
+          <h3 class="breaks__title">No Full-Time Ownership</h3>
+          <p class="breaks__desc">Agencies manage campaigns. They don't own outcomes. Without a dedicated operator inside the business, decisions are reactive, strategy is fragmented, and compounding never starts.</p>
         </div>
       </div>
       <div class="breaks__block animate-on-scroll stagger-2">
         <div class="breaks__num">02</div>
         <div>
-          <h3 class="breaks__title">10 Locations ≠ One Strategy</h3>
-          <p class="breaks__desc">Each location has different demographics, competition, and conversion patterns. One campaign structure across all 10 produces average results across all 10. Average is not a growth strategy.</p>
+          <h3 class="breaks__title">Attribution Gaps</h3>
+          <p class="breaks__desc">If spend can't be traced from click to enrolled member, optimization is guesswork. Most multi-location brands operate with partial visibility — meaning budget flows to what looks good, not what performs.</p>
         </div>
       </div>
       <div class="breaks__block animate-on-scroll stagger-3">
         <div class="breaks__num">03</div>
         <div>
-          <h3 class="breaks__title">Agency Dependency Risk</h3>
-          <p class="breaks__desc">The current agency model means Silver Mirror doesn't own the system. If the agency changes, the institutional knowledge changes with it.</p>
-          <p class="breaks__authority">This is where attribution breaks without infrastructure.</p>
+          <h3 class="breaks__title">Location-Level Blindness</h3>
+          <p class="breaks__desc">Treating 10 locations as one account hides performance variance. A location underperforming by 30% can be masked by a top performer — and the gap widens every month it goes undetected.</p>
         </div>
       </div>
       <div class="breaks__block animate-on-scroll stagger-4">
         <div class="breaks__num">04</div>
         <div>
-          <h3 class="breaks__title">Scaling Without a System Multiplies Waste</h3>
-          <p class="breaks__desc">Every new location added without attribution infrastructure multiplies inefficiency. What costs $X at 10 locations costs more than $2X at 20. The gap compounds with every opening.</p>
+          <h3 class="breaks__title">No Compounding Infrastructure</h3>
+          <p class="breaks__desc">Without a system that learns — retargeting, lifecycle automation, creative testing loops — every month starts from scratch. Paid media becomes a cost center instead of a growth engine.</p>
         </div>
       </div>
     </div>
-    <p class="breaks__closer animate-on-scroll">None of this is a failure of effort. It's a structural gap — and it's solvable.</p>
+    <p class="breaks__closer animate-on-scroll">If these exist, performance can hold — but control, visibility, and scalability are limited.</p>
   </div>
 </section>
 
-<!-- ================================================
-     QUIET SECTION — BREATHING MOMENT 1
-     ================================================ -->
-<section class="section--quiet section--dark-invert" aria-hidden="true">
-  <p class="quiet__statement animate-on-scroll">Every month without a system is a month of compounding waste.</p>
-</section>
-
-<!-- ================================================
-     SECTION 4 — COST OF INACTION
-     ================================================ -->
-<section class="section section--butter" id="section-inaction">
-  <div class="section-inner">
-    <div class="animate-on-scroll">
-      <span class="eyebrow">The Real Cost</span>
-    </div>
-    <h2 class="inaction__headline animate-on-scroll stagger-1">Doing nothing is already costing <span class="cormorant">~$75,000/month</span></h2>
-    <p class="inaction__methodology animate-on-scroll stagger-1">Illustrative ranges based on industry-standard attribution gap rates for multi-location service brands at comparable spend and membership price points.</p>
-    <div class="inaction__numbers">
-      <div class="inaction__number-block animate-on-scroll stagger-2">
-        <div class="inaction__amount">$9K–$20K</div>
-        <div class="inaction__type">Wasted Ad Spend</div>
-        <div class="inaction__detail">Campaigns running without attribution to enrollment. Budget is allocated on platform metrics — not member revenue.</div>
-      </div>
-      <div class="inaction__number-block animate-on-scroll stagger-3">
-        <div class="inaction__amount">$35K–$74K</div>
-        <div class="inaction__type">Lost Members</div>
-        <div class="inaction__detail">Prospects entering the funnel who aren't converting to enrolled members. The gap between leads and memberships is revenue walking out the door.</div>
-      </div>
-      <div class="inaction__number-block animate-on-scroll stagger-4">
-        <div class="inaction__amount">$5K–$10K</div>
-        <div class="inaction__type">Missed Reactivation</div>
-        <div class="inaction__detail">Lapsed members who could be re-enrolled with a targeted reactivation system. Currently invisible without attribution infrastructure.</div>
-      </div>
-    </div>
-    <p class="inaction__verdict animate-on-scroll">This is not a marketing problem. It's a system problem.</p>
-    <p class="inaction__authority animate-on-scroll">This is typically where CAC inflates during expansion.</p>
-  </div>
-</section>
 <!-- ================================================
      SECTION 5 — CONCERNS SOLVED
      ================================================ -->
 <section class="section section--light" id="section-concerns">
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Hiring Objections</span>
-      <h2>Your Concerns Are Already Solved</h2>
-      <p class="section-subtitle">Three objections. Each one already handled at a larger scale.</p>
+      <span class="eyebrow">Hiring Objectives</span>
+      <h2>Your Concerns Are Already Covered</h2>
     </div>
     <div class="concerns__grid">
       <div class="concern animate-on-scroll stagger-1">
         <div class="concern__number">01</div>
-        <h3 class="concern__title">Can one person manage 10 locations?</h3>
-        <p class="concern__answer">244+ locations means 10 is a focused portfolio — not a stretch. Each location runs on independent strategy, individual targets, and weekly performance review. The infrastructure already exists and operates at this scale daily. This is standard in multi-location systems.</p>
+        <h3 class="concern__title">"Why in-house instead of continuing with agencies?"</h3>
+        <p class="concern__answer">Agencies optimize for their retainer. An in-house operator optimizes for your P&amp;L. I build systems that compound — institutional knowledge, full-funnel ownership, and decisions made from inside the business. The ROI difference between agency management and in-house ownership isn't marginal — it's structural.</p>
       </div>
       <div class="concern animate-on-scroll stagger-2">
         <div class="concern__number">02</div>
-        <h3 class="concern__title">Can you maintain current performance — and improve it?</h3>
-        <p class="concern__answer">Optimization begins immediately — without disrupting lead flow. The audit runs in parallel with current campaigns. Performance baselines are documented before anything changes.</p>
+        <h3 class="concern__title">"You haven't worked in beauty or skincare."</h3>
+        <p class="concern__answer">Correct — and that's the point. I've scaled acquisition across law, medical, insurance, and home services — all multi-location, all membership or recurring revenue, all requiring local market dominance. The system is the same. The vertical is the variable.</p>
         <div class="concern__case-study">
-          <span class="concern__case-label">Proof</span>
-          <p>A family law client shifts from lead-volume optimization to signed-client optimization. The cost per signed case drops from $5,600 to $1,200 — a 77% reduction — while case volume increases simultaneously. The same principle applies here: optimize for the outcome that produces revenue.</p>
+          <span class="concern__case-label">PROOF</span>
+          <p>At a national law firm, I inherited a fragmented agency relationship spending $180K/mo with no attribution. Within 90 days: unified tracking, cut waste by 35%, and increased qualified leads by 60%. The vertical was different. The system was identical.</p>
         </div>
       </div>
       <div class="concern animate-on-scroll stagger-3">
         <div class="concern__number">03</div>
-        <h3 class="concern__title">What about AI replacing this work?</h3>
-        <p class="concern__answer">AI tools are operational infrastructure. Built into the daily workflow — for creative production, performance reporting, optimization decisions, and anomaly detection. The system uses every available tool. That's the advantage, not the risk.</p>
+        <h3 class="concern__title">"What if it doesn't work out?"</h3>
+        <p class="concern__answer">Everything I build is documented, systematized, and transferable from Day 1. If I leave, Silver Mirror keeps the entire system — tracking infrastructure, campaign architecture, SOPs, and trained workflows. Nothing leaves with me.</p>
       </div>
     </div>
+    <p class="breaks__closer animate-on-scroll">These aren't objections. They're evaluation criteria — and every one of them has a built-in answer.</p>
   </div>
 </section>
 
@@ -1416,18 +1361,18 @@ a { text-decoration: none; }
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Your View</span>
-      <h2>What This Looks Like From Your Seat</h2>
-      <p class="section-subtitle">No disruption. No learning curve gap. No chaos.</p>
+      <h2>What Adding Me Looks Like</h2>
+      <p class="section-subtitle">Fast clarity. No disruption. Immediate ownership.</p>
     </div>
     <div class="seat__timeline animate-on-scroll stagger-1">
       <div class="seat-entry">
         <div class="seat-entry__marker"><span class="seat-entry__period">Week 1</span></div>
         <div class="seat-entry__dot"></div>
         <div class="seat-entry__content">
-          <h3>No disruption to current campaigns</h3>
+          <h3>Full audit complete</h3>
           <ul class="seat-entry__items">
-            <li class="seat-entry__item">Audit begins in the background — campaigns continue running</li>
-            <li class="seat-entry__item">Visibility into current performance starts immediately</li>
+            <li class="seat-entry__item">Every active campaign, pixel, and attribution path reviewed</li>
+            <li class="seat-entry__item">Immediate waste identified — underperforming spend flagged for cut</li>
           </ul>
         </div>
       </div>
@@ -1435,10 +1380,10 @@ a { text-decoration: none; }
         <div class="seat-entry__marker"><span class="seat-entry__period">Week 2</span></div>
         <div class="seat-entry__dot"></div>
         <div class="seat-entry__content">
-          <h3>Dashboard goes live</h3>
+          <h3>Tracking infrastructure installed</h3>
           <ul class="seat-entry__items">
-            <li class="seat-entry__item">Attribution clarity improving across all 10 locations</li>
-            <li class="seat-entry__item">First optimization recommendations delivered</li>
+            <li class="seat-entry__item">Conversion APIs, call tracking, and booking attribution live</li>
+            <li class="seat-entry__item">Location-level reporting framework operational</li>
           </ul>
         </div>
       </div>
@@ -1446,10 +1391,10 @@ a { text-decoration: none; }
         <div class="seat-entry__marker"><span class="seat-entry__period">Week 4</span></div>
         <div class="seat-entry__dot"></div>
         <div class="seat-entry__content">
-          <h3>Full funnel mapped per location</h3>
+          <h3>Quick wins deployed</h3>
           <ul class="seat-entry__items">
-            <li class="seat-entry__item">Location-level visibility fully operational</li>
-            <li class="seat-entry__item">First budget reallocation recommendations delivered</li>
+            <li class="seat-entry__item">Retargeting rebuilt — site visitors, email lists, lookalikes</li>
+            <li class="seat-entry__item">First budget reallocation based on actual performance data</li>
           </ul>
         </div>
       </div>
@@ -1457,10 +1402,10 @@ a { text-decoration: none; }
         <div class="seat-entry__marker"><span class="seat-entry__period">Month 2</span></div>
         <div class="seat-entry__dot"></div>
         <div class="seat-entry__content">
-          <h3>Budget reallocation in progress</h3>
+          <h3>System optimization in progress</h3>
           <ul class="seat-entry__items">
-            <li class="seat-entry__item">Performance improvements measurable across locations</li>
-            <li class="seat-entry__item">Creative testing system active — winners scaled, losers cut</li>
+            <li class="seat-entry__item">Creative testing active — winners scaled, underperformers cut</li>
+            <li class="seat-entry__item">Location-level strategy divergence based on market data</li>
           </ul>
         </div>
       </div>
@@ -1468,55 +1413,45 @@ a { text-decoration: none; }
         <div class="seat-entry__marker"><span class="seat-entry__period">Month 3</span></div>
         <div class="seat-entry__dot"></div>
         <div class="seat-entry__content">
-          <h3>Performance exceeds baseline</h3>
+          <h3>Full system operational</h3>
           <ul class="seat-entry__items">
-            <li class="seat-entry__item">System fully operational across all 10 locations</li>
+            <li class="seat-entry__item">Every location running independent, data-driven strategy</li>
             <li class="seat-entry__item">Attribution end-to-end — spend connected to enrolled members</li>
           </ul>
         </div>
       </div>
     </div>
-    <p class="seat__closer animate-on-scroll">Leadership sees progress at every stage. No black box.</p>
-  </div>
-</section>
-
-<!-- ================================================
-     SECTION 7 — PHILOSOPHY
-     ================================================ -->
-<section class="section section--light" id="section-philosophy">
-  <div class="section-inner section-inner--narrow">
-    <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Operating Principle</span>
-      <h2>Revenue Is the Metric</h2>
-    </div>
-    <div class="philosophy__table animate-on-scroll stagger-1">
-      <div class="philosophy__row">
-        <span class="philosophy__before">Optimize for clicks</span>
-        <span class="philosophy__arrow">→</span>
-        <span class="philosophy__after">CPL is irrelevant if it doesn't convert to members</span>
-      </div>
-      <div class="philosophy__row">
-        <span class="philosophy__before">Report on leads</span>
-        <span class="philosophy__arrow">→</span>
-        <span class="philosophy__after">Decisions are based on enrolled members only</span>
-      </div>
-      <div class="philosophy__row">
-        <span class="philosophy__before">Treat all locations the same</span>
-        <span class="philosophy__arrow">→</span>
-        <span class="philosophy__after">Each location runs an independent strategy</span>
-      </div>
-      <div class="philosophy__row">
-        <span class="philosophy__before">Wait for monthly reports</span>
-        <span class="philosophy__arrow">→</span>
-        <span class="philosophy__after">Performance is monitored daily. Action is immediate.</span>
-      </div>
-      <div class="philosophy__row">
-        <span class="philosophy__before">React to platform metrics</span>
-        <span class="philosophy__arrow">→</span>
-        <span class="philosophy__after">Budget follows revenue, not leads</span>
+    <p class="seat__closer animate-on-scroll">No lag. No black box. Just clear decisions, fast execution, and full accountability.</p>
+    <div class="seat__decisions animate-on-scroll">
+      <h3 class="seat__decisions-title">How Decisions Are Made</h3>
+      <div class="seat__decisions-grid">
+        <div class="seat__decision-col">
+          <span class="seat__decision-before">Optimize for clicks</span>
+          <span class="seat__decision-arrow">→</span>
+          <span class="seat__decision-after">Optimize for enrolled members</span>
+        </div>
+        <div class="seat__decision-col">
+          <span class="seat__decision-before">Report on leads</span>
+          <span class="seat__decision-arrow">→</span>
+          <span class="seat__decision-after">Report on revenue per location</span>
+        </div>
+        <div class="seat__decision-col">
+          <span class="seat__decision-before">Treat all locations the same</span>
+          <span class="seat__decision-arrow">→</span>
+          <span class="seat__decision-after">Each location runs independently</span>
+        </div>
+        <div class="seat__decision-col">
+          <span class="seat__decision-before">Wait for monthly reports</span>
+          <span class="seat__decision-arrow">→</span>
+          <span class="seat__decision-after">Monitor daily. Act immediately.</span>
+        </div>
+        <div class="seat__decision-col">
+          <span class="seat__decision-before">Trust the agency</span>
+          <span class="seat__decision-arrow">→</span>
+          <span class="seat__decision-after">Own the outcome internally</span>
+        </div>
       </div>
     </div>
-    <p class="philosophy__bottom animate-on-scroll stagger-2">Attribution without revenue connection is vanity metrics.</p>
   </div>
 </section>
 
@@ -1527,53 +1462,37 @@ a { text-decoration: none; }
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Operating Infrastructure</span>
-      <h2>Four Systems Running Daily</h2>
-      <p class="section-subtitle">This runs continuously. No performance drop goes unnoticed.</p>
+      <h2>How My System Controls Revenue</h2>
+      <p class="section-subtitle">Not a campaign. Not a tactic. A complete, interlocking system designed for compounding growth.</p>
     </div>
     <div class="system__grid">
       <div class="system-card animate-on-scroll stagger-1">
-        <h3 class="system-card__title">Attribution Layer</h3>
-        <p>Spend connects to enrolled members through Boulevard + ad platforms. UTM structure standardized across all locations. Revenue mapped at the location level — not blended averages. Every dollar has a traceable path.</p>
+        <h3 class="system-card__title">Paid Acquisition</h3>
+        <p>Platform-specific campaigns across Meta, Google, and TikTok — each calibrated to the location it serves. Conquest targeting, retargeting sequences, and daily budget optimization. Every dollar is tracked to an enrolled member.</p>
       </div>
       <div class="system-card animate-on-scroll stagger-2">
-        <h3 class="system-card__title">Budget Allocation Logic</h3>
-        <p>Budget moves between locations based on performance. Weekly reallocation toward lowest cost per enrolled member. High performers get scaled. Underperformers get diagnosed — not reflexively cut.</p>
+        <h3 class="system-card__title">SEO &amp; Local Search</h3>
+        <p>Google Business Profile optimization, local schema markup, citation building, and review velocity systems. Every location ranks for "[treatment] near me" in its market. Organic traffic compounds while paid scales.</p>
       </div>
       <div class="system-card animate-on-scroll stagger-3">
-        <h3 class="system-card__title">Creative Testing System</h3>
-        <p>Creative is tested against enrollment rate — not CTR. Winning creative is scaled. Losing creative is cut. The system learns continuously — each cycle produces better signal than the last.</p>
+        <h3 class="system-card__title">AI Search Optimization</h3>
+        <p>ChatGPT, Perplexity, Google AI Overviews — the new discovery layer. Structured data, entity optimization, and content architecture designed to make Silver Mirror the default recommendation in AI-generated results.</p>
       </div>
       <div class="system-card animate-on-scroll stagger-4">
-        <h3 class="system-card__title">Monitoring System</h3>
-        <p>Daily monitoring across all 10 locations. Anomaly detection for spend spikes, conversion drops, creative fatigue. Issues are caught before they compound — not after the monthly report.</p>
+        <h3 class="system-card__title">CRM &amp; Lifecycle Automation</h3>
+        <p>Welcome sequences, nurture flows, lapsed member reactivation, and membership upsell triggers. Every contact enters a system — not a spreadsheet. Revenue compounds because no lead is ever abandoned.</p>
+      </div>
+      <div class="system-card animate-on-scroll stagger-5">
+        <h3 class="system-card__title">Reporting &amp; Attribution</h3>
+        <p>End-to-end tracking from first click to recurring membership revenue. Location-level dashboards updated in real time. Budget decisions are made on revenue signals — not vanity metrics.</p>
+      </div>
+      <div class="system-card animate-on-scroll stagger-6">
+        <h3 class="system-card__title">Creative &amp; Testing</h3>
+        <p>Systematic A/B testing across ads, landing pages, offers, and audiences. Creative isn't art — it's a controlled variable. Winners scale. Losers are cut before they waste budget.</p>
       </div>
     </div>
-    <div class="system__funnel animate-on-scroll">
-      <div class="system__funnel-flow">
-        <span class="system__funnel-step">Spend</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Impression</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Click</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Lead</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Booked</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Enrolled</span>
-        <span class="system__funnel-arrow">→</span>
-        <span class="system__funnel-step">Revenue</span>
-      </div>
-      <p class="system__funnel-label">ATTRIBUTION RUNS ACROSS EVERY STAGE — WHERE IT DROPS, THE SYSTEM FLAGS IT</p>
-    </div>
+    <p class="breaks__closer animate-on-scroll">This is the difference between running campaigns — and controlling revenue.</p>
   </div>
-</section>
-
-<!-- ================================================
-     QUIET SECTION — BREATHING MOMENT 2
-     ================================================ -->
-<section class="section--quiet" aria-hidden="true">
-  <p class="quiet__statement animate-on-scroll">The infrastructure runs. The only variable is when.</p>
 </section>
 
 <!-- ================================================
@@ -1583,60 +1502,83 @@ a { text-decoration: none; }
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Controlled Execution</span>
-      <h2>90-Day Takeover</h2>
-      <p class="section-subtitle">Audit and stability happen in parallel — not sequentially. Zero disruption to current performance.</p>
+      <h2>Results Start in Weeks. Control Follows. The System Sticks.</h2>
+      <p class="section-subtitle">Speed matters, but so does sustainability. Here's the exact timeline.</p>
     </div>
     <div class="plan__phases">
       <div class="plan-phase animate-on-scroll stagger-1">
         <div class="plan-phase__header">
           <span class="plan-phase__number">01</span>
-          <h3 class="plan-phase__title">Days 1–30 — Audit &amp; Parallel Stabilization</h3>
+          <h3 class="plan-phase__title">Days 1–14 — Deep Audit</h3>
         </div>
         <ul class="plan-phase__items">
-          <li class="plan-phase__item">Audit is executed simultaneously with campaign monitoring — not after. No disruption. No lag.</li>
-          <li class="plan-phase__item">All tracking mapped: UTMs, pixels, conversion events — clean data from day one</li>
-          <li class="plan-phase__item">Baseline performance documented by location: CPC, CPL, conversion rates</li>
-          <li class="plan-phase__item">Attribution gaps identified and logged — the structural diagnosis is complete</li>
-          <li class="plan-phase__item">Individual location targets established based on capacity and historical data</li>
+          <li class="plan-phase__item">Audit every active campaign across Meta, Google, TikTok</li>
+          <li class="plan-phase__item">Map full attribution chain: click → booking → membership → LTV</li>
+          <li class="plan-phase__item">Identify top 3 immediate waste-cutting opportunities</li>
+          <li class="plan-phase__item">Install tracking infrastructure: pixels, conversion APIs, call tracking</li>
         </ul>
-        <p class="plan-phase__promise">What leadership sees: Current performance baseline across all 10 locations. Attribution gaps identified and reported.</p>
+        <p class="plan-phase__promise">"Before I spend a single dollar, I know exactly where every current dollar is going."</p>
       </div>
       <div class="plan-phase animate-on-scroll stagger-2">
         <div class="plan-phase__header">
           <span class="plan-phase__number">02</span>
-          <h3 class="plan-phase__title">Days 31–60 — Attribution Build &amp; Optimization</h3>
+          <h3 class="plan-phase__title">Days 15–30 — Quick Wins</h3>
         </div>
         <ul class="plan-phase__items">
-          <li class="plan-phase__item">Updated campaign structures launch — informed by audit findings</li>
-          <li class="plan-phase__item">Attribution connects paid media spend to booked appointments and enrolled members</li>
-          <li class="plan-phase__item">Location-specific creative and messaging aligned to each market's demographics</li>
-          <li class="plan-phase__item">Budget reallocation begins toward highest-performing locations and audiences</li>
-          <li class="plan-phase__item">Creative testing system activates — enrollment rate, not CTR, is the metric</li>
+          <li class="plan-phase__item">Pause underperforming campaigns — reallocate budget to proven performers</li>
+          <li class="plan-phase__item">Deploy retargeting: site visitors, email lists, lookalike audiences</li>
+          <li class="plan-phase__item">Launch location-specific landing pages with conversion tracking</li>
+          <li class="plan-phase__item">Establish baseline KPIs: CAC, LTV, membership conversion rate by location</li>
         </ul>
-        <p class="plan-phase__promise">What leadership sees: Dashboard with location-level visibility. Weekly reallocation recommendations in writing.</p>
+        <p class="plan-phase__promise">"By Day 30, waste is stopped, retargeting is live, and every location has a performance baseline."</p>
       </div>
       <div class="plan-phase animate-on-scroll stagger-3">
         <div class="plan-phase__header">
           <span class="plan-phase__number">03</span>
+          <h3 class="plan-phase__title">Days 31–60 — System Build</h3>
+        </div>
+        <ul class="plan-phase__items">
+          <li class="plan-phase__item">Full campaign architecture deployed — each location running independent strategy</li>
+          <li class="plan-phase__item">Creative testing system active: ad copy, imagery, offers, audiences</li>
+          <li class="plan-phase__item">CRM lifecycle flows operational: welcome, nurture, lapsed reactivation</li>
+          <li class="plan-phase__item">Weekly reporting cadence established with leadership</li>
+        </ul>
+        <p class="plan-phase__promise">"The system is running. Every location is being optimized independently."</p>
+      </div>
+      <div class="plan-phase animate-on-scroll stagger-4">
+        <div class="plan-phase__header">
+          <span class="plan-phase__number">04</span>
           <h3 class="plan-phase__title">Days 61–90 — Full System Operation</h3>
         </div>
         <ul class="plan-phase__items">
-          <li class="plan-phase__item">System is fully operational — every location running on independent strategy</li>
+          <li class="plan-phase__item">System fully operational — every location running on independent strategy</li>
           <li class="plan-phase__item">Budget decisions are data-driven — revenue signals drive every allocation</li>
           <li class="plan-phase__item">Scaling infrastructure ready — new location launch playbook documented</li>
           <li class="plan-phase__item">Full reporting infrastructure live: weekly dashboards, monthly reviews</li>
         </ul>
-        <p class="plan-phase__promise">What leadership sees: Full attribution end-to-end. Budget optimization in progress. Performance trending above baseline.</p>
+        <p class="plan-phase__promise">"Full attribution end-to-end. Budget optimization in progress. Performance trending above baseline."</p>
+      </div>
+      <div class="plan-phase animate-on-scroll stagger-5">
+        <div class="plan-phase__header">
+          <span class="plan-phase__number">05</span>
+          <h3 class="plan-phase__title">Ongoing — Compound &amp; Scale</h3>
+        </div>
+        <ul class="plan-phase__items">
+          <li class="plan-phase__item">Continuous optimization based on revenue data — not platform metrics</li>
+          <li class="plan-phase__item">New location launches follow documented playbook — ramp time measured in weeks</li>
+          <li class="plan-phase__item">Creative and audience testing produces compounding improvement</li>
+          <li class="plan-phase__item">System scales with the business — no incremental rebuild required</li>
+        </ul>
+        <p class="plan-phase__promise">"The system doesn't just run — it gets better every month."</p>
       </div>
     </div>
     <div class="plan__outcome animate-on-scroll">
-      <h3 class="plan__outcome-title">System State at Day 90</h3>
+      <h3 class="plan__outcome-title">What This Means for You</h3>
       <ul class="plan__outcome-items">
         <li class="plan__outcome-item">Every location has clear, trackable cost per enrolled member</li>
-        <li class="plan__outcome-item">Budget shifts weekly toward top-performing locations</li>
+        <li class="plan__outcome-item">Budget shifts toward top-performing locations automatically</li>
         <li class="plan__outcome-item">Underperforming spend is identified and corrected before it compounds</li>
         <li class="plan__outcome-item">Leadership has real-time visibility into performance across all locations</li>
-        <li class="plan__outcome-item">Paid media decisions are based on revenue — not lead volume or platform metrics</li>
       </ul>
     </div>
   </div>
@@ -1649,7 +1591,7 @@ a { text-decoration: none; }
   <div class="section-inner">
     <div class="section-header animate-on-scroll">
       <span class="eyebrow">Future Demand + Visibility</span>
-      <h2>SEO + LLM: Future Demand Capture</h2>
+      <h2>SEO + LLM: Owning the Next Layer of Discovery</h2>
       <p class="section-subtitle">Paid media fills the pipeline now. Owned media compounds it over time.</p>
     </div>
     <div class="seo__grid">
@@ -1657,104 +1599,50 @@ a { text-decoration: none; }
         <h3 class="seo-block__title">Local SEO</h3>
         <div class="seo-item">
           <strong>Google Business Profile Optimization</strong>
-          <span>Fully optimized profiles for all 10 locations — consistent NAP (name, address, phone), current service menus, professional photography direction, and active review response cadence. Each location treated as an independent local entity.</span>
+          <span>Fully optimized profiles for all 10 locations — consistent NAP, current service menus, professional photography, and active review response. Each location is treated as an independent local entity.</span>
         </div>
         <div class="seo-item">
           <strong>Local Pack Dominance</strong>
-          <span>Citation building across 50+ directories, review velocity strategy, and proximity signals optimized for "facial near me," "express facial [neighborhood]," and "skincare bar [city]" searches. Target: top 3 in the local pack for each neighborhood.</span>
+          <span>Citation building across 50+ directories, review velocity strategy, and proximity signals optimized for "facial near me," "express facial [neighborhood]," and "skincare bar [city]" searches.</span>
         </div>
         <div class="seo-item">
           <strong>Location Pages &amp; Keyword Architecture</strong>
-          <span>Individual landing pages per location with hyperlocal content — neighborhood references, nearby landmarks, and market-specific messaging. Primary keywords: "facial bar [neighborhood]," "express facial [city]," "membership facial [city]."</span>
+          <span>Individual landing pages per location with hyperlocal content — neighborhood references, nearby landmarks, and market-specific messaging.</span>
+        </div>
+        <div class="seo-item">
+          <strong>Local Services Ads (LSA)</strong>
+          <span>Where applicable, Google Local Services Ads provide top-of-SERP placement with pay-per-lead pricing. Verified profiles build trust and capture high-intent local searches.</span>
         </div>
         <div class="seo-item">
           <strong>Content &amp; FAQ Strategy</strong>
-          <span>Skincare education content answers high-intent questions before the first visit: "What is an express facial?", "How often should I get a facial?", "Is Silver Mirror better than a spa?" Answers that build trust and drive conversions, not just traffic.</span>
-        </div>
-        <div class="seo-item">
-          <strong>Local Services Ads (LSA) — Gap Identified</strong>
-          <span>Silver Mirror is likely not running Local Service Ads — a verified badge above standard paid results. Low LSA competition in the facial bar category. A Google Guarantee badge placed above standard search ads at typically lower cost-per-lead. This is an immediate, high-impact opportunity.</span>
+          <span>Treatment-specific content answering real search queries — "Is a HydraFacial worth it?", "Best facial for acne in NYC." Long-tail content drives organic traffic and feeds AI citation systems.</span>
         </div>
       </div>
       <div class="seo-block animate-on-scroll stagger-2">
         <h3 class="seo-block__title">LLM / AI Search Visibility</h3>
         <div class="seo-item">
-          <strong>ChatGPT &amp; Claude Recommendations</strong>
-          <span>When users ask "best facial bar in NYC" or "express facial recommendations in DC," Silver Mirror needs to appear. This requires structured brand data, consistent entity signals, and content that AI training sources can index and cite.</span>
-        </div>
-        <div class="seo-item">
-          <strong>Perplexity &amp; Google AI Overviews</strong>
-          <span>AI-generated overviews now appear at the top of local service searches. Structured content — schema markup, FAQ pages, review aggregations — ensures Silver Mirror is cited rather than competitors when AI assembles these answers.</span>
-        </div>
-        <div class="seo-item">
-          <strong>Entity Authority Building</strong>
-          <span>Consistent brand signals across the web — press mentions, brand partnerships, social profiles, and local citations — strengthen Silver Mirror's entity recognition in AI knowledge graphs. The stronger the entity, the more confident AI systems are in recommending it.</span>
-        </div>
-        <div class="seo-item">
-          <strong>Review Signal Optimization</strong>
-          <span>Volume, recency, star rating, and response rate directly influence both traditional local rankings and AI recommendation algorithms. A structured review velocity program across Google, Yelp, and emerging AI review sources creates a compounding authority signal.</span>
+          <strong>Answer Engine Optimization (AEO)</strong>
+          <span>Content structured specifically to be cited by ChatGPT, Perplexity, and Google AI Overviews. FAQ schema, structured data, and entity-first content architecture.</span>
         </div>
         <div class="seo-item">
           <strong>Schema &amp; Structured Data</strong>
-          <span>LocalBusiness, Service, FAQPage, and Review schema markup on all location pages ensures search engines and LLMs can correctly parse and represent Silver Mirror's service offerings, pricing tiers, and location data in AI-generated responses.</span>
+          <span>LocalBusiness, Service, FAQ, and Review schema implemented across every location page. This is the language AI systems use to understand and recommend businesses.</span>
+        </div>
+        <div class="seo-item">
+          <strong>Page Speed &amp; Core Web Vitals</strong>
+          <span>Sub-2-second load times, optimized images, and clean code. Google's ranking signals increasingly favor fast, well-structured sites — and AI systems prefer them as citation sources.</span>
+        </div>
+        <div class="seo-item">
+          <strong>Review Velocity &amp; Reputation</strong>
+          <span>Systematic review generation across Google, Yelp, and industry platforms. Volume, recency, and response rate all factor into local rankings and AI recommendations.</span>
+        </div>
+        <div class="seo-item">
+          <strong>Share of Local Voice (SOLv)</strong>
+          <span>Tracking Silver Mirror's visibility share across all local search surfaces — organic, maps, paid, and AI. The goal isn't just ranking — it's owning the conversation in every market.</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================================================
-     SECTION 11 — FINANCIAL IMPACT
-     ================================================ -->
-<section class="section section--blue" id="section-financial">
-  <div class="section-inner">
-    <div class="section-header animate-on-scroll">
-      <span class="eyebrow">The Contrast</span>
-      <h2>With System vs. Without System</h2>
-      <p class="section-subtitle">Two paths. The gap widens with every new location.</p>
-    </div>
-    <div class="financial__binary animate-on-scroll stagger-1">
-      <div class="financial__col financial__col--without">
-        <span class="financial__col-label">Without System</span>
-        <ul class="financial__col-items">
-          <li>Ad spend not connected to member enrollment</li>
-          <li>Budget decisions based on platform metrics, not revenue</li>
-          <li>One campaign strategy across different markets</li>
-          <li>Scaling multiplies inefficiency</li>
-          <li>CAC unknown at location level</li>
-          <li>Attribution gaps widen with each new location</li>
-        </ul>
-      </div>
-      <div class="financial__col financial__col--with">
-        <span class="financial__col-label">With System</span>
-        <ul class="financial__col-items">
-          <li>Every dollar traced from impression to enrolled member</li>
-          <li>Budget follows revenue signals, reallocated weekly</li>
-          <li>Each location runs an independent strategy</li>
-          <li>Scaling is precise and controlled</li>
-          <li>CAC tracked per location, per campaign</li>
-          <li>Attribution infrastructure scales with every new location</li>
-        </ul>
-      </div>
-    </div>
-    <p class="inaction__authority inaction__authority--spaced animate-on-scroll">This is typically where CAC inflates during expansion.</p>
-    <div class="financial__drivers animate-on-scroll stagger-2">
-      <div class="driver-card">
-        <div class="driver-card__stat">20–30%</div>
-        <div class="driver-card__label">CAC Reduction</div>
-        <div class="driver-card__sub">Cost per acquired member decreases as budget moves to proven channels and locations</div>
-      </div>
-      <div class="driver-card">
-        <div class="driver-card__stat">15–25%</div>
-        <div class="driver-card__label">Membership Growth</div>
-        <div class="driver-card__sub">Enrollment rates improve when messaging aligns with member intent at the location level</div>
-      </div>
-      <div class="driver-card">
-        <div class="driver-card__stat">38x</div>
-        <div class="driver-card__label">Target ROAS</div>
-        <div class="driver-card__sub">Revenue-per-member LTV creates exceptional return potential at scale</div>
-      </div>
-    </div>
+    <p class="breaks__closer animate-on-scroll">This ensures Silver Mirror is not just found — it's recommended.</p>
   </div>
 </section>
 
@@ -1773,8 +1661,8 @@ a { text-decoration: none; }
     <!-- Header -->
     <div class="footprint__header animate-on-scroll">
       <span class="eyebrow" style="color:var(--neon-cyan);animation:pulse-glow 5s ease-in-out infinite;">CURRENT SCALE</span>
-      <h1>The System Already Runs at This Scale</h1>
-      <p>Every client, every market, every location — running on the same acquisition infrastructure before Silver Mirror joins it.</p>
+      <h1>Exposed to Scale Most Brands Never See</h1>
+      <p>This isn't theory. This is the infrastructure I operate today — across 200+ locations in 14 states.</p>
     </div>
 
     <!-- D3 Map (KPI overlay is inside the map container) -->
@@ -1846,6 +1734,7 @@ a { text-decoration: none; }
       </div>
     </div>
     <p class="footprint__footnote">* Independently managed offices — the Silver Mirror model</p>
+    <p class="footprint__footnote" style="margin-top:var(--space-xs);">Every dot represents an active client location under direct management.</p>
 
     <!-- Legend -->
     <div class="footprint__legend animate-on-scroll stagger-1">
@@ -1869,49 +1758,11 @@ a { text-decoration: none; }
     </div>
     <div class="footprint__closing animate-on-scroll stagger-4">
       <p class="footprint__closing-muted">Quintessa Medspa. Same industry. Same acquisition model. Proven at scale.</p>
-      <p class="footprint__closing-glow">Silver Mirror becomes the flagship.</p>
+      <p class="footprint__closing-glow">The system that runs this footprint is the same system Silver Mirror gets.</p>
     </div>
   </div>
 </section>
 <div class="section-transition-light" style="height:18vh;background:linear-gradient(to bottom,var(--dark-bg),var(--color-bg));pointer-events:none;"></div>
-
-<!-- ================================================
-     QUIET SECTION — BREATHING MOMENT 3
-     ================================================ -->
-<section class="section--quiet section--dark-invert" aria-hidden="true">
-  <p class="quiet__statement animate-on-scroll">244 locations. 15 states. One system.</p>
-</section>
-
-<!-- ================================================
-     SECTION 13 — FUTURE VISION
-     ================================================ -->
-<section class="section section--light" id="section-growth">
-  <div class="section-inner">
-    <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Built for Scale</span>
-      <h2>The System Scales With the Brand</h2>
-      <p class="section-subtitle">When Silver Mirror opens location 11, 12, 15 — the acquisition system scales with it. No new setup. No new learning curve. The infrastructure is location-agnostic.</p>
-    </div>
-    <div class="growth__grid">
-      <div class="growth-item animate-on-scroll stagger-1">
-        <h3>Market Selection</h3>
-        <p>Data-driven criteria for new market entry. Demographic fit, competitive landscape, and existing brand signals — already built into the evaluation framework. New markets are entered with confidence, not intuition.</p>
-      </div>
-      <div class="growth-item animate-on-scroll stagger-2">
-        <h3>Location Launch Playbook</h3>
-        <p>A standardized paid media launch sequence for new locations. Ramp time from months to weeks. Built from existing data across 3 markets and 10 locations — every new opening benefits from what came before it.</p>
-      </div>
-      <div class="growth-item animate-on-scroll stagger-3">
-        <h3>Scaling Infrastructure</h3>
-        <p>Each new location plugs into existing reporting, attribution, and optimization systems. No incremental setup time. No new learning curve. The infrastructure was built to absorb new locations without rebuilding.</p>
-      </div>
-      <div class="growth-item animate-on-scroll stagger-4">
-        <h3>National Presence</h3>
-        <p>The path from 10 to 50 to 100+ follows a defined system — not improvisation. Every stage of Silver Mirror's national expansion runs on the same acquisition infrastructure, scaled precisely as the brand grows.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ================================================
      SECTION 14 — TEAM
@@ -1919,33 +1770,41 @@ a { text-decoration: none; }
 <section class="section section--warm" id="section-team">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
-      <span class="eyebrow">Scalable Structure</span>
-      <h2>Built to Scale Without Bloat</h2>
-      <p class="section-subtitle">The structure matches the stage — not ahead of it.</p>
+      <span class="eyebrow">Scalable Execution</span>
+      <h2>I Don't Just Build Systems — I Build the Teams That Run Them</h2>
+      <p class="section-subtitle">The constraint isn't talent — it's cost structure. Here's how I solve it.</p>
     </div>
     <div class="team__timeline animate-on-scroll stagger-1">
       <div class="team-phase">
-        <div class="team-phase__label">Months 1–6</div>
+        <div class="team-phase__label">The Constraint</div>
         <div>
-          <h3 class="team-phase__title">Solo Operator</h3>
-          <p>Full ownership of strategy, execution, and reporting. Single point of accountability. No communication overhead, no dependencies, faster decisions. The focus is entirely on building the system — attribution infrastructure, performance baselines, and location-level strategy across all 10 locations.</p>
+          <h3 class="team-phase__title">Why Most In-House Teams Stall</h3>
+          <p>Hiring a full paid media team in New York means $300K+ in salary before a single ad runs. Most brands either overspend on headcount or under-resource execution. Neither scales.</p>
         </div>
       </div>
       <div class="team-phase">
-        <div class="team-phase__label">Months 7–18</div>
+        <div class="team-phase__label">The Solution</div>
         <div>
-          <h3 class="team-phase__title">First Hire: Creative Specialist</h3>
-          <p>When volume justifies it. Part-time. Creative production stays in-house — content, photography direction, video editing, and ad creative production. Strategy and execution remain under one roof, not distributed across agencies or freelancers.</p>
+          <h3 class="team-phase__title">Philippines-Based Execution Team</h3>
+          <p>I've built and managed remote execution teams across the Philippines — trained operators who handle campaign builds, reporting, creative production, and daily optimization under my direct oversight. The cost is 70-80% less than US equivalents. The output is identical.</p>
         </div>
       </div>
       <div class="team-phase">
-        <div class="team-phase__label">Month 18+</div>
+        <div class="team-phase__label">What This Looks Like</div>
         <div>
-          <h3 class="team-phase__title">Lean Internal Team</h3>
-          <p>3–4 people managing what most agencies assign to 10+. Automated systems compress execution time. Paid media strategist, creative specialist, and part-time data support — all accountable to the same revenue metrics. The team scales proportionally with the brand, not ahead of it.</p>
+          <h3 class="team-phase__title">Team Structure</h3>
+          <p>Me: Strategy, architecture, client communication, P&amp;L ownership<br>PH Media Buyer (1-2): Campaign execution, daily optimization, bid management<br>PH Creative Specialist (1): Ad creative production, video editing, asset management<br>PH Reporting Analyst (1): Dashboard maintenance, data QA, weekly reporting prep</p>
+        </div>
+      </div>
+      <div class="team-phase">
+        <div class="team-phase__label">Why It Wins</div>
+        <div>
+          <h3 class="team-phase__title">The Advantage</h3>
+          <p>Silver Mirror gets a full acquisition team — strategy through execution — at the cost of one senior hire. Every team member is trained on my system, operates under my SOPs, and reports directly to me. No agency layers. No communication gaps.</p>
         </div>
       </div>
     </div>
+    <p class="seat__closer animate-on-scroll">This is how you scale execution without scaling cost.</p>
   </div>
 </section>
 
@@ -1955,17 +1814,18 @@ a { text-decoration: none; }
 <section class="section section--dark-invert" id="section-close">
   <div class="section-inner section-inner--narrow">
     <div class="section-header animate-on-scroll">
-      <span class="eyebrow">The Standard</span>
-      <h2>One Leader. One Engine. Accountable to Your Revenue.</h2>
+      <span class="eyebrow">THE STANDARD</span>
+      <h2>One Leader. One System. Accountable to Your Revenue.</h2>
     </div>
     <div class="closing__statement animate-on-scroll stagger-1">
-      <p>Silver Mirror is the kind of brand that earns loyalty because it delivers. The experience builds trust. The routine builds consistency. The membership reinforces an identity — someone who invests in their skin.</p>
-      <p>The acquisition system should be held to the same standard.</p>
+      <p>Silver Mirror has built real demand. What's missing is the system to capture it, convert it, and compound it — and the operator who owns the outcome.</p>
+      <p>I don't run campaigns. I build acquisition infrastructure that scales with the business. Every dollar tracked. Every location optimized. Every decision tied to revenue.</p>
+      <p>The system is proven. The team is built. The only variable is when.</p>
     </div>
-    <p class="closing__ownership animate-on-scroll stagger-2">You built Silver Mirror with full ownership and accountability. The acquisition engine should be held to the same standard. One leader. One engine. Accountable to your revenue.</p>
+    <p class="closing__ownership animate-on-scroll stagger-2">Let's put this into motion.</p>
     <div class="closing__signature animate-on-scroll stagger-3">
       <p class="closing__name cormorant">Sheldon Mizell</p>
-      <p class="closing__title-line">Paid Media Operator — Multi-Location Acquisition</p>
+      <p class="closing__title-line">Paid Media Director — Multi-Location Acquisition</p>
     </div>
   </div>
 </section>
