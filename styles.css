@@ -2050,7 +2050,7 @@ a { text-decoration: none; }
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
   opacity: 0;
   pointer-events: none;
   transform: translateX(0);
@@ -2085,6 +2085,121 @@ a { text-decoration: none; }
 .slideshow-mode .section-transition-dark,
 .slideshow-mode .section-transition-light {
   display: none;
+}
+
+/* ── Slideshow Mode: Viewport-Relative Sizing ── */
+/* Override spacing and typography to scale with viewport height so
+   content-heavy slides fit within 100vh without internal scrolling. */
+
+.slideshow-mode {
+  /* Spacing overrides */
+  --space-section: clamp(2rem, 4vh, 6rem);
+  --space-2xl: clamp(1.5rem, 3vh, 4rem);
+  --space-xl: clamp(1rem, 2.5vh, 2.5rem);
+  --space-lg: clamp(0.75rem, 1.8vh, 2rem);
+  --space-md: clamp(0.5rem, 1.2vh, 1.25rem);
+  --space-sm: clamp(0.35rem, 0.8vh, 0.75rem);
+
+  /* Typography overrides with vh minimums */
+  --text-hero: clamp(1.8rem, 4.5vh, 4.4rem);
+  --text-h1: clamp(1.5rem, 3.5vh, 3.2rem);
+  --text-h2: clamp(1.3rem, 2.8vh, 2.5rem);
+  --text-h3: clamp(1rem, 1.8vh, 1.65rem);
+  --text-body: clamp(0.85rem, 1.4vh, 1.1rem);
+  --text-small: clamp(0.75rem, 1.1vh, 0.95rem);
+  --text-label: clamp(0.6rem, 0.85vh, 0.75rem);
+}
+
+/* Section inner padding in slideshow mode */
+.slideshow-mode .section {
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+}
+
+/* Vertically center section content and prevent inner scroll */
+.slideshow-mode .section-inner {
+  transform-origin: top center;
+}
+
+/* ── Section 2: Acquisition Dashboard ── */
+.slideshow-mode .sys-dash__zones {
+  padding: clamp(10px, 1.5vh, 22px) clamp(8px, 1vw, 20px);
+  gap: clamp(6px, 1vh, 16px);
+}
+.slideshow-mode .sys-dash__zone-inner {
+  padding: clamp(8px, 1.2vh, 14px);
+  gap: clamp(5px, 0.8vh, 10px);
+}
+.slideshow-mode .sys-card {
+  padding: clamp(8px, 1.2vh, 16px) clamp(10px, 1.5vw, 18px);
+}
+.slideshow-mode .sys-card--hero {
+  padding: clamp(12px, 1.8vh, 28px) clamp(12px, 1.5vw, 24px);
+}
+.slideshow-mode .sys-card__revenue-label {
+  font-size: clamp(1.4rem, 3vh, 2.6rem);
+}
+.slideshow-mode .sys-dash__feedback {
+  padding: clamp(6px, 0.8vh, 12px) clamp(8px, 1vw, 16px);
+}
+
+/* ── Section 7: Execution Plan ── */
+.slideshow-mode .plan-phase {
+  padding: clamp(0.6rem, 1.4vh, 1.75rem);
+}
+.slideshow-mode .plan-phase__header {
+  margin-bottom: clamp(0.3rem, 0.6vh, 1rem);
+}
+.slideshow-mode .plan-phase__items {
+  margin-bottom: clamp(0.3rem, 0.6vh, 1rem);
+}
+.slideshow-mode .plan-phase__number {
+  font-size: clamp(1.4rem, 2.8vh, 4rem);
+}
+.slideshow-mode .plan__outcome {
+  margin-top: clamp(1rem, 2vh, 3rem);
+  padding: clamp(0.75rem, 1.5vh, 2rem);
+}
+
+/* ── Section 10: SEO Grid ── */
+.slideshow-mode .seo__grid {
+  gap: clamp(0.75rem, 1.5vh, 2.5rem);
+}
+.slideshow-mode .seo-item {
+  padding: clamp(0.5rem, 0.9vh, 1rem);
+  margin-bottom: clamp(0.2rem, 0.4vh, 0.5rem);
+}
+.slideshow-mode .seo-block__title {
+  margin-bottom: clamp(0.5rem, 1vh, 1.5rem);
+  padding-bottom: clamp(0.3rem, 0.5vh, 0.75rem);
+}
+
+/* ── Section 14: Team Timeline ── */
+.slideshow-mode .team__timeline {
+  gap: clamp(0.5rem, 1.2vh, 2rem);
+}
+.slideshow-mode .team-phase {
+  padding: clamp(0.6rem, 1.2vh, 1.5rem);
+  gap: clamp(0.5rem, 1vh, 1.25rem);
+}
+
+/* ── Section 8: Core System Grid ── */
+.slideshow-mode .system__grid {
+  gap: clamp(0.5rem, 1.2vh, 1.25rem);
+  margin-bottom: clamp(1rem, 2vh, 3rem);
+}
+.slideshow-mode .system-card {
+  padding: clamp(0.75rem, 1.4vh, 1.5rem);
+}
+
+/* ── Breaks / Operational Infrastructure ── */
+.slideshow-mode .breaks__blocks {
+  gap: clamp(0.5rem, 1vh, 1.25rem);
+  margin-bottom: clamp(1rem, 2vh, 2.5rem);
+}
+.slideshow-mode .breaks__block {
+  padding: clamp(0.75rem, 1.4vh, 2rem);
+  gap: clamp(0.5rem, 1vh, 1.5rem);
 }
 
 /* ── Slide Navigation Arrows ── */
