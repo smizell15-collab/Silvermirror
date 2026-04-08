@@ -533,6 +533,7 @@
   var currentSlide = 0;
   var isAnimating = false;
   var slideshowActive = false;
+  var SLIDESHOW_MIN_SCALE = 0.55;
 
   function triggerSlideAnimations(slide) {
     if (!slide) return;
@@ -570,6 +571,34 @@
     var rightArrow = document.getElementById('slide-arrow-right');
     if (leftArrow) leftArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
     if (rightArrow) rightArrow.style.display = currentSlide === slides.length - 1 ? 'none' : 'flex';
+  }
+
+  function scaleActiveSlide() {
+    if (!slideshowActive) return;
+    var slide = slides[currentSlide];
+    if (!slide) return;
+    var inner = slide.querySelector('.section-inner');
+    if (!inner) return;
+    // Reset scale so we measure natural height
+    inner.style.transform = '';
+    var naturalHeight = inner.scrollHeight;
+    var available = window.innerHeight;
+    if (naturalHeight > available) {
+      var factor = available / naturalHeight;
+      factor = Math.max(factor, SLIDESHOW_MIN_SCALE);
+      inner.style.transform = 'scale(' + factor + ')';
+    } else {
+      inner.style.transform = '';
+    }
+  }
+
+  function clearAllScales() {
+    slides.forEach(function(slide) {
+      var inner = slide.querySelector('.section-inner');
+      if (inner) {
+        inner.style.transform = '';
+      }
+    });
   }
 
   function goToSlide(index) {
@@ -625,6 +654,7 @@
           s.classList.remove('slide-exit-left', 'slide-exit-right');
         }
       });
+      scaleActiveSlide();
     }, 600);
   }
 
@@ -644,12 +674,14 @@
     updateSlideshowNavDots();
     updateSlideshowArrows();
     updateSlideshowProgressBar();
+    scaleActiveSlide();
   }
 
   function exitSlideshowMode() {
     slideshowActive = false;
     document.body.classList.remove('slideshow-mode');
     isAnimating = false;
+    clearAllScales();
 
     slides.forEach(function(slide) {
       slide.classList.remove('slide-active', 'slide-exit-left', 'slide-exit-right', 'slide-enter-right', 'slide-enter-left');
@@ -705,7 +737,12 @@
   var resizeTimer;
   window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(initSlideshow, 200);
+    resizeTimer = setTimeout(function() {
+      initSlideshow();
+      if (slideshowActive) {
+        scaleActiveSlide();
+      }
+    }, 200);
   });
 
   initSlideshow();
