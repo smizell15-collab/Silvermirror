@@ -1451,7 +1451,7 @@ a { text-decoration: none; }
 .loading-screen__mono {
   opacity: 0; transform: scale(0.85);
   transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem; color: #43423c;
 }
 .loading-screen__mono.show { opacity: 1; transform: scale(1); }
 
@@ -1724,5 +1724,54 @@ a { text-decoration: none; }
   .quiet__statement { font-size: var(--text-h2); }
   .section--quiet { padding: clamp(3rem, 8vh, 6rem) var(--side-padding); }
   #section-inaction { padding: clamp(4rem, 10vh, 8rem) var(--side-padding); }
+}
+
+/* ============================================
+   BRANDING — STICKY LOGO
+   ============================================ */
+.sticky-logo {
+  position: fixed; top: 16px; left: 16px; z-index: 1000;
+  opacity: 0.6; transition: opacity 0.3s ease, filter 0.3s ease;
+  text-decoration: none; display: block; line-height: 0;
+}
+.sticky-logo:hover { opacity: 1; }
+.sticky-logo__icon { display: block; color: #43423c; }
+.sticky-logo--light .sticky-logo__icon { filter: brightness(0) invert(1); }
+
+/* ============================================
+   BRANDING — HOOK BRAND BLOCK
+   ============================================ */
+.hook__brand {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1.5rem;
+}
+.hook__brand-icon { color: #43423c; opacity: 0.85; }
+.hook__brand-wordmark { width: 180px; height: auto; display: block; opacity: 0.75; }
+
+/* ============================================
+   BRANDING — FOOTER WORDMARK
+   ============================================ */
+.footer__wordmark {
+  display: block; margin: 0 auto var(--space-md);
+  width: 200px; height: auto;
+  filter: brightness(0) invert(1); opacity: 0.5;
+}
+
+/* ============================================
+   BRANDING — SECTION WATERMARKS
+   ============================================ */
+.section--dark::after,
+.section--dark-invert::after {
+  content: ''; position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 360px; height: 360px;
+  background: url('assets/sm-icon.svg') center / contain no-repeat;
+  filter: brightness(0) invert(1);
+  opacity: 0.04; pointer-events: none; z-index: 0;
+}
+
+@media (max-width: 600px) {
+  .sticky-logo { top: 12px; left: 12px; }
+  .sticky-logo__icon { width: 28px; height: 28px; }
 }
 

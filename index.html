@@ -15,9 +15,13 @@
 <!-- Hidden SVG symbol definitions — reused via <use href="#sm-mono"> -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
   <defs>
-    <symbol id="sm-mono" viewBox="0 0 108 88">
-      <path d="M8 22 C8 14 14 8 24 8 C34 8 40 13 40 21 C40 29 34 32 24 36 C14 40 8 44 8 54 C8 64 14 70 24 70 C34 70 40 65 40 57" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-      <path d="M54 68 L54 8 L76 48 L98 8 L98 68" stroke="#24A2EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <symbol id="sm-mono" viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="188" fill="none" stroke="currentColor" stroke-width="9"/>
+      <circle cx="200" cy="200" r="164" fill="none" stroke="currentColor" stroke-width="3.5"/>
+      <path d="M148 138 C148 126 157 118 172 118 C186 118 198 124 205 134 C209 140 210 148 208 156 C206 164 200 169 192 173 L174 181 C162 186 154 192 150 200 C146 208 146 218 150 226 C158 242 176 250 196 250 C216 250 230 242 236 228 C240 220 240 210 236 202" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M256 118 L256 250" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M256 118 L290 190 L324 118" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M324 118 L324 250" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
     </symbol>
   </defs>
 </svg>
@@ -26,7 +30,7 @@
      LOADING SCREEN
      ================================================ -->
 <div id="sm-loading-screen" aria-hidden="true">
-  <svg class="loading-screen__mono" width="108" height="88" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
+  <svg class="loading-screen__mono" width="110" height="110" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
   <div class="loading-screen__lockup">
     <span class="loading-screen__brand">Silver Mirror</span>
     <span class="loading-screen__x">×</span>
@@ -51,6 +55,11 @@
   <button class="nav-dot" data-section="section-close" data-label="Close" aria-label="Close"></button>
 </nav>
 
+<!-- Fixed sticky brand mark — top-left of viewport -->
+<a href="#section-hook" id="sticky-logo" class="sticky-logo" aria-label="Silver Mirror — back to top">
+  <svg class="sticky-logo__icon" width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
+</a>
+
 <!-- ================================================
      SECTION 1 — HOOK
      ================================================ -->
@@ -70,9 +79,9 @@
         <p class="opening__credibility animate-on-scroll stagger-4">Currently operating acquisition across 200+ locations and multi-market service businesses.</p>
         <p class="opening__hook animate-on-scroll stagger-5">The system exists. Ownership is what determines how it performs.</p>
       </div>
-      <div class="hook__image-placeholder animate-on-scroll stagger-3">
-        <svg class="hook__image-mono" width="64" height="52" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#sm-mono"/></svg>
-        <span class="hook__image-label">Location Image</span>
+      <div class="hook__image-placeholder hook__brand animate-on-scroll stagger-3">
+        <svg class="hook__brand-icon" width="130" height="130" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
+        <img class="hook__brand-wordmark" src="assets/sm-wordmark.svg" alt="Silver Mirror Facial Bar" width="180" height="81"/>
       </div>
     </div>
   </div>
@@ -919,7 +928,7 @@
 </section>
 
 <footer class="footer">
-  <svg class="footer__mono" width="72" height="58" viewBox="0 0 108 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#sm-mono"/></svg>
+  <img class="footer__wordmark" src="assets/sm-wordmark.svg" alt="Silver Mirror Facial Bar" width="200" height="90"/>
   <p class="footer__pairing">Silver Mirror × Sheldon Mizell</p>
   <p class="footer__sub">Confidential Growth Strategy Document — 2026</p>
 </footer>
