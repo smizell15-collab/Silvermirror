@@ -2296,50 +2296,45 @@ a { text-decoration: none; }
 }
 
 /* ── Scrollable inner containers for content-heavy sections ── */
-/* Allow content to scroll within the slide when it exceeds viewport height */
-.slideshow-mode #section-plan .section-inner,
-.slideshow-mode #section-seo .section-inner,
-.slideshow-mode #section-team .section-inner,
-.slideshow-mode #section-concerns .section-inner,
+/* Only the map section uses overflow scrolling; all others scale to fit */
 .slideshow-mode #section-footprint .section-inner {
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: rgba(36,162,236,0.4) transparent;
-}
-.slideshow-mode #section-footprint .section-inner {
   scrollbar-color: rgba(78,197,191,0.4) transparent;
 }
-.slideshow-mode #section-plan .section-inner::-webkit-scrollbar,
-.slideshow-mode #section-seo .section-inner::-webkit-scrollbar,
-.slideshow-mode #section-team .section-inner::-webkit-scrollbar,
-.slideshow-mode #section-concerns .section-inner::-webkit-scrollbar,
 .slideshow-mode #section-footprint .section-inner::-webkit-scrollbar {
   width: 4px;
-}
-.slideshow-mode #section-plan .section-inner::-webkit-scrollbar-thumb,
-.slideshow-mode #section-seo .section-inner::-webkit-scrollbar-thumb,
-.slideshow-mode #section-team .section-inner::-webkit-scrollbar-thumb,
-.slideshow-mode #section-concerns .section-inner::-webkit-scrollbar-thumb {
-  background: rgba(36,162,236,0.4); border-radius: 2px;
 }
 .slideshow-mode #section-footprint .section-inner::-webkit-scrollbar-thumb {
   background: rgba(78,197,191,0.4); border-radius: 2px;
 }
+/* Force no-scroll on sections previously marked as scrollable */
+.slideshow-mode #section-plan .section-inner,
+.slideshow-mode #section-seo .section-inner,
+.slideshow-mode #section-team .section-inner,
+.slideshow-mode #section-concerns .section-inner {
+  max-height: none;
+  overflow-y: visible;
+}
 
-/* Plan phases: 2-column grid in slideshow mode to halve vertical space */
+/* Plan phases: 3-column grid in slideshow mode to fit within viewport */
 .slideshow-mode .plan__phases {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(0.4rem, 0.8vh, 1rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.3rem, 0.6vh, 0.8rem);
   padding-left: 0;
 }
 .slideshow-mode .plan__phases::before {
   display: none;
 }
+.slideshow-mode .plan__phases .plan-phase:nth-child(4),
+.slideshow-mode .plan__phases .plan-phase:nth-child(5) {
+  grid-column: auto;
+}
 .slideshow-mode .plan__phases .plan-phase:last-child {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 .slideshow-mode .plan__outcome {
   margin-top: clamp(0.5rem, 1vh, 1.5rem);
@@ -2349,8 +2344,9 @@ a { text-decoration: none; }
 .slide-arrow {
   display: none;
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
+  top: auto;
+  bottom: 2rem;
+  transform: none;
   width: 52px; height: 52px;
   background: rgba(255, 255, 255, 0.92);
   border: 2px solid rgba(36, 162, 236, 0.3);
@@ -2371,7 +2367,7 @@ a { text-decoration: none; }
 .slide-arrow:hover {
   background: rgba(255, 255, 255, 1);
   border-color: #00B3DE;
-  transform: translateY(-50%) scale(1.12);
+  transform: scale(1.12);
   box-shadow: 0 6px 24px rgba(0, 179, 222, 0.3);
   color: #00B3DE;
 }
@@ -2418,4 +2414,373 @@ a { text-decoration: none; }
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* ============================================
+   SLIDESHOW MODE — PER-SLIDE COMPACT SIZING
+   All scoped under .slideshow-mode to preserve scroll-mode behavior
+   ============================================ */
+
+/* ── SLIDE 1 (section-hook): Reduce crowding ── */
+.slideshow-mode #section-hook .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-hook .opening__title {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.slideshow-mode #section-hook .opening__subtitle {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+.slideshow-mode #section-hook .opening__scope {
+  margin-bottom: 0.75rem;
+  gap: 0.4rem;
+}
+.slideshow-mode #section-hook .opening__scope-item {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+}
+.slideshow-mode #section-hook .opening__credibility {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  margin-bottom: 0.5rem;
+}
+.slideshow-mode #section-hook .opening__hook {
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+}
+.slideshow-mode #section-hook .opening__eyebrow {
+  font-size: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ── SLIDE 2 (section-overview): Quote compact + platform icon size ── */
+.slideshow-mode .acq-system__quote {
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+}
+.slideshow-mode .acq-system__quote-text {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  line-height: 1.4;
+}
+.slideshow-mode .acq-system__quote-attr {
+  font-size: 0.7rem;
+}
+.slideshow-mode .sys-card__platforms svg {
+  width: 20px;
+  height: auto;
+}
+
+/* ── SLIDE 3 (section-breaks): Compact sizing ── */
+.slideshow-mode #section-breaks .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-breaks .section-header {
+  margin-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-breaks .section-header h2 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+.slideshow-mode .breaks__num {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+.slideshow-mode .breaks__title {
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+}
+.slideshow-mode .breaks__desc {
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  line-height: 1.5;
+}
+.slideshow-mode .breaks__closer {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ── SLIDE 4 (section-footprint-intro): Center + compact ── */
+.slideshow-mode #section-footprint-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slideshow-mode #section-footprint-intro .footprint__header h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+.slideshow-mode #section-footprint-intro .footprint__header p {
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ── SLIDE 6 (section-footprint-proof): Compact pills + closing ── */
+.slideshow-mode #section-footprint-proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slideshow-mode #section-footprint-proof .footprint__who-label {
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  margin-bottom: 1rem;
+}
+.slideshow-mode #section-footprint-proof .footprint-pill {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  padding: 0.6rem 1.2rem;
+}
+.slideshow-mode #section-footprint-proof .footprint__closing {
+  margin-top: 2rem;
+}
+.slideshow-mode #section-footprint-proof .footprint__closing-glow {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+/* ── SLIDE 7 (section-seat): Compact timeline ── */
+.slideshow-mode #section-seat .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-seat .section-header {
+  margin-bottom: clamp(0.75rem, 1.5vh, 1.5rem);
+}
+.slideshow-mode #section-seat .section-header h2 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+.slideshow-mode .seat-entry__content h3 {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+.slideshow-mode .seat-entry__item {
+  font-size: clamp(0.7rem, 1vw, 0.82rem);
+  line-height: 1.4;
+}
+.slideshow-mode .seat-entry {
+  gap: 0.5rem;
+  padding: clamp(0.3rem, 0.6vh, 0.6rem) 0;
+}
+.slideshow-mode .seat__closer {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  margin-top: 0.5rem;
+}
+
+/* ── SLIDE 8 (section-decisions): Compact comparison ── */
+.slideshow-mode #section-decisions .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-decisions .section-header {
+  margin-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-decisions .section-header h2 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+.slideshow-mode .decisions-panel__item {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  padding: 0.5rem 0;
+}
+.slideshow-mode .decisions-panel {
+  padding: clamp(1rem, 2vh, 2rem);
+}
+
+/* ── SLIDE 9 (section-system): Blue gradient + compact grid ── */
+.slideshow-mode .section--blue {
+  background: linear-gradient(165deg, #005F78 0%, #007A9A 50%, #005F78 100%);
+}
+.slideshow-mode #section-system .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-system .section-header {
+  margin-bottom: clamp(0.75rem, 1.5vh, 1.5rem);
+}
+.slideshow-mode #section-system .section-header h2 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+.slideshow-mode .system__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.slideshow-mode .system-card__title {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  margin-bottom: 0.3rem;
+}
+.slideshow-mode .system-card p {
+  font-size: clamp(0.7rem, 1vw, 0.82rem);
+  line-height: 1.45;
+}
+
+/* ── SLIDE 10 (section-plan): Scale-to-fit, no scroll ── */
+.slideshow-mode #section-plan .section-inner {
+  padding-top: clamp(1rem, 2vh, 2rem);
+  padding-bottom: clamp(0.5rem, 1vh, 1rem);
+}
+.slideshow-mode #section-plan .section-header {
+  margin-bottom: clamp(0.5rem, 1vh, 1.5rem);
+}
+.slideshow-mode #section-plan .section-header h2 {
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+}
+.slideshow-mode .plan-phase {
+  padding: clamp(0.4rem, 0.8vh, 0.8rem);
+}
+.slideshow-mode .plan-phase__title {
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+}
+.slideshow-mode .plan-phase__item {
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  line-height: 1.4;
+}
+.slideshow-mode .plan__outcome {
+  padding: clamp(0.6rem, 1vh, 1.2rem);
+}
+.slideshow-mode .plan__outcome-title {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  margin-bottom: 0.4rem;
+}
+.slideshow-mode .plan__outcome-item {
+  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+}
+
+/* ── SLIDE 11 (section-concerns): Scale-to-fit, no scroll ── */
+.slideshow-mode #section-concerns .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-concerns .section-header {
+  margin-bottom: clamp(0.75rem, 1.5vh, 1.5rem);
+}
+.slideshow-mode .concerns__grid {
+  gap: clamp(0.5rem, 1vh, 1.25rem);
+}
+.slideshow-mode .concern {
+  padding: clamp(0.75rem, 1.4vh, 1.5rem);
+}
+.slideshow-mode .concern__title {
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+}
+.slideshow-mode .concern__answer {
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  line-height: 1.5;
+}
+
+/* ── SLIDE 12 (section-seo): Scale-to-fit, no scroll ── */
+.slideshow-mode #section-seo .section-inner {
+  padding-top: clamp(1rem, 2vh, 2rem);
+  padding-bottom: clamp(0.5rem, 1vh, 1rem);
+}
+.slideshow-mode .seo-block__title {
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+  margin-bottom: 0.4rem;
+}
+.slideshow-mode .seo-item {
+  padding: clamp(0.3rem, 0.5vh, 0.5rem) 0;
+}
+.slideshow-mode .seo-item strong {
+  font-size: clamp(0.7rem, 1vw, 0.82rem);
+}
+.slideshow-mode .seo-item span {
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  line-height: 1.4;
+}
+
+/* ── SLIDE 13 (section-team): Scale-to-fit, no scroll ── */
+.slideshow-mode #section-team .section-inner {
+  padding-top: clamp(1rem, 2vh, 2rem);
+  padding-bottom: clamp(0.5rem, 1vh, 1rem);
+}
+.slideshow-mode #section-team .section-header {
+  margin-bottom: clamp(0.5rem, 1vh, 1.25rem);
+}
+.slideshow-mode #section-team .section-header h2 {
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+}
+.slideshow-mode .team-phase__title {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+}
+.slideshow-mode .team-phase li,
+.slideshow-mode .team-phase p {
+  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+  line-height: 1.4;
+}
+.slideshow-mode .team-phase__label {
+  font-size: clamp(0.55rem, 0.8vw, 0.68rem);
+}
+
+/* ── SLIDE 14 (section-close): Compact + contact buttons ── */
+.slideshow-mode #section-close .section-inner {
+  padding-top: clamp(1.5rem, 3vh, 3rem);
+  padding-bottom: clamp(1rem, 2vh, 2rem);
+}
+.slideshow-mode #section-close .closing__statement p {
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.slideshow-mode .closing__ownership {
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.slideshow-mode .closing__signature {
+  margin-top: 0.75rem;
+}
+.slideshow-mode .closing__actions {
+  margin-top: 1rem;
+}
+
+/* ── Contact Action Buttons (slide 14) ── */
+.closing__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.closing__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 100px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.closing__action-btn:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.closing__action-btn--linkedin:hover {
+  background: rgba(10,102,194,0.3);
+  border-color: #0A66C2;
+}
+.closing__action-btn--email:hover {
+  background: rgba(36,162,236,0.3);
+  border-color: #24A2EC;
+}
+.closing__action-btn--phone:hover {
+  background: rgba(34,197,94,0.3);
+  border-color: #22C55E;
+}
+
+/* ── Override earlier slideshow-mode rules for tighter compact sizing ── */
+.slideshow-mode .seo__grid {
+  gap: clamp(0.5rem, 1vh, 1.25rem);
+}
+.slideshow-mode .team-phase {
+  padding: clamp(0.4rem, 0.8vh, 0.8rem);
+  gap: clamp(0.3rem, 0.5vh, 0.6rem);
+}
+.slideshow-mode .team__timeline {
+  gap: clamp(0.5rem, 1vh, 1.5rem);
 }

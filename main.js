@@ -589,10 +589,6 @@
 
   // Sections that use overflow-y: auto scrolling instead of scaling
   var SCROLLABLE_SECTIONS = {
-    'section-plan': true,
-    'section-seo': true,
-    'section-team': true,
-    'section-concerns': true,
     'section-footprint': true
   };
 
