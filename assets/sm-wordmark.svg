@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180">
+  <style>.s0 { fill: #404040; }</style>
+  <!-- SILVER MIRROR wordmark -->
+  <text x="200" y="82" class="s0"
+    font-family="'Cormorant Garamond', Garamond, 'Times New Roman', Georgia, serif"
+    font-size="54" font-weight="600"
+    text-anchor="middle" letter-spacing="10">SILVER MIRROR</text>
+  <!-- Thin rule -->
+  <line x1="100" y1="98" x2="300" y2="98" stroke="#404040" stroke-width="0.75"/>
+  <!-- FACIAL BAR subtitle -->
+  <text x="200" y="128" class="s0"
+    font-family="'Montserrat', Arial, Helvetica, sans-serif"
+    font-size="16" font-weight="400"
+    text-anchor="middle" letter-spacing="8">FACIAL BAR</text>
+</svg>

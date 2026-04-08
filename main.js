@@ -44,6 +44,7 @@
   var dots = document.querySelectorAll('.nav-dot');
   var sections = document.querySelectorAll('.section[id]');
   var navContainer = document.getElementById('nav-dots');
+  var stickyLogo = document.getElementById('sticky-logo');
 
   var secObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
@@ -53,10 +54,13 @@
         dots.forEach(function(d) {
           d.classList.toggle('is-active', d.dataset.section === id);
         });
-        if (id === 'section-footprint' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue')) {
+        var isDark = id === 'section-footprint' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
+        if (isDark) {
           navContainer.classList.add('nav-dots--dark');
+          if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
         } else {
           navContainer.classList.remove('nav-dots--dark');
+          if (stickyLogo) stickyLogo.classList.remove('sticky-logo--light');
         }
       }
     });
@@ -69,6 +73,13 @@
       if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
   });
+
+  if (stickyLogo) {
+    stickyLogo.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   /* ── KPI COUNTER ANIMATION ── */
   function animateKPI(el) {
