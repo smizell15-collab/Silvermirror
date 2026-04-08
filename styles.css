@@ -578,6 +578,12 @@ a { text-decoration: none; }
   border-radius: 100px;
   padding: 3px 10px;
   font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.sys-card__trend {
   font-size: 0.6rem;
   font-weight: 700;
   line-height: 1;
