@@ -51,6 +51,10 @@
   var navContainer = document.getElementById('nav-dots');
   var stickyLogo = document.getElementById('sticky-logo');
 
+  function isSectionDark(id, el) {
+    return id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || el.classList.contains('section--dark-invert') || el.classList.contains('section--blue');
+  }
+
   var secObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting && !document.body.classList.contains('slideshow-mode')) {
@@ -59,7 +63,7 @@
         dots.forEach(function(d) {
           d.classList.toggle('is-active', d.dataset.section === id);
         });
-        var isDark = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
+        var isDark = isSectionDark(id, target);
         if (isDark) {
           navContainer.classList.add('nav-dots--dark');
           if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
@@ -559,8 +563,7 @@
       d.classList.toggle('is-active', i === currentSlide);
     });
     if (!slide) return;
-    var id = slide.id;
-    var isDark = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
+    var isDark = isSectionDark(slide.id, slide);
     if (isDark) {
       navContainer.classList.add('nav-dots--dark');
       if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
@@ -576,10 +579,9 @@
     if (leftArrow) leftArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
     if (rightArrow) rightArrow.style.display = currentSlide === slides.length - 1 ? 'none' : 'flex';
     // Toggle dark-section arrow styling
-    var slide = slides[currentSlide];
-    if (slide) {
-      var id = slide.id;
-      var isDarkSlide = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
+    var activeSlide = slides[currentSlide];
+    if (activeSlide) {
+      var isDarkSlide = isSectionDark(activeSlide.id, activeSlide);
       if (leftArrow) leftArrow.classList.toggle('slide-arrow--on-dark', isDarkSlide);
       if (rightArrow) rightArrow.classList.toggle('slide-arrow--on-dark', isDarkSlide);
     }

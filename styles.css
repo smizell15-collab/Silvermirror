@@ -2244,7 +2244,6 @@ a { text-decoration: none; }
 .slideshow-mode .breaks__blocks {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
   gap: clamp(0.5rem, 1vh, 1.25rem);
   margin-bottom: clamp(1rem, 2vh, 2.5rem);
 }
