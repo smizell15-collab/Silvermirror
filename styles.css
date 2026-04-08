@@ -1503,13 +1503,13 @@ a { text-decoration: none; }
   object-fit: cover;
   object-position: top center;
   display: block;
-  /* dark overlay so text stays readable */
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.85) 100%),
-              linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 30%, transparent 70%);
+  /* Fade left and bottom edges so text stays readable against the dark bg */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%),
+                      linear-gradient(to top, transparent 0%, black 25%);
+  -webkit-mask-composite: destination-in;
+  mask-image: linear-gradient(to right, transparent 0%, black 35%),
+              linear-gradient(to top, transparent 0%, black 25%);
   mask-composite: intersect;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.85) 100%),
-                      linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 30%, transparent 70%);
-  -webkit-mask-composite: source-in;
   opacity: 0.45;
 }
 /* ============================================
