@@ -59,7 +59,7 @@
         dots.forEach(function(d) {
           d.classList.toggle('is-active', d.dataset.section === id);
         });
-        var isDark = id === 'section-footprint' || id === 'section-hook' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
+        var isDark = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
         if (isDark) {
           navContainer.classList.add('nav-dots--dark');
           if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
@@ -560,7 +560,7 @@
     });
     if (!slide) return;
     var id = slide.id;
-    var isDark = id === 'section-footprint' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
+    var isDark = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
     if (isDark) {
       navContainer.classList.add('nav-dots--dark');
       if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
@@ -575,6 +575,14 @@
     var rightArrow = document.getElementById('slide-arrow-right');
     if (leftArrow) leftArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
     if (rightArrow) rightArrow.style.display = currentSlide === slides.length - 1 ? 'none' : 'flex';
+    // Toggle dark-section arrow styling
+    var slide = slides[currentSlide];
+    if (slide) {
+      var id = slide.id;
+      var isDarkSlide = id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
+      if (leftArrow) leftArrow.classList.toggle('slide-arrow--on-dark', isDarkSlide);
+      if (rightArrow) rightArrow.classList.toggle('slide-arrow--on-dark', isDarkSlide);
+    }
   }
 
   // Sections that use overflow-y: auto scrolling instead of scaling

@@ -2242,6 +2242,9 @@ a { text-decoration: none; }
 
 /* ── Breaks / Operational Infrastructure ── */
 .slideshow-mode .breaks__blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
   gap: clamp(0.5rem, 1vh, 1.25rem);
   margin-bottom: clamp(1rem, 2vh, 2.5rem);
 }
@@ -2331,4 +2334,41 @@ a { text-decoration: none; }
 .slide-arrow--right { right: 16px; }
 @media (max-width: 768px) {
   .slide-arrow { display: none !important; }
+}
+
+/* ── Slide arrow dark-section variant ── */
+.slide-arrow--on-dark {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.8);
+}
+.slide-arrow--on-dark:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+}
+
+/* ── Footprint intro/proof centered layout ── */
+.footprint__inner--centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  text-align: center;
+}
+.slideshow-mode #section-footprint-intro .section-inner,
+.slideshow-mode #section-footprint-proof .section-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+#section-footprint-intro .footprint__header,
+#section-footprint-proof .footprint__who-relies,
+#section-footprint-proof .footprint__closing {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }

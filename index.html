@@ -30,8 +30,11 @@
   <button class="nav-dot" data-section="section-hook" data-label="Opening" aria-label="Opening"></button>
   <button class="nav-dot" data-section="section-overview" data-label="Context" aria-label="Context"></button>
   <button class="nav-dot" data-section="section-breaks" data-label="Issues" aria-label="Issues"></button>
-  <button class="nav-dot" data-section="section-footprint" data-label="Footprint" aria-label="Footprint"></button>
+  <button class="nav-dot" data-section="section-footprint-intro" data-label="Footprint" aria-label="Footprint"></button>
+  <button class="nav-dot" data-section="section-footprint" data-label="Map" aria-label="Map"></button>
+  <button class="nav-dot" data-section="section-footprint-proof" data-label="Proof" aria-label="Proof"></button>
   <button class="nav-dot" data-section="section-seat" data-label="Your View" aria-label="Your View"></button>
+  <button class="nav-dot" data-section="section-decisions" data-label="Decisions" aria-label="Decisions"></button>
   <button class="nav-dot" data-section="section-system" data-label="System" aria-label="System"></button>
   <button class="nav-dot" data-section="section-plan" data-label="Execution" aria-label="Execution"></button>
   <button class="nav-dot" data-section="section-concerns" data-label="Concerns" aria-label="Concerns"></button>
@@ -393,9 +396,29 @@
 </section>
 
 <!-- ================================================
-     SECTION 13 — FOOTPRINT MAP (DARK)
+     SECTION 13A — FOOTPRINT INTRO (DARK)
      ================================================ -->
 <div class="section-transition-dark"></div>
+<section class="section section--dark footprint__section" id="section-footprint-intro">
+  <!-- Dot grid + glow hotspots -->
+  <div class="footprint__dot-grid"></div>
+  <div class="footprint__glow-midwest"></div>
+  <div class="footprint__glow-florida"></div>
+  <div class="footprint__glow-texas"></div>
+
+  <div class="section-inner footprint__inner footprint__inner--centered">
+    <!-- Header -->
+    <div class="footprint__header animate-on-scroll">
+      <span class="eyebrow eyebrow--cyan">MY CURRENT PAID MEDIA FOOTPRINT</span>
+      <h1>I Already Run This System at Scale</h1>
+      <p>244+ locations. $915K+/month in spend. Operated through one system — with each location tracked, managed, and optimized independently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     SECTION 13B — FOOTPRINT MAP (DARK) — keep ID for JS!
+     ================================================ -->
 <section class="section section--dark footprint__section" id="section-footprint">
   <!-- Dot grid + glow hotspots -->
   <div class="footprint__dot-grid" id="fp-dot-grid"></div>
@@ -404,13 +427,6 @@
   <div class="footprint__glow-texas"></div>
 
   <div class="section-inner section-inner--wide footprint__inner">
-    <!-- Header -->
-    <div class="footprint__header animate-on-scroll">
-      <span class="eyebrow eyebrow--cyan">MY CURRENT PAID MEDIA FOOTPRINT</span>
-      <h1>I Already Run This System at Scale</h1>
-      <p>244+ locations. $915K+/month in spend. Operated through one system — with each location tracked, managed, and optimized independently.</p>
-    </div>
-
     <!-- D3 Map (KPI overlay is inside the map container) -->
     <div class="footprint__map-container animate-on-scroll" id="fp-map-container">
       <!-- Glassmorphism KPI overlay — floats top-left on desktop, collapses to strip on mobile -->
@@ -487,7 +503,20 @@
       <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--active"></span>Active Market</div>
       <div class="fp-legend-item"><span class="fp-legend-dot fp-legend-dot--base"></span>Coverage Area</div>
     </div>
+  </div>
+</section>
 
+<!-- ================================================
+     SECTION 13C — FOOTPRINT PROOF (DARK)
+     ================================================ -->
+<section class="section section--dark footprint__section" id="section-footprint-proof">
+  <!-- Dot grid + glow hotspots -->
+  <div class="footprint__dot-grid"></div>
+  <div class="footprint__glow-midwest"></div>
+  <div class="footprint__glow-florida"></div>
+  <div class="footprint__glow-texas"></div>
+
+  <div class="section-inner footprint__inner footprint__inner--centered">
     <!-- Who Relies -->
     <div class="footprint__who-relies animate-on-scroll stagger-2">
       <span class="footprint__who-label">WHO ALREADY RUNS ON THIS SYSTEM</span>
@@ -583,6 +612,14 @@
       </div>
     </div>
     <p class="seat__closer animate-on-scroll">No lag. No black box. Just clear decisions, fast execution, and full accountability.</p>
+  </div>
+</section>
+
+<!-- ================================================
+     SECTION 6B — HOW DECISIONS ARE MADE
+     ================================================ -->
+<section class="section section--warm" id="section-decisions">
+  <div class="section-inner section-inner--narrow">
     <div class="seat__decisions animate-on-scroll">
       <h3 class="seat__decisions-title">How Decisions Are Made</h3>
       <div class="decisions-transform">
