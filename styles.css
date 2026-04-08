@@ -49,7 +49,7 @@ a { text-decoration: none; }
   --space-xl: 4rem;
   --space-2xl: 6rem;
   --space-3xl: 8rem;
-  --space-section: clamp(7rem, 15vh, 12rem);
+  --space-section: clamp(7rem, 15vh, 10rem);
   --max-width: 1200px;
   --max-width-narrow: 800px;
   --max-width-wide: 1400px;
@@ -89,8 +89,9 @@ a { text-decoration: none; }
    ============================================ */
 #scroll-progress {
   position: fixed; top: 0; left: 0; height: 3px; width: 0;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-bright));
+  background: linear-gradient(90deg, #00B3DE, #4FB5F0);
   z-index: 9999; transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(0, 179, 222, 0.5);
 }
 
 /* ============================================
@@ -210,8 +211,8 @@ a { text-decoration: none; }
 .section-header h2 { font-family: var(--font-serif); font-size: var(--text-h2); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-sm); line-height: 1.15; }
 .section-subtitle { font-size: var(--text-body); color: var(--color-text-secondary); max-width: 600px; margin: 0 auto; }
 .eyebrow {
-  display: block; text-transform: uppercase; letter-spacing: 0.2em;
-  font-size: var(--text-label); color: var(--color-accent); font-weight: 700;
+  display: block; text-transform: uppercase; letter-spacing: 0.15em;
+  font-size: var(--text-label); color: #00B3DE; font-weight: 700;
   margin-bottom: var(--space-sm); animation: none;
 }
 
@@ -219,8 +220,8 @@ a { text-decoration: none; }
    SECTION 1 — OPENING
    ============================================ */
 .opening__eyebrow {
-  display: block; text-transform: uppercase; letter-spacing: 0.2em;
-  font-size: var(--text-label); color: var(--color-accent); font-weight: 700;
+  display: block; text-transform: uppercase; letter-spacing: 0.15em;
+  font-size: var(--text-label); color: #00B3DE; font-weight: 700;
   margin-bottom: var(--space-md); animation: pulse-glow 8s ease-in-out infinite;
 }
 .opening__title {
@@ -234,11 +235,11 @@ a { text-decoration: none; }
   max-width: 600px; margin-bottom: var(--space-lg); line-height: 1.7;
 }
 .opening__scope {
-  display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-md);
+  display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: var(--space-md);
 }
 .opening__scope-item {
   border: none; border-radius: 100px;
-  padding: 0.4rem 1.2rem; font-size: var(--text-small); font-weight: 600;
+  padding: 0.5rem 1.25rem; font-size: var(--text-small); font-weight: 600;
   color: var(--color-accent); background: var(--color-bg-ice);
 }
 .opening__credibility {
@@ -517,7 +518,7 @@ a { text-decoration: none; }
   background: #FFFFFF;
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 12px;
-  padding: 16px 18px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -898,7 +899,7 @@ a { text-decoration: none; }
 .concern {
   background: #FFFFFF;
   border: 1px solid rgba(0,0,0,0.06); border-radius: var(--border-radius);
-  padding: var(--space-lg); box-shadow: var(--shadow-sm);
+  padding: 24px; box-shadow: var(--shadow-md);
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 .concern:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -1195,7 +1196,7 @@ a { text-decoration: none; }
 .system-card {
   background: #FFFFFF;
   border: 1px solid rgba(0,0,0,0.06); border-radius: var(--border-radius);
-  padding: var(--space-lg); box-shadow: var(--shadow-sm);
+  padding: 24px; box-shadow: var(--shadow-md);
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 .system-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -1433,6 +1434,13 @@ a { text-decoration: none; }
   border-left: 3px solid var(--color-accent); padding-left: var(--space-md);
   margin-bottom: var(--space-xl);
   text-shadow: 0 0 30px rgba(79,181,240,0.3);
+}
+.closing__cta {
+  font-size: var(--text-body);
+  color: var(--color-text);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--space-xl);
 }
 .closing__signature {
   border-top: 1px solid var(--color-border);
