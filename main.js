@@ -30,7 +30,9 @@
     if (document.body.classList.contains('slideshow-mode')) return;
     var st = window.pageYOffset;
     var dh = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (dh > 0 ? (st / dh) * 100 : 0) + '%';
+    var pct = dh > 0 ? (st / dh) * 100 : 0;
+    bar.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', Math.round(pct));
   }
   window.addEventListener('scroll', updateBar, { passive: true });
 
@@ -57,7 +59,7 @@
         dots.forEach(function(d) {
           d.classList.toggle('is-active', d.dataset.section === id);
         });
-        var isDark = id === 'section-footprint' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
+        var isDark = id === 'section-footprint' || id === 'section-hook' || target.classList.contains('section--dark-invert') || target.classList.contains('section--blue');
         if (isDark) {
           navContainer.classList.add('nav-dots--dark');
           if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
@@ -558,11 +560,13 @@
     });
     if (!slide) return;
     var id = slide.id;
-    var isDark = id === 'section-footprint' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
+    var isDark = id === 'section-footprint' || id === 'section-hook' || slide.classList.contains('section--dark-invert') || slide.classList.contains('section--blue');
     if (isDark) {
       navContainer.classList.add('nav-dots--dark');
+      if (stickyLogo) stickyLogo.classList.add('sticky-logo--light');
     } else {
       navContainer.classList.remove('nav-dots--dark');
+      if (stickyLogo) stickyLogo.classList.remove('sticky-logo--light');
     }
   }
 
@@ -573,12 +577,26 @@
     if (rightArrow) rightArrow.style.display = currentSlide === slides.length - 1 ? 'none' : 'flex';
   }
 
+  // Sections that use overflow-y: auto scrolling instead of scaling
+  var SCROLLABLE_SECTIONS = {
+    'section-plan': true,
+    'section-seo': true,
+    'section-team': true,
+    'section-concerns': true,
+    'section-footprint': true
+  };
+
   function scaleActiveSlide() {
     if (!slideshowActive) return;
     var slide = slides[currentSlide];
     if (!slide) return;
     var inner = slide.querySelector('.section-inner');
     if (!inner) return;
+    // Skip scaling for sections that use overflow scrolling
+    if (SCROLLABLE_SECTIONS[slide.id]) {
+      inner.style.transform = '';
+      return;
+    }
     // Reset scale so we measure natural height
     inner.style.transform = '';
     var naturalHeight = inner.scrollHeight;

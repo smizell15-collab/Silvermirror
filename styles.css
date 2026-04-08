@@ -98,7 +98,7 @@ a { text-decoration: none; }
    NAV DOTS
    ============================================ */
 #nav-dots {
-  position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  position: fixed; right: 32px; top: 50%; transform: translateY(-50%);
   display: flex; flex-direction: column; gap: 10px; z-index: 1000;
 }
 .nav-dot {
@@ -1482,6 +1482,37 @@ a { text-decoration: none; }
   color: var(--color-text-muted); font-weight: 600;
 }
 /* ============================================
+   HERO IMAGE — BOTTOM RIGHT DECORATIVE
+   ============================================ */
+.hook__hero-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: clamp(280px, 40%, 520px);
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.hook__hero-image img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  /* Fade left and bottom edges so text stays readable against the dark bg */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%),
+                      linear-gradient(to top, transparent 0%, black 25%);
+  -webkit-mask-composite: destination-in;
+  mask-image: linear-gradient(to right, transparent 0%, black 35%),
+              linear-gradient(to top, transparent 0%, black 25%);
+  mask-composite: intersect;
+  opacity: 0.45;
+}
+/* ============================================
    HERO SECTION — MORE DOMINANT
    ============================================ */
 #section-hook {
@@ -1489,6 +1520,11 @@ a { text-decoration: none; }
   padding-bottom: clamp(7rem, 18vh, 14rem);
   background: linear-gradient(165deg, #0A0A12 0%, #0d1420 40%, #0A0A12 100%);
   position: relative;
+  overflow: hidden;
+}
+#section-hook .section-inner {
+  position: relative;
+  z-index: 1;
 }
 #section-hook::after {
   content: '';
@@ -1509,8 +1545,16 @@ a { text-decoration: none; }
 #section-hook .opening__title,
 #section-hook .opening__hook { color: #FFFFFF; }
 #section-hook .opening__subtitle { color: rgba(255,255,255,0.75); }
-#section-hook .opening__credibility { color: rgba(255,255,255,0.7); border-color: rgba(36,162,236,0.2); background: rgba(36,162,236,0.08); }
-#section-hook .opening__scope-item { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+#section-hook .opening__credibility {
+  color: rgba(255,255,255,0.7);
+  border-color: rgba(36,162,236,0.2);
+  background: rgba(36,162,236,0.08);
+}
+#section-hook .opening__scope-item {
+  background: rgba(36, 162, 236, 0.15);
+  color: #4FB5F0;
+  border: 1px solid rgba(36, 162, 236, 0.25);
+}
 
 /* ============================================
    HOVER STATES — ALL INTERACTIVE CARDS
@@ -1733,7 +1777,8 @@ a { text-decoration: none; }
    SECTION 3 — WHERE THIS BREAKS
    ============================================ */
 .breaks__blocks { display: flex; flex-direction: column; gap: var(--space-md); margin-bottom: var(--space-xl); }
-.breaks__block { display: grid; grid-template-columns: auto 1fr; gap: var(--space-lg); align-items: start; padding: 2rem; background: #FFFFFF; border-radius: 16px; border-top: 3px solid var(--color-accent); box-shadow: 0 4px 20px rgba(0,0,0,0.07); min-height: 120px; }
+.breaks__block { display: grid; grid-template-columns: auto 1fr; gap: var(--space-lg); align-items: start; padding: 2rem; background: #FFFFFF; border-radius: 16px; border-top: 3px solid var(--color-accent); box-shadow: 0 4px 20px rgba(0,0,0,0.07); min-height: 120px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.breaks__block:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
 .breaks__block:last-child { border-bottom: none; }
 .breaks__num { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 800; color: var(--color-accent); opacity: 0.5; line-height: 1; min-width: 3rem; letter-spacing: -0.03em; }
 .breaks__title { font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-xs); }
@@ -2086,6 +2131,9 @@ a { text-decoration: none; }
 .slideshow-mode .section-transition-light {
   display: none;
 }
+.slideshow-mode .footer {
+  display: none;
+}
 
 /* ── Slideshow Mode: Viewport-Relative Sizing ── */
 /* Override spacing and typography to scale with viewport height so
@@ -2202,7 +2250,57 @@ a { text-decoration: none; }
   gap: clamp(0.5rem, 1vh, 1.5rem);
 }
 
-/* ── Slide Navigation Arrows ── */
+/* ── Scrollable inner containers for content-heavy sections ── */
+/* Allow content to scroll within the slide when it exceeds viewport height */
+.slideshow-mode #section-plan .section-inner,
+.slideshow-mode #section-seo .section-inner,
+.slideshow-mode #section-team .section-inner,
+.slideshow-mode #section-concerns .section-inner,
+.slideshow-mode #section-footprint .section-inner {
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(36,162,236,0.4) transparent;
+}
+.slideshow-mode #section-footprint .section-inner {
+  scrollbar-color: rgba(78,197,191,0.4) transparent;
+}
+.slideshow-mode #section-plan .section-inner::-webkit-scrollbar,
+.slideshow-mode #section-seo .section-inner::-webkit-scrollbar,
+.slideshow-mode #section-team .section-inner::-webkit-scrollbar,
+.slideshow-mode #section-concerns .section-inner::-webkit-scrollbar,
+.slideshow-mode #section-footprint .section-inner::-webkit-scrollbar {
+  width: 4px;
+}
+.slideshow-mode #section-plan .section-inner::-webkit-scrollbar-thumb,
+.slideshow-mode #section-seo .section-inner::-webkit-scrollbar-thumb,
+.slideshow-mode #section-team .section-inner::-webkit-scrollbar-thumb,
+.slideshow-mode #section-concerns .section-inner::-webkit-scrollbar-thumb {
+  background: rgba(36,162,236,0.4); border-radius: 2px;
+}
+.slideshow-mode #section-footprint .section-inner::-webkit-scrollbar-thumb {
+  background: rgba(78,197,191,0.4); border-radius: 2px;
+}
+
+/* Plan phases: 2-column grid in slideshow mode to halve vertical space */
+.slideshow-mode .plan__phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.4rem, 0.8vh, 1rem);
+  padding-left: 0;
+}
+.slideshow-mode .plan__phases::before {
+  display: none;
+}
+.slideshow-mode .plan__phases .plan-phase:last-child {
+  grid-column: 1 / -1;
+}
+.slideshow-mode .plan__outcome {
+  margin-top: clamp(0.5rem, 1vh, 1.5rem);
+}
+
+/* Slide Navigation Arrows ── */
 .slide-arrow {
   display: none;
   position: fixed;
