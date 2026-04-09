@@ -168,11 +168,11 @@
         particles[i].alpha = Math.random() * 0.55 + 0.4;
         particles[i].r = Math.random() * 2.5 + 2;
       }
-      // Add ~270 new rain particles in waves — each wave faster and longer
-      var totalToAdd = 270;
+      // Add ~190 new rain particles in waves — each wave faster and longer
+      var totalToAdd = 190;
       var batchDelay = 0;
       var batchSize = 22;
-      var BATCH_DELAY_MS = 180;
+      var BATCH_DELAY_MS = 130;
       for (var added = 0; added < totalToAdd; added += batchSize) {
         (function(delay, count) {
           setTimeout(function() {
@@ -233,28 +233,29 @@
     function handleLoadingClick() {
       loadingScreen.removeEventListener('click', handleLoadingClick);
 
-      /* Reverse exit — role → name → × → logo */
+      /* Reverse exit — role → name → × → logo (30% shorter stagger) */
       if (loadingEnter) loadingEnter.classList.add('is-exiting');
       if (loadingRole) loadingRole.classList.add('is-exiting');
       setTimeout(function() {
         if (loadingName) loadingName.classList.add('is-exiting');
-      }, 300);
+      }, 200);
       setTimeout(function() {
         if (loadingX) loadingX.classList.add('is-exiting');
-      }, 600);
+      }, 400);
       setTimeout(function() {
         if (loadingLogo) loadingLogo.classList.add('is-exiting');
-      }, 900);
+      }, 600);
 
       /* Rain washout — starts as elements exit */
       if (particleSys) particleSys.startRain();
 
-      /* Start CSS mask wash-away after rain builds up (~1200ms) */
+      /* Pixel dissolve — starts after rain builds (~800ms) */
       setTimeout(function() {
         loadingScreen.classList.add('is-washing');
-      }, 1200);
+        startPixelDissolve(loadingScreen);
+      }, 800);
 
-      /* Trigger Slide 1 hero content mid-wash (~2000ms) */
+      /* Trigger Slide 1 hero content mid-dissolve (~1400ms) */
       setTimeout(function() {
         if (document.body.classList.contains('slideshow-mode')) {
           triggerSlideAnimations(slides[0]);
@@ -264,13 +265,78 @@
             setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
           });
         }
-      }, 2000);
+      }, 1400);
 
-      /* Fully remove loading screen after wash completes (~3700ms total) */
+      /* Fully remove loading screen after dissolve completes (~2600ms total) */
       setTimeout(function() {
         if (particleSys) particleSys.stop();
         loadingScreen.classList.add('is-hidden');
-      }, 3700);
+      }, 2600);
+    }
+
+    /* ── PIXEL DISSOLVE — canvas overlay that punches transparent holes ── */
+    function startPixelDissolve(screen) {
+      var dissolveCanvas = document.createElement('canvas');
+      dissolveCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:99998;pointer-events:none;';
+      screen.appendChild(dissolveCanvas);
+
+      var dctx = dissolveCanvas.getContext('2d');
+      var W = window.innerWidth;
+      var H = window.innerHeight;
+      dissolveCanvas.width = W;
+      dissolveCanvas.height = H;
+
+      var BLOCK = 8; /* pixel block size */
+      var cols = Math.ceil(W / BLOCK);
+      var rows = Math.ceil(H / BLOCK);
+      var totalBlocks = cols * rows;
+
+      /* Build shuffled list of block indices */
+      var indices = [];
+      for (var k = 0; k < totalBlocks; k++) indices.push(k);
+      for (var m = indices.length - 1; m > 0; m--) {
+        var n = Math.floor(Math.random() * (m + 1));
+        var tmp = indices[m]; indices[m] = indices[n]; indices[n] = tmp;
+      }
+
+      /* Fill canvas with the loading screen bg color */
+      dctx.fillStyle = '#0a0a14';
+      dctx.fillRect(0, 0, W, H);
+
+      var DURATION_MS = 1600;
+      var startTime = null;
+      var cleared = 0;
+
+      function dissolveStep(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / DURATION_MS, 1);
+
+        /* Ease-in progress — faster at the end */
+        var eased = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        var targetCleared = Math.floor(eased * totalBlocks);
+
+        /* Clear newly revealed blocks */
+        while (cleared < targetCleared) {
+          var idx = indices[cleared];
+          var col = idx % cols;
+          var row = Math.floor(idx / cols);
+          dctx.clearRect(col * BLOCK, row * BLOCK, BLOCK, BLOCK);
+          cleared++;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(dissolveStep);
+        } else {
+          /* Remove the dissolve canvas — loading screen hidden by JS anyway */
+          if (dissolveCanvas.parentNode) dissolveCanvas.parentNode.removeChild(dissolveCanvas);
+        }
+      }
+
+      requestAnimationFrame(dissolveStep);
     }
 
     loadingScreen.addEventListener('click', handleLoadingClick);
