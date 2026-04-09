@@ -27,9 +27,9 @@ a { text-decoration: none; }
   --color-accent-muted: rgba(36, 162, 236, 0.08);
   --color-accent-border: rgba(36, 162, 236, 0.2);
   --color-text: #FFFFFF;
-  --color-text-secondary: #CCCCCC;
-  --color-text-muted: rgba(255,255,255,0.5);
-  --color-text-light: rgba(255,255,255,0.35);
+  --color-text-secondary: #D8D8D8;
+  --color-text-muted: rgba(255,255,255,0.62);
+  --color-text-light: rgba(255,255,255,0.45);
   --color-border: rgba(78,197,191,0.12);
   --color-border-light: rgba(78,197,191,0.07);
   --color-silver: rgba(255,255,255,0.1);
@@ -72,8 +72,8 @@ a { text-decoration: none; }
   --dark-border: rgba(78, 197, 191, 0.15);
   --dark-border-bright: rgba(78, 197, 191, 0.4);
   --dark-text: #FFFFFF;
-  --dark-text-secondary: #CCCCCC;
-  --dark-text-muted: rgba(255,255,255,0.5);
+  --dark-text-secondary: #D8D8D8;
+  --dark-text-muted: rgba(255,255,255,0.62);
   --neon-cyan: #4EC5BF;
   --neon-blue: #0088FF;
   --neon-green: #00FF88;
@@ -171,8 +171,14 @@ a { text-decoration: none; }
   display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden;
 }
 .section--light {
-  background: #0a0a1c;
+  background: #0e0e24;
   color: var(--color-text);
+  position: relative;
+}
+.section--light::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(36,162,236,0.07) 0%, transparent 60%);
+  pointer-events: none;
 }
 .section--light::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
@@ -183,10 +189,9 @@ a { text-decoration: none; }
   background: linear-gradient(to bottom, #0f0f22, #0a0a1a);
   color: var(--dark-text);
   --color-text: #FFFFFF;
-  --color-text-secondary: #CCCCCC;
-  --color-text-muted: rgba(255,255,255,0.5);
+  --color-text-secondary: #D8D8D8;
+  --color-text-muted: rgba(255,255,255,0.62);
   --color-bg: #0f0f22;
-  --color-bg-subtle: #0a0a1a;
   --color-bg-card: rgba(255,255,255,0.04);
   --color-border: rgba(78,197,191,0.12);
   --color-border-light: rgba(78,197,191,0.07);
@@ -201,7 +206,7 @@ a { text-decoration: none; }
 }
 .section--dark::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(78,197,191,0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(78,197,191,0.10) 0%, transparent 70%);
   pointer-events: none;
 }
 .section-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; }
@@ -1525,9 +1530,9 @@ a { text-decoration: none; }
    FOOTER
    ============================================ */
 .footer {
-  background: #0A0A12; border-top: 1px solid rgba(255,255,255,0.1);
+  background: #0e0e18; border-top: 1px solid rgba(255,255,255,0.1);
   padding: var(--space-2xl) var(--side-padding); text-align: center;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.6);
 }
 .footer__mono { margin: 0 auto var(--space-md); opacity: 0.35; }
 .footer__pairing {
@@ -1603,7 +1608,7 @@ a { text-decoration: none; }
 #section-hook {
   padding-top: clamp(5rem, 12vh, 10rem);
   padding-bottom: clamp(4rem, 8vh, 8rem);
-  background: #0a0a1c;
+  background: #0e0e24;
   position: relative;
   overflow: hidden;
   justify-content: stretch;
@@ -1658,15 +1663,15 @@ a { text-decoration: none; }
 }
 
 /* ── Section-specific dark shades ── */
-#section-overview { background: #0d0b18; }
-#section-breaks { background: linear-gradient(180deg, #0e0c16 0%, #120e1c 100%); }
-#section-decisions { background: linear-gradient(180deg, #0a0a1c 0%, #0d0d22 100%); }
-#section-system { background: linear-gradient(180deg, #080818 0%, #0c0c28 100%); }
-#section-plan { background: #0b0b1e; }
-#section-concerns { background: linear-gradient(180deg, #0c0c1e 0%, #0e0e24 100%); }
-#section-seo { background: #0a0a1c; }
-#section-team { background: linear-gradient(180deg, #0d0b18 0%, #0f0d1e 100%); }
-#section-close { background: #060612; }
+#section-overview { background: #110f20; }
+#section-breaks { background: linear-gradient(180deg, #12101e 0%, #161228 100%); }
+#section-decisions { background: linear-gradient(180deg, #0e0e24 0%, #111128 100%); }
+#section-system { background: linear-gradient(180deg, #0c0c1e 0%, #101030 100%); }
+#section-plan { background: #0f0f22; }
+#section-concerns { background: linear-gradient(180deg, #0e0e22 0%, #101028 100%); }
+#section-seo { background: #0e0e24; }
+#section-team { background: linear-gradient(180deg, #110f20 0%, #131120 100%); }
+#section-close { background: #0a0a16; }
 
 /* Seat entry timeline dot — fix for dark bg */
 .seat-entry__dot { border-color: #0a0a1a; }
@@ -1867,6 +1872,22 @@ a { text-decoration: none; }
   overflow: hidden;
 }
 #sm-loading-screen.is-hidden { display: none; }
+
+@keyframes wash-away {
+  0%   { -webkit-mask-position: 0 0;    mask-position: 0 0; }
+  100% { -webkit-mask-position: 0 100%; mask-position: 0 100%; }
+}
+
+#sm-loading-screen.is-washing {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+  -webkit-mask-size: 100% 300%;
+  mask-size: 100% 300%;
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  animation: wash-away 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
 
 #loading-particles {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -2087,8 +2108,15 @@ a { text-decoration: none; }
    WARM SECTION BACKGROUNDS
    ============================================ */
 .section--warm {
-  background: #0d0b18;
+  background: #110f20;
   color: var(--color-text);
+  position: relative;
+}
+.section--warm::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 80% 30%, rgba(78,197,191,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 10% 80%, rgba(36,162,236,0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 .section--warm::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
@@ -2107,8 +2135,14 @@ a { text-decoration: none; }
    BUTTER SECTIONS — WARNING / URGENCY
    ============================================ */
 .section--butter {
-  background: linear-gradient(180deg, #0e0c16 0%, #120e1c 100%);
+  background: linear-gradient(180deg, #12101e 0%, #161228 100%);
   color: var(--color-text);
+  position: relative;
+}
+.section--butter::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(78,197,191,0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
 .section--butter::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
@@ -2126,8 +2160,14 @@ a { text-decoration: none; }
    BLUE SECTIONS — AUTHORITY / PROOF
    ============================================ */
 .section--blue {
-  background: linear-gradient(135deg, #0A1520 0%, #0F1E2E 100%);
+  background: linear-gradient(135deg, #0e1a2a 0%, #142838 100%);
   color: #FFFFFF;
+  position: relative;
+}
+.section--blue::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(0,179,222,0.08) 0%, transparent 55%);
+  pointer-events: none;
 }
 .section--blue::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
@@ -2172,8 +2212,14 @@ a { text-decoration: none; }
    DARK INVERT SECTIONS — DRAMA / GRAVITAS
    ============================================ */
 .section--dark-invert {
-  background: #0A0A12;
+  background: #0e0e18;
   color: #FFFFFF;
+  position: relative;
+}
+.section--dark-invert::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(36,162,236,0.06) 0%, transparent 60%);
+  pointer-events: none;
 }
 .section--dark-invert .quiet__statement { color: rgba(255,255,255,0.6); }
 .section--dark-invert .eyebrow { color: var(--color-accent-bright); }

@@ -163,30 +163,33 @@
       // Convert existing particles to rain
       for (var i = 0; i < particles.length; i++) {
         particles[i].isRain = true;
-        particles[i].dy = Math.random() * 5 + 3;
+        particles[i].dy = Math.random() * 6 + 4;
         particles[i].dx = (Math.random() - 0.5) * 0.4;
-        particles[i].alpha = Math.random() * 0.5 + 0.35;
-        particles[i].r = Math.random() * 2 + 1.5;
+        particles[i].alpha = Math.random() * 0.55 + 0.4;
+        particles[i].r = Math.random() * 2.5 + 2;
       }
-      // Add 170 new rain particles in waves
-      var totalToAdd = 170;
+      // Add ~270 new rain particles in waves — each wave faster and longer
+      var totalToAdd = 270;
       var batchDelay = 0;
-      var batchSize = 20;
-      var BATCH_DELAY_MS = 200;
+      var batchSize = 22;
+      var BATCH_DELAY_MS = 180;
       for (var added = 0; added < totalToAdd; added += batchSize) {
         (function(delay, count) {
           setTimeout(function() {
+            var waveIndex = delay / BATCH_DELAY_MS;
+            var speedBoost = waveIndex * 1.2;
+            var lengthBoost = waveIndex * 0.4;
             for (var j = 0; j < count; j++) {
-              var speed = Math.random() * 5 + 3 + (delay / BATCH_DELAY_MS);
+              var speed = Math.random() * 6 + 4 + speedBoost;
               particles.push({
                 x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height * 0.5,
+                y: Math.random() * canvas.height * 0.4,
                 type: 'rain',
-                r: Math.random() * 2.5 + 1.5,
-                dx: (Math.random() - 0.5) * 0.4,
+                r: Math.random() * 3 + 2 + lengthBoost,
+                dx: (Math.random() - 0.5) * 0.3,
                 dy: speed,
                 sway: 0, swaySpeed: 0, swayAmp: 0,
-                alpha: Math.random() * 0.55 + 0.35,
+                alpha: Math.random() * 0.6 + 0.4,
                 pulse: 0, pulseSpeed: 0,
                 rotation: 0, rotSpeed: 0,
                 isRain: true
@@ -246,10 +249,13 @@
       /* Rain washout — starts as elements exit */
       if (particleSys) particleSys.startRain();
 
-      /* Dismiss loading screen after rain + reverse animation completes */
+      /* Start CSS mask wash-away after rain builds up (~1200ms) */
       setTimeout(function() {
-        if (particleSys) particleSys.stop();
-        loadingScreen.classList.add('is-hidden');
+        loadingScreen.classList.add('is-washing');
+      }, 1200);
+
+      /* Trigger Slide 1 hero content mid-wash (~2000ms) */
+      setTimeout(function() {
         if (document.body.classList.contains('slideshow-mode')) {
           triggerSlideAnimations(slides[0]);
         } else {
@@ -258,7 +264,13 @@
             setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
           });
         }
-      }, 1500);
+      }, 2000);
+
+      /* Fully remove loading screen after wash completes (~3700ms total) */
+      setTimeout(function() {
+        if (particleSys) particleSys.stop();
+        loadingScreen.classList.add('is-hidden');
+      }, 3700);
     }
 
     loadingScreen.addEventListener('click', handleLoadingClick);
