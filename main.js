@@ -7,6 +7,7 @@
   var loadingX = loadingScreen ? loadingScreen.querySelector('.loading-screen__x') : null;
   var loadingName = loadingScreen ? loadingScreen.querySelector('.loading-screen__name') : null;
   var loadingRole = loadingScreen ? loadingScreen.querySelector('.loading-screen__role') : null;
+  var loadingEnter = loadingScreen ? loadingScreen.querySelector('.loading-screen__enter') : null;
   var particleCanvas = document.getElementById('loading-particles');
 
   /* ── PARTICLE SYSTEM ── */
@@ -220,38 +221,47 @@
       if (loadingRole) loadingRole.classList.add('show');
     }, 3400);
 
-    /* ── PHASE 3: Reverse exit — role → name → × → logo (~6000ms) ── */
+    /* ── PHASE 2: Show "Click to Enter" after all elements are in ── */
     setTimeout(function() {
+      if (loadingEnter) loadingEnter.classList.add('show');
+    }, 4400);
+
+    /* ── PHASE 3: Wait for click — no auto-dismiss ── */
+    function handleLoadingClick() {
+      loadingScreen.removeEventListener('click', handleLoadingClick);
+
+      /* Reverse exit — role → name → × → logo */
+      if (loadingEnter) loadingEnter.classList.add('is-exiting');
       if (loadingRole) loadingRole.classList.add('is-exiting');
-    }, 6000);
-    setTimeout(function() {
-      if (loadingName) loadingName.classList.add('is-exiting');
-    }, 6300);
-    setTimeout(function() {
-      if (loadingX) loadingX.classList.add('is-exiting');
-    }, 6600);
-    setTimeout(function() {
-      if (loadingLogo) loadingLogo.classList.add('is-exiting');
-    }, 6900);
+      setTimeout(function() {
+        if (loadingName) loadingName.classList.add('is-exiting');
+      }, 300);
+      setTimeout(function() {
+        if (loadingX) loadingX.classList.add('is-exiting');
+      }, 600);
+      setTimeout(function() {
+        if (loadingLogo) loadingLogo.classList.add('is-exiting');
+      }, 900);
 
-    /* ── PHASE 4: Rain washout — starts as exit begins ── */
-    setTimeout(function() {
+      /* Rain washout — starts as elements exit */
       if (particleSys) particleSys.startRain();
-    }, 6000);
 
-    /* ── PHASE 5: Dismiss screen (~9500ms) ── */
-    setTimeout(function() {
-      if (particleSys) particleSys.stop();
-      loadingScreen.classList.add('is-hidden');
-      if (document.body.classList.contains('slideshow-mode')) {
-        triggerSlideAnimations(slides[0]);
-      } else {
-        var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
-        heroEls.forEach(function(el, i) {
-          setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
-        });
-      }
-    }, 9500);
+      /* Dismiss loading screen after rain + reverse animation completes */
+      setTimeout(function() {
+        if (particleSys) particleSys.stop();
+        loadingScreen.classList.add('is-hidden');
+        if (document.body.classList.contains('slideshow-mode')) {
+          triggerSlideAnimations(slides[0]);
+        } else {
+          var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
+          heroEls.forEach(function(el, i) {
+            setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
+          });
+        }
+      }, 1500);
+    }
+
+    loadingScreen.addEventListener('click', handleLoadingClick);
   }
 
   /* ── SCROLL PROGRESS ── */
