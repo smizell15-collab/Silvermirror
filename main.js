@@ -23,49 +23,118 @@
     resize();
     window.addEventListener('resize', resize);
 
-    for (var i = 0; i < 60; i++) {
+    // Particle types: 'droplet', 'sparkle', 'bokeh'
+    for (var i = 0; i < 40; i++) {
+      var type;
+      var rand = Math.random();
+      if (rand < 0.4) type = 'droplet';
+      else if (rand < 0.75) type = 'sparkle';
+      else type = 'bokeh';
+
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 2.5 + 1,
-        dx: (Math.random() - 0.5) * 0.4,
-        dy: (Math.random() - 0.5) * 0.3 - 0.15,
-        alpha: Math.random() * 0.6 + 0.3,
-        pulse: Math.random() * Math.PI * 2
+        type: type,
+        r: type === 'bokeh' ? (Math.random() * 7 + 8) : (type === 'droplet' ? (Math.random() * 3 + 3) : (Math.random() * 2 + 2)),
+        dx: (Math.random() - 0.5) * 0.15,
+        dy: type === 'sparkle' ? (Math.random() - 0.5) * 0.1 : -(Math.random() * 0.2 + 0.05),
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: Math.random() * 0.008 + 0.003,
+        swayAmp: Math.random() * 0.3 + 0.1,
+        alpha: type === 'bokeh' ? (Math.random() * 0.05 + 0.03) : (type === 'sparkle' ? (Math.random() * 0.6 + 0.3) : (Math.random() * 0.4 + 0.2)),
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: type === 'sparkle' ? (Math.random() * 0.04 + 0.02) : (Math.random() * 0.015 + 0.005),
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.005
       });
+    }
+
+    function drawDroplet(ctx, x, y, r, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      // Teardrop shape
+      ctx.moveTo(x, y - r * 1.4);
+      ctx.bezierCurveTo(x + r * 0.8, y - r * 0.5, x + r * 0.7, y + r * 0.6, x, y + r);
+      ctx.bezierCurveTo(x - r * 0.7, y + r * 0.6, x - r * 0.8, y - r * 0.5, x, y - r * 1.4);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(78, 197, 191, 0.6)';
+      ctx.fill();
+      // Subtle inner highlight
+      ctx.beginPath();
+      ctx.arc(x - r * 0.15, y - r * 0.3, r * 0.25, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawSparkle(ctx, x, y, r, alpha, rotation) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      // 4-point star
+      ctx.beginPath();
+      for (var i = 0; i < 4; i++) {
+        var angle = (i / 4) * Math.PI * 2 - Math.PI / 2;
+        var nextAngle = ((i + 0.5) / 4) * Math.PI * 2 - Math.PI / 2;
+        ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+        ctx.lineTo(Math.cos(nextAngle) * r * 0.3, Math.sin(nextAngle) * r * 0.3);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.fill();
+      // Tiny glow
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, ' + (alpha * 0.15) + ')';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBokeh(ctx, x, y, r, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(78, 197, 191, 0.5)';
+      ctx.fill();
+      // Soft ring
+      ctx.beginPath();
+      ctx.arc(x, y, r * 0.85, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(78, 197, 191, 0.3)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
-        p.x += p.dx;
+        // Gentle sway
+        p.sway += p.swaySpeed;
+        p.x += p.dx + Math.sin(p.sway) * p.swayAmp;
         p.y += p.dy;
-        p.pulse += 0.02;
+        p.pulse += p.pulseSpeed;
+        p.rotation += p.rotSpeed;
+
         var flicker = 0.5 + 0.5 * Math.sin(p.pulse);
         var a = p.alpha * flicker;
 
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-        if (p.y < -10) p.y = canvas.height + 10;
-        if (p.y > canvas.height + 10) p.y = -10;
+        // Wrap around edges
+        if (p.x < -20) p.x = canvas.width + 20;
+        if (p.x > canvas.width + 20) p.x = -20;
+        if (p.y < -20) p.y = canvas.height + 20;
+        if (p.y > canvas.height + 20) p.y = -20;
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(78, 197, 191, ' + a + ')';
-        ctx.fill();
-
-        // Increased glow halo - larger radius and stronger opacity
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.35) + ')';
-        ctx.fill();
-
-        // Additional outer glow for more visibility
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 8, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.15) + ')';
-        ctx.fill();
+        if (p.type === 'droplet') {
+          drawDroplet(ctx, p.x, p.y, p.r, a);
+        } else if (p.type === 'sparkle') {
+          drawSparkle(ctx, p.x, p.y, p.r, a, p.rotation);
+        } else {
+          drawBokeh(ctx, p.x, p.y, p.r, a);
+        }
       }
       animId = requestAnimationFrame(draw);
     }
