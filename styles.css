@@ -4,15 +4,6 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg); color: var(--color-text); overflow-x: hidden; line-height: 1.72; }
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(36,162,236,0.04) 0%, transparent 50%),
-              radial-gradient(ellipse at 0% 100%, rgba(78,197,191,0.03) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: 0;
-}
 img { max-width: 100%; display: block; }
 a { text-decoration: none; }
 ::selection { background: rgba(36, 162, 236, 0.15); }
