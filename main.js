@@ -15,6 +15,7 @@
     var ctx = canvas.getContext('2d');
     var particles = [];
     var animId = null;
+    var rainMode = false;
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -45,7 +46,8 @@
         pulse: Math.random() * Math.PI * 2,
         pulseSpeed: type === 'sparkle' ? (Math.random() * 0.04 + 0.02) : (Math.random() * 0.015 + 0.005),
         rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.005
+        rotSpeed: (Math.random() - 0.5) * 0.005,
+        isRain: false
       });
     }
 
@@ -65,6 +67,19 @@
       ctx.arc(x - r * 0.15, y - r * 0.3, r * 0.25, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
       ctx.fill();
+      ctx.restore();
+    }
+
+    function drawRainStreak(ctx, x, y, r, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + r * 0.1, y + r * 4);
+      ctx.strokeStyle = 'rgba(78, 197, 191, 0.7)';
+      ctx.lineWidth = Math.max(1, r * 0.5);
+      ctx.lineCap = 'round';
+      ctx.stroke();
       ctx.restore();
     }
 
@@ -114,21 +129,23 @@
         var p = particles[i];
         // Gentle sway
         p.sway += p.swaySpeed;
-        p.x += p.dx + Math.sin(p.sway) * p.swayAmp;
+        p.x += p.dx + (p.isRain ? 0 : Math.sin(p.sway) * p.swayAmp);
         p.y += p.dy;
         p.pulse += p.pulseSpeed;
         p.rotation += p.rotSpeed;
 
-        var flicker = 0.5 + 0.5 * Math.sin(p.pulse);
+        var flicker = p.isRain ? 1 : (0.5 + 0.5 * Math.sin(p.pulse));
         var a = p.alpha * flicker;
 
         // Wrap around edges
         if (p.x < -20) p.x = canvas.width + 20;
         if (p.x > canvas.width + 20) p.x = -20;
-        if (p.y < -20) p.y = canvas.height + 20;
-        if (p.y > canvas.height + 20) p.y = -20;
+        if (p.y > canvas.height + 40) p.y = -20;
+        if (!p.isRain && p.y < -20) p.y = canvas.height + 20;
 
-        if (p.type === 'droplet') {
+        if (p.isRain) {
+          drawRainStreak(ctx, p.x, p.y, p.r, a);
+        } else if (p.type === 'droplet') {
           drawDroplet(ctx, p.x, p.y, p.r, a);
         } else if (p.type === 'sparkle') {
           drawSparkle(ctx, p.x, p.y, p.r, a, p.rotation);
@@ -139,68 +156,102 @@
       animId = requestAnimationFrame(draw);
     }
     draw();
-    return { stop: function() { if (animId) cancelAnimationFrame(animId); } };
+
+    function startRain() {
+      rainMode = true;
+      // Convert existing particles to rain
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].isRain = true;
+        particles[i].dy = Math.random() * 5 + 3;
+        particles[i].dx = (Math.random() - 0.5) * 0.4;
+        particles[i].alpha = Math.random() * 0.5 + 0.35;
+        particles[i].r = Math.random() * 2 + 1.5;
+      }
+      // Add 170 new rain particles in waves
+      var totalToAdd = 170;
+      var batchDelay = 0;
+      var batchSize = 20;
+      var BATCH_DELAY_MS = 200;
+      for (var added = 0; added < totalToAdd; added += batchSize) {
+        (function(delay, count) {
+          setTimeout(function() {
+            for (var j = 0; j < count; j++) {
+              var speed = Math.random() * 5 + 3 + (delay / BATCH_DELAY_MS);
+              particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height * 0.5,
+                type: 'rain',
+                r: Math.random() * 2.5 + 1.5,
+                dx: (Math.random() - 0.5) * 0.4,
+                dy: speed,
+                sway: 0, swaySpeed: 0, swayAmp: 0,
+                alpha: Math.random() * 0.55 + 0.35,
+                pulse: 0, pulseSpeed: 0,
+                rotation: 0, rotSpeed: 0,
+                isRain: true
+              });
+            }
+          }, delay);
+        })(batchDelay, Math.min(batchSize, totalToAdd - added));
+        batchDelay += BATCH_DELAY_MS;
+      }
+    }
+
+    return {
+      stop: function() { if (animId) cancelAnimationFrame(animId); },
+      startRain: startRain
+    };
   }
 
   var particleSys = initParticles(particleCanvas);
 
   if (loadingScreen) {
-    var loadingEnter = loadingScreen.querySelector('.loading-screen__enter');
-    var clickHandled = false;
-
-    /* Staggered entrance (SLOWER): logo → × → name → role */
+    /* ── PHASE 1: Staggered entrance — logo → × → name → role ── */
     setTimeout(function() {
       if (loadingLogo) loadingLogo.classList.add('show');
     }, 600);
     setTimeout(function() {
       if (loadingX) loadingX.classList.add('show');
-    }, 1400);
+    }, 1600);
     setTimeout(function() {
       if (loadingName) loadingName.classList.add('show');
-    }, 2200);
+    }, 2600);
     setTimeout(function() {
       if (loadingRole) loadingRole.classList.add('show');
-    }, 3000);
+    }, 3400);
 
-    /* Show "Click to Enter" prompt after all elements appear */
+    /* ── PHASE 3: Reverse exit — role → name → × → logo (~6000ms) ── */
     setTimeout(function() {
-      if (loadingEnter) loadingEnter.classList.add('show');
-    }, 3700);
-
-    /* Click-to-enter: reverse animation exit */
-    function dismissLoadingScreen() {
-      if (clickHandled) return;
-      clickHandled = true;
-
-      /* Reverse exit: enter-prompt → role → name → × → logo */
-      if (loadingEnter) loadingEnter.classList.add('is-exiting');
       if (loadingRole) loadingRole.classList.add('is-exiting');
-      setTimeout(function() {
-        if (loadingName) loadingName.classList.add('is-exiting');
-      }, 150);
-      setTimeout(function() {
-        if (loadingX) loadingX.classList.add('is-exiting');
-      }, 300);
-      setTimeout(function() {
-        if (loadingLogo) loadingLogo.classList.add('is-exiting');
-      }, 450);
+    }, 6000);
+    setTimeout(function() {
+      if (loadingName) loadingName.classList.add('is-exiting');
+    }, 6300);
+    setTimeout(function() {
+      if (loadingX) loadingX.classList.add('is-exiting');
+    }, 6600);
+    setTimeout(function() {
+      if (loadingLogo) loadingLogo.classList.add('is-exiting');
+    }, 6900);
 
-      /* After reverse animation completes, hide screen and start hero */
-      setTimeout(function() {
-        if (particleSys) particleSys.stop();
-        loadingScreen.classList.add('is-hidden');
-        if (document.body.classList.contains('slideshow-mode')) {
-          triggerSlideAnimations(slides[0]);
-        } else {
-          var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
-          heroEls.forEach(function(el, i) {
-            setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
-          });
-        }
-      }, 950);
-    }
+    /* ── PHASE 4: Rain washout — starts as exit begins ── */
+    setTimeout(function() {
+      if (particleSys) particleSys.startRain();
+    }, 6000);
 
-    loadingScreen.addEventListener('click', dismissLoadingScreen);
+    /* ── PHASE 5: Dismiss screen (~9500ms) ── */
+    setTimeout(function() {
+      if (particleSys) particleSys.stop();
+      loadingScreen.classList.add('is-hidden');
+      if (document.body.classList.contains('slideshow-mode')) {
+        triggerSlideAnimations(slides[0]);
+      } else {
+        var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
+        heroEls.forEach(function(el, i) {
+          setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
+        });
+      }
+    }, 9500);
   }
 
   /* ── SCROLL PROGRESS ── */
@@ -229,6 +280,9 @@
   var sections = document.querySelectorAll('.section[id]');
   var navContainer = document.getElementById('nav-dots');
   var stickyLogo = document.getElementById('sticky-logo');
+
+  /* Always use dark nav-dots since all sections are dark */
+  if (navContainer) navContainer.classList.add('nav-dots--dark');
 
   function isSectionDark() {
     return true; /* All sections are now dark theme */
