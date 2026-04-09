@@ -78,11 +78,6 @@ a { text-decoration: none; }
   --neon-blue: #0088FF;
   --neon-green: #00FF88;
   --neon-amber: #FFB800;
-  --color-gold-accent: #D4A853;
-  --hero-bg-start: #0a0f1a;
-  --hero-bg-mid: #0d1525;
-  --hero-bg-end: #111827;
-  --hero-bg-alt: #0f1620;
   --glow-cyan-sm: 0 0 4px #4EC5BF, 0 0 8px rgba(78,197,191,0.5);
   --glow-cyan-md: 0 0 4px #4EC5BF, 0 0 8px rgba(78,197,191,0.5), 0 0 20px rgba(58,175,169,0.25);
   --glow-cyan-lg: 0 0 4px #4EC5BF, 0 0 8px rgba(78,197,191,0.5), 0 0 20px rgba(58,175,169,0.25), 0 0 40px rgba(58,175,169,0.12);
@@ -94,7 +89,7 @@ a { text-decoration: none; }
    ============================================ */
 #scroll-progress {
   position: fixed; top: 0; left: 0; height: 3px; width: 0;
-  background: linear-gradient(90deg, #6EC1E4, #4FB5F0, var(--color-gold-accent));
+  background: linear-gradient(90deg, #6EC1E4, #4FB5F0, #D4A853);
   z-index: 9999; transition: width 0.1s linear;
   box-shadow: 0 0 12px rgba(110, 193, 228, 0.5);
 }
@@ -1624,7 +1619,7 @@ a { text-decoration: none; }
 #section-hook {
   padding-top: clamp(5rem, 12vh, 10rem);
   padding-bottom: clamp(4rem, 8vh, 8rem);
-  background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-mid) 30%, var(--hero-bg-end) 60%, var(--hero-bg-alt) 100%);
+  background: linear-gradient(135deg, #0a0f1a 0%, #0d1525 30%, #111827 60%, #0f1620 100%);
   position: relative;
   overflow: hidden;
   justify-content: stretch;
@@ -1728,7 +1723,7 @@ a { text-decoration: none; }
 
 /* Credibility card — frosted glass with warm gold accent */
 #section-hook .opening__credibility {
-  color: var(--color-gold-accent);
+  color: #D4A853;
   border-color: rgba(212, 168, 83, 0.35);
   background: rgba(212, 168, 83, 0.08);
   backdrop-filter: blur(24px);
@@ -1862,7 +1857,7 @@ a { text-decoration: none; }
   .opening__subtitle { margin-bottom: var(--space-lg); }
   .opening__scope { margin-bottom: var(--space-md); }
   .opening__credibility { margin-bottom: var(--space-lg); }
-  .hook__hero-image { width: 100%; height: 100%; opacity: 0.3; }
+  .hook__hero-image { width: 100%; height: 100%; opacity: 0.25; }
   .hook__hero-image::after {
     background:
       linear-gradient(to top, rgba(10,15,26,0.95) 0%, rgba(10,15,26,0.7) 40%, rgba(10,15,26,0.5) 100%);
