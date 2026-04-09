@@ -1884,14 +1884,8 @@ a { text-decoration: none; }
 }
 #sm-loading-screen.is-hidden { display: none; }
 
-@keyframes pixel-dissolve {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 #sm-loading-screen.is-washing {
   position: relative;
-  animation: pixel-dissolve 1.6s ease-in-out forwards;
   pointer-events: none;
 }
 

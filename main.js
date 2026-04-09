@@ -312,7 +312,7 @@
         var elapsed = timestamp - startTime;
         var progress = Math.min(elapsed / DURATION_MS, 1);
 
-        /* Ease-in progress — faster at the end */
+        /* Ease-in-out progress — slow start, fast middle, slow end */
         var eased = progress < 0.5
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
