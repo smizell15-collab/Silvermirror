@@ -4,9 +4,9 @@
   /* ── LOADING SCREEN ── */
   var loadingScreen = document.getElementById('sm-loading-screen');
   var loadingLogo = loadingScreen ? loadingScreen.querySelector('.loading-screen__logo') : null;
-  var loadingBrand = loadingScreen ? loadingScreen.querySelector('.loading-screen__brand') : null;
   var loadingX = loadingScreen ? loadingScreen.querySelector('.loading-screen__x') : null;
   var loadingName = loadingScreen ? loadingScreen.querySelector('.loading-screen__name') : null;
+  var loadingRole = loadingScreen ? loadingScreen.querySelector('.loading-screen__role') : null;
   var particleCanvas = document.getElementById('loading-particles');
 
   /* ── PARTICLE SYSTEM ── */
@@ -27,10 +27,10 @@
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 2 + 0.5,
+        r: Math.random() * 2.5 + 1,
         dx: (Math.random() - 0.5) * 0.4,
         dy: (Math.random() - 0.5) * 0.3 - 0.15,
-        alpha: Math.random() * 0.5 + 0.1,
+        alpha: Math.random() * 0.6 + 0.3,
         pulse: Math.random() * Math.PI * 2
       });
     }
@@ -55,8 +55,15 @@
         ctx.fillStyle = 'rgba(78, 197, 191, ' + a + ')';
         ctx.fill();
 
+        // Increased glow halo - larger radius and stronger opacity
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.35) + ')';
+        ctx.fill();
+
+        // Additional outer glow for more visibility
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 8, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.15) + ')';
         ctx.fill();
       }
@@ -69,18 +76,18 @@
   var particleSys = initParticles(particleCanvas);
 
   if (loadingScreen) {
-    /* Staggered entrance: logo → brand → × → name */
+    /* Staggered entrance: logo → × → name → role */
     setTimeout(function() {
       if (loadingLogo) loadingLogo.classList.add('show');
     }, 300);
     setTimeout(function() {
-      if (loadingBrand) loadingBrand.classList.add('show');
+      if (loadingX) loadingX.classList.add('show');
     }, 700);
     setTimeout(function() {
-      if (loadingX) loadingX.classList.add('show');
+      if (loadingName) loadingName.classList.add('show');
     }, 1050);
     setTimeout(function() {
-      if (loadingName) loadingName.classList.add('show');
+      if (loadingRole) loadingRole.classList.add('show');
     }, 1350);
 
     /* Exit sequence */
