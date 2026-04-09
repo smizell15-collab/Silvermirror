@@ -3,7 +3,16 @@
    ============================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg); color: var(--color-text); overflow-x: hidden; line-height: 1.72; }
+body { font-family: 'Montserrat', Arial, sans-serif; background: var(--color-bg); color: var(--color-text); overflow-x: hidden; line-height: 1.72; position: relative; }
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(36,162,236,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse at 85% 80%, rgba(78,197,191,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
 img { max-width: 100%; display: block; }
 a { text-decoration: none; }
 ::selection { background: rgba(36, 162, 236, 0.15); }
@@ -15,11 +24,11 @@ a { text-decoration: none; }
    DARK THEME (global)
    ============================================ */
 :root {
-  --color-bg: #0a0a1c;
-  --color-bg-subtle: #0f0f22;
+  --color-bg: #121228;
+  --color-bg-subtle: #18183a;
   --color-bg-card: rgba(255,255,255,0.04);
-  --color-bg-warm: #0d0b18;
-  --color-bg-warm-deep: #12101e;
+  --color-bg-warm: #181630;
+  --color-bg-warm-deep: #1c1a38;
   --color-bg-ice: rgba(36,162,236,0.08);
   --color-accent: #24A2EC;
   --color-accent-bright: #4FB5F0;
@@ -66,8 +75,8 @@ a { text-decoration: none; }
   --transition-base: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   --transition-slow: 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
   --transition-slower: 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-  --dark-bg: #0d0d1e;
-  --dark-bg-subtle: #12122a;
+  --dark-bg: #141430;
+  --dark-bg-subtle: #1c1c42;
   --dark-bg-card: rgba(255,255,255,0.03);
   --dark-border: rgba(78, 197, 191, 0.15);
   --dark-border-bright: rgba(78, 197, 191, 0.4);
@@ -171,13 +180,14 @@ a { text-decoration: none; }
   display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden;
 }
 .section--light {
-  background: #0e0e24;
+  background: #141432;
   color: var(--color-text);
   position: relative;
 }
 .section--light::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(36,162,236,0.07) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 20% 50%, rgba(36,162,236,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(78,197,191,0.08) 0%, transparent 55%);
   pointer-events: none;
 }
 .section--light::after {
@@ -186,19 +196,19 @@ a { text-decoration: none; }
   pointer-events: none;
 }
 .section--light-subtle {
-  background: linear-gradient(to bottom, #0f0f22, #0a0a1a);
+  background: linear-gradient(to bottom, #18183a, #121228);
   color: var(--dark-text);
   --color-text: #FFFFFF;
   --color-text-secondary: #D8D8D8;
   --color-text-muted: rgba(255,255,255,0.62);
-  --color-bg: #0f0f22;
+  --color-bg: #18183a;
   --color-bg-card: rgba(255,255,255,0.04);
   --color-border: rgba(78,197,191,0.12);
   --color-border-light: rgba(78,197,191,0.07);
 }
 .section--light-subtle::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, rgba(10,10,26,0.6));
+  background: linear-gradient(to bottom, transparent, rgba(18,18,40,0.6));
   pointer-events: none;
 }
 .section--dark {
@@ -206,7 +216,7 @@ a { text-decoration: none; }
 }
 .section--dark::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(78,197,191,0.10) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(78,197,191,0.16) 0%, transparent 70%);
   pointer-events: none;
 }
 .section-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; }
@@ -219,7 +229,7 @@ a { text-decoration: none; }
 }
 .section-transition-light {
   height: 18vh;
-  background: linear-gradient(to bottom, var(--dark-bg), #0f0f22);
+  background: linear-gradient(to bottom, var(--dark-bg), #18183a);
   pointer-events: none;
 }
 
@@ -1608,7 +1618,7 @@ a { text-decoration: none; }
 #section-hook {
   padding-top: clamp(5rem, 12vh, 10rem);
   padding-bottom: clamp(4rem, 8vh, 8rem);
-  background: #0e0e24;
+  background: #141432;
   position: relative;
   overflow: hidden;
   justify-content: stretch;
@@ -1642,7 +1652,8 @@ a { text-decoration: none; }
 #section-hook::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: none;
+  background: radial-gradient(ellipse at 30% 60%, rgba(36,162,236,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 75% 20%, rgba(78,197,191,0.10) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -1873,19 +1884,8 @@ a { text-decoration: none; }
 }
 #sm-loading-screen.is-hidden { display: none; }
 
-@keyframes wash-away {
-  0%   { -webkit-mask-position: 0 0;    mask-position: 0 0; }
-  100% { -webkit-mask-position: 0 100%; mask-position: 0 100%; }
-}
-
 #sm-loading-screen.is-washing {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
-  -webkit-mask-size: 100% 300%;
-  mask-size: 100% 300%;
-  -webkit-mask-position: 0 0;
-  mask-position: 0 0;
-  animation: wash-away 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  position: relative;
   pointer-events: none;
 }
 
@@ -2108,19 +2108,19 @@ a { text-decoration: none; }
    WARM SECTION BACKGROUNDS
    ============================================ */
 .section--warm {
-  background: #110f20;
+  background: #181630;
   color: var(--color-text);
   position: relative;
 }
 .section--warm::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 80% 30%, rgba(78,197,191,0.06) 0%, transparent 55%),
-              radial-gradient(ellipse at 10% 80%, rgba(36,162,236,0.05) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 80% 30%, rgba(78,197,191,0.13) 0%, transparent 55%),
+              radial-gradient(ellipse at 10% 80%, rgba(36,162,236,0.10) 0%, transparent 50%);
   pointer-events: none;
 }
 .section--warm::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, rgba(13,11,24,0.6));
+  background: linear-gradient(to bottom, transparent, rgba(24,22,48,0.6));
   pointer-events: none;
 }
 /* Cards inside warm sections — subtle dark border */
@@ -2135,18 +2135,19 @@ a { text-decoration: none; }
    BUTTER SECTIONS — WARNING / URGENCY
    ============================================ */
 .section--butter {
-  background: linear-gradient(180deg, #12101e 0%, #161228 100%);
+  background: linear-gradient(180deg, #1a1832 0%, #1e1a3a 100%);
   color: var(--color-text);
   position: relative;
 }
 .section--butter::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(78,197,191,0.08) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(78,197,191,0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at 85% 70%, rgba(36,162,236,0.10) 0%, transparent 45%);
   pointer-events: none;
 }
 .section--butter::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, rgba(18,14,28,0.6));
+  background: linear-gradient(to bottom, transparent, rgba(30,26,58,0.6));
   pointer-events: none;
 }
 .section--butter .breaks__block { background: rgba(255,255,255,0.04); border-color: rgba(78,197,191,0.12); border-top-color: var(--color-accent); }
@@ -2160,18 +2161,19 @@ a { text-decoration: none; }
    BLUE SECTIONS — AUTHORITY / PROOF
    ============================================ */
 .section--blue {
-  background: linear-gradient(135deg, #0e1a2a 0%, #142838 100%);
+  background: linear-gradient(135deg, #122240 0%, #1a3050 100%);
   color: #FFFFFF;
   position: relative;
 }
 .section--blue::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 30% 60%, rgba(0,179,222,0.08) 0%, transparent 55%);
+  background: radial-gradient(ellipse at 30% 60%, rgba(0,179,222,0.16) 0%, transparent 55%),
+              radial-gradient(ellipse at 75% 20%, rgba(78,197,191,0.10) 0%, transparent 50%);
   pointer-events: none;
 }
 .section--blue::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, rgba(10,21,32,0.5));
+  background: linear-gradient(to bottom, transparent, rgba(18,34,64,0.5));
   pointer-events: none;
 }
 .section--blue .eyebrow { color: rgba(78,197,191,0.9); text-shadow: none; animation: none; }
@@ -2212,13 +2214,14 @@ a { text-decoration: none; }
    DARK INVERT SECTIONS — DRAMA / GRAVITAS
    ============================================ */
 .section--dark-invert {
-  background: #0e0e18;
+  background: #141428;
   color: #FFFFFF;
   position: relative;
 }
 .section--dark-invert::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(36,162,236,0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(36,162,236,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 15% 20%, rgba(78,197,191,0.08) 0%, transparent 50%);
   pointer-events: none;
 }
 .section--dark-invert .quiet__statement { color: rgba(255,255,255,0.6); }
@@ -3039,13 +3042,14 @@ a { text-decoration: none; }
 
 /* Hook section (opening) — dramatic dark with cyan glow */
 #section-hook {
-  background: #0a0a1c;
+  background: #141432;
   color: var(--dark-text);
 }
 #section-hook::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 30% 40%, rgba(78,197,191,0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 30% 40%, rgba(78,197,191,0.15) 0%, transparent 65%),
+              radial-gradient(ellipse at 75% 70%, rgba(36,162,236,0.10) 0%, transparent 55%);
   pointer-events: none;
 }
 #section-hook .opening__title { color: #FFFFFF; }
