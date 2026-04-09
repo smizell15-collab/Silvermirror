@@ -4,9 +4,13 @@
   /* ── LOADING SCREEN ── */
   var loadingScreen = document.getElementById('sm-loading-screen');
   var lockup = loadingScreen ? loadingScreen.querySelector('.loading-screen__lockup') : null;
+  var loadingLogo = loadingScreen ? loadingScreen.querySelector('.loading-screen__logo') : null;
 
   if (loadingScreen && lockup) {
-    setTimeout(function() { lockup.classList.add('show'); }, 400);
+    setTimeout(function() {
+      lockup.classList.add('show');
+      if (loadingLogo) loadingLogo.classList.add('show');
+    }, 400);
     setTimeout(function() {
       loadingScreen.style.transition = 'opacity 0.6s ease';
       loadingScreen.style.opacity = '0';
