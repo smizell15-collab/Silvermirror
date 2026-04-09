@@ -3,19 +3,99 @@
 
   /* ── LOADING SCREEN ── */
   var loadingScreen = document.getElementById('sm-loading-screen');
-  var lockup = loadingScreen ? loadingScreen.querySelector('.loading-screen__lockup') : null;
   var loadingLogo = loadingScreen ? loadingScreen.querySelector('.loading-screen__logo') : null;
+  var loadingX = loadingScreen ? loadingScreen.querySelector('.loading-screen__x') : null;
+  var loadingName = loadingScreen ? loadingScreen.querySelector('.loading-screen__name') : null;
+  var loadingRole = loadingScreen ? loadingScreen.querySelector('.loading-screen__role') : null;
+  var particleCanvas = document.getElementById('loading-particles');
 
-  if (loadingScreen && lockup) {
+  /* ── PARTICLE SYSTEM ── */
+  function initParticles(canvas) {
+    if (!canvas) return null;
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var animId = null;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (var i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2.5 + 1,
+        dx: (Math.random() - 0.5) * 0.4,
+        dy: (Math.random() - 0.5) * 0.3 - 0.15,
+        alpha: Math.random() * 0.6 + 0.3,
+        pulse: Math.random() * Math.PI * 2
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.dx;
+        p.y += p.dy;
+        p.pulse += 0.02;
+        var flicker = 0.5 + 0.5 * Math.sin(p.pulse);
+        var a = p.alpha * flicker;
+
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        if (p.y < -10) p.y = canvas.height + 10;
+        if (p.y > canvas.height + 10) p.y = -10;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(78, 197, 191, ' + a + ')';
+        ctx.fill();
+
+        // Increased glow halo - larger radius and stronger opacity
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.35) + ')';
+        ctx.fill();
+
+        // Additional outer glow for more visibility
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(78, 197, 191, ' + (a * 0.15) + ')';
+        ctx.fill();
+      }
+      animId = requestAnimationFrame(draw);
+    }
+    draw();
+    return { stop: function() { if (animId) cancelAnimationFrame(animId); } };
+  }
+
+  var particleSys = initParticles(particleCanvas);
+
+  if (loadingScreen) {
+    /* Staggered entrance: logo → × → name → role */
     setTimeout(function() {
-      lockup.classList.add('show');
       if (loadingLogo) loadingLogo.classList.add('show');
-    }, 400);
+    }, 300);
     setTimeout(function() {
-      loadingScreen.style.transition = 'opacity 0.6s ease';
-      loadingScreen.style.opacity = '0';
-    }, 2000);
+      if (loadingX) loadingX.classList.add('show');
+    }, 700);
     setTimeout(function() {
+      if (loadingName) loadingName.classList.add('show');
+    }, 1050);
+    setTimeout(function() {
+      if (loadingRole) loadingRole.classList.add('show');
+    }, 1350);
+
+    /* Exit sequence */
+    setTimeout(function() {
+      loadingScreen.classList.add('is-exiting');
+    }, 2600);
+    setTimeout(function() {
+      if (particleSys) particleSys.stop();
       loadingScreen.classList.add('is-hidden');
       if (document.body.classList.contains('slideshow-mode')) {
         triggerSlideAnimations(slides[0]);
@@ -25,7 +105,7 @@
           setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
         });
       }
-    }, 2600);
+    }, 3400);
   }
 
   /* ── SCROLL PROGRESS ── */
@@ -535,7 +615,7 @@
   /* ── REDUCED MOTION OVERRIDE ── */
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.animate-on-scroll').forEach(function(el) { el.classList.add('is-visible'); });
-    if (loadingScreen) loadingScreen.classList.add('is-hidden');
+    if (loadingScreen) { loadingScreen.classList.add('is-hidden'); if (particleSys) particleSys.stop(); }
   }
 
   /* ── SLIDESHOW (DESKTOP ≥769px ONLY) ── */
