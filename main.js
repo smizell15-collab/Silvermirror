@@ -176,9 +176,9 @@
       for (var added = 0; added < totalToAdd; added += batchSize) {
         (function(delay, count) {
           setTimeout(function() {
-            var wave = delay / BATCH_DELAY_MS;
-            var speedBoost = wave * 1.2;
-            var lengthBoost = wave * 0.4;
+            var waveIndex = delay / BATCH_DELAY_MS;
+            var speedBoost = waveIndex * 1.2;
+            var lengthBoost = waveIndex * 0.4;
             for (var j = 0; j < count; j++) {
               var speed = Math.random() * 6 + 4 + speedBoost;
               particles.push({
