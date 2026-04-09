@@ -220,31 +220,31 @@ a { text-decoration: none; }
    SECTION 1 — OPENING
    ============================================ */
 .opening__eyebrow {
-  display: block; text-transform: uppercase; letter-spacing: 0.15em;
-  font-size: var(--text-label); color: #00B3DE; font-weight: 700;
-  margin-bottom: var(--space-md); animation: pulse-glow 8s ease-in-out infinite;
+  display: block; text-transform: uppercase; letter-spacing: 0.2em;
+  font-size: var(--text-small); color: #00B3DE; font-weight: 700;
+  margin-bottom: var(--space-lg); animation: pulse-glow 8s ease-in-out infinite;
 }
 .opening__title {
   font-family: var(--font-serif);
-  font-size: var(--text-hero); font-weight: 700; line-height: 1.1;
-  color: var(--color-text); margin-bottom: var(--space-lg); letter-spacing: -0.02em;
+  font-size: var(--text-hero); font-weight: 700; line-height: 1.08;
+  color: var(--color-text); margin-bottom: var(--space-xl); letter-spacing: -0.02em;
 }
 .opening__title em { color: var(--color-accent); font-style: italic; }
 .opening__subtitle {
-  font-size: var(--text-body); color: var(--color-text-secondary);
-  max-width: 600px; margin-bottom: var(--space-lg); line-height: 1.7;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem); color: var(--color-text-secondary);
+  max-width: 640px; margin-bottom: var(--space-xl); line-height: 1.75;
 }
 .opening__scope {
-  display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: var(--space-md);
+  display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: var(--space-lg);
 }
 .opening__scope-item {
   border: none; border-radius: 100px;
-  padding: 0.5rem 1.25rem; font-size: var(--text-small); font-weight: 600;
+  padding: 0.55rem 1.4rem; font-size: var(--text-small); font-weight: 600;
   color: var(--color-accent); background: var(--color-bg-ice);
 }
 .opening__credibility {
-  font-size: var(--text-small); color: var(--color-text);
-  font-weight: 600; margin-bottom: var(--space-lg);
+  font-size: var(--text-body); color: var(--color-text);
+  font-weight: 600; margin-bottom: var(--space-xl);
   padding: var(--space-md) var(--space-lg);
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -254,8 +254,8 @@ a { text-decoration: none; }
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 .opening__hook {
-  font-size: var(--text-h3); font-weight: 600; color: var(--color-text-secondary);
-  font-style: italic;
+  font-size: var(--text-h2); font-weight: 600; color: var(--color-text-secondary);
+  font-style: italic; line-height: 1.3;
 }
 
 /* ============================================
@@ -1545,8 +1545,8 @@ a { text-decoration: none; }
    HERO SECTION — MORE DOMINANT
    ============================================ */
 #section-hook {
-  padding-top: clamp(7rem, 18vh, 14rem);
-  padding-bottom: clamp(7rem, 18vh, 14rem);
+  padding-top: clamp(8rem, 20vh, 16rem);
+  padding-bottom: clamp(8rem, 20vh, 16rem);
   background: linear-gradient(165deg, #0A0A12 0%, #0d1420 40%, #0A0A12 100%);
   position: relative;
   overflow: hidden;
