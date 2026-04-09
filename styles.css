@@ -1916,7 +1916,7 @@ a { text-decoration: none; }
   font-family: 'Montserrat', sans-serif;
   font-size: 0.65rem; font-weight: 600;
   letter-spacing: 0.35em; text-transform: uppercase;
-  color: rgba(78, 197, 191, 0.55);
+  color: rgba(78, 197, 191, 0.7);
   opacity: 0; transform: translateY(10px);
   transition: opacity 0.9s ease, transform 0.9s ease;
   margin-top: 2.5rem;
@@ -1938,8 +1938,8 @@ a { text-decoration: none; }
 }
 
 @keyframes enter-pulse {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.9; }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* Content area breathing glow keyframe */

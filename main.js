@@ -230,7 +230,7 @@
   var navContainer = document.getElementById('nav-dots');
   var stickyLogo = document.getElementById('sticky-logo');
 
-  function isSectionDark(id, el) {
+  function isSectionDark() {
     return true; /* All sections are now dark theme */
   }
 
