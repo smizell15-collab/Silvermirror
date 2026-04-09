@@ -145,36 +145,62 @@
   var particleSys = initParticles(particleCanvas);
 
   if (loadingScreen) {
-    /* Staggered entrance: logo → × → name → role */
+    var loadingEnter = loadingScreen.querySelector('.loading-screen__enter');
+    var clickHandled = false;
+
+    /* Staggered entrance (SLOWER): logo → × → name → role */
     setTimeout(function() {
       if (loadingLogo) loadingLogo.classList.add('show');
-    }, 300);
+    }, 600);
     setTimeout(function() {
       if (loadingX) loadingX.classList.add('show');
-    }, 700);
+    }, 1400);
     setTimeout(function() {
       if (loadingName) loadingName.classList.add('show');
-    }, 1050);
+    }, 2200);
     setTimeout(function() {
       if (loadingRole) loadingRole.classList.add('show');
-    }, 1350);
+    }, 3000);
 
-    /* Exit sequence */
+    /* Show "Click to Enter" prompt after all elements appear */
     setTimeout(function() {
-      loadingScreen.classList.add('is-exiting');
-    }, 2600);
-    setTimeout(function() {
-      if (particleSys) particleSys.stop();
-      loadingScreen.classList.add('is-hidden');
-      if (document.body.classList.contains('slideshow-mode')) {
-        triggerSlideAnimations(slides[0]);
-      } else {
-        var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
-        heroEls.forEach(function(el, i) {
-          setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
-        });
-      }
-    }, 3400);
+      if (loadingEnter) loadingEnter.classList.add('show');
+    }, 3700);
+
+    /* Click-to-enter: reverse animation exit */
+    function dismissLoadingScreen() {
+      if (clickHandled) return;
+      clickHandled = true;
+
+      /* Reverse exit: enter-prompt → role → name → × → logo */
+      if (loadingEnter) loadingEnter.classList.add('is-exiting');
+      if (loadingRole) loadingRole.classList.add('is-exiting');
+      setTimeout(function() {
+        if (loadingName) loadingName.classList.add('is-exiting');
+      }, 150);
+      setTimeout(function() {
+        if (loadingX) loadingX.classList.add('is-exiting');
+      }, 300);
+      setTimeout(function() {
+        if (loadingLogo) loadingLogo.classList.add('is-exiting');
+      }, 450);
+
+      /* After reverse animation completes, hide screen and start hero */
+      setTimeout(function() {
+        if (particleSys) particleSys.stop();
+        loadingScreen.classList.add('is-hidden');
+        if (document.body.classList.contains('slideshow-mode')) {
+          triggerSlideAnimations(slides[0]);
+        } else {
+          var heroEls = document.querySelectorAll('#section-hook .animate-on-scroll');
+          heroEls.forEach(function(el, i) {
+            setTimeout(function() { el.classList.add('is-visible'); }, i * 120);
+          });
+        }
+      }, 950);
+    }
+
+    loadingScreen.addEventListener('click', dismissLoadingScreen);
   }
 
   /* ── SCROLL PROGRESS ── */
@@ -204,8 +230,8 @@
   var navContainer = document.getElementById('nav-dots');
   var stickyLogo = document.getElementById('sticky-logo');
 
-  function isSectionDark(id, el) {
-    return id === 'section-footprint' || id === 'section-footprint-intro' || id === 'section-footprint-proof' || id === 'section-hook' || el.classList.contains('section--dark-invert') || el.classList.contains('section--blue');
+  function isSectionDark() {
+    return true; /* All sections are now dark theme */
   }
 
   var secObserver = new IntersectionObserver(function(entries) {
